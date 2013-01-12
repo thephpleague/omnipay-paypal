@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\PayPal;
+namespace Tala\Billing\PayPal;
 
 use Tala\RedirectResponse;
 use Tala\Request;
