@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala Payments package.
+ * This file is part of the Omnipay package.
  *
  * (c) Adrian Macneil <adrian@adrianmacneil.com>
  *
@@ -9,17 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\PayPal;
+namespace Omnipay\Billing\PayPal;
 
 use Mockery as m;
-use Tala\BaseGatewayTest;
-use Tala\Request;
+use Omnipay\BaseGatewayTest;
+use Omnipay\Request;
 
 class ExpressGatewayTest extends BaseGatewayTest
 {
     public function setUp()
     {
-        $this->httpClient = m::mock('\Tala\HttpClient\HttpClientInterface');
+        $this->httpClient = m::mock('\Omnipay\HttpClient\HttpClientInterface');
         $this->httpRequest = m::mock('\Symfony\Component\HttpFoundation\Request');
 
         $this->gateway = new ExpressGateway($this->httpClient, $this->httpRequest);
@@ -39,7 +39,7 @@ class ExpressGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Tala\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
     }
 
@@ -51,7 +51,7 @@ class ExpressGatewayTest extends BaseGatewayTest
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Tala\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
     }
 }

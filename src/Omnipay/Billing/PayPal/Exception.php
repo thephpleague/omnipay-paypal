@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala Payments package.
+ * This file is part of the Omnipay package.
  *
  * (c) Adrian Macneil <adrian@adrianmacneil.com>
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\PayPal;
+namespace Omnipay\Billing\PayPal;
 
 /**
  * Invalid Response exception.
@@ -18,7 +18,7 @@ namespace Tala\Billing\PayPal;
  *
  * @author  Adrian Macneil <adrian@adrianmacneil.com>
  */
-class Exception extends \Tala\Exception
+class Exception extends \Omnipay\Exception
 {
     public function __construct($responseData)
     {

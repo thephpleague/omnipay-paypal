@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Tala Payments package.
+ * This file is part of the Omnipay package.
  *
  * (c) Adrian Macneil <adrian@adrianmacneil.com>
  *
@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tala\Billing\PayPal;
+namespace Omnipay\Billing\PayPal;
 
-use Tala\AbstractResponse;
+use Omnipay\AbstractResponse;
 
 /**
  * PayPal Express Class
