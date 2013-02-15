@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\PayPal;
+namespace Omnipay\PayPal;
 
 use Omnipay\GatewayTestCase;
-use Omnipay\CreditCard;
+use Omnipay\Common\CreditCard;
 
 class ProGatewayTest extends GatewayTestCase
 {
@@ -36,7 +36,7 @@ class ProGatewayTest extends GatewayTestCase
     }
 
     /**
-     * @expectedException \Omnipay\Exception\InvalidRequestException
+     * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      * @expectedExceptionMessage The amount parameter is required
      */
     public function testAuthorizeRequiresAmount()

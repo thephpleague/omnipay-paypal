@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\PayPal;
+namespace Omnipay\PayPal;
 
 use Omnipay\GatewayTestCase;
 
@@ -34,7 +34,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->authorize($this->options);
 
-        $this->assertInstanceOf('\Omnipay\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
     }
 
@@ -44,7 +44,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->purchase($this->options);
 
-        $this->assertInstanceOf('\Omnipay\RedirectResponse', $response);
+        $this->assertInstanceOf('\Omnipay\Common\RedirectResponse', $response);
         $this->assertEquals('https://www.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-5BV04722RH241693H', $response->getRedirectUrl());
     }
 }

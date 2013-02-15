@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\PayPal;
+namespace Omnipay\PayPal;
 
-use Omnipay\AbstractGateway;
-use Omnipay\Exception\InvalidResponseException;
-use Omnipay\Request;
+use Omnipay\Common\AbstractGateway;
+use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Common\Request;
 
 /**
  * PayPal Pro Class

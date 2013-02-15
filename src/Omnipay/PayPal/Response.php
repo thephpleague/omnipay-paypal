@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Omnipay\Billing\PayPal;
+namespace Omnipay\PayPal;
 
-use Omnipay\AbstractResponse;
+use Omnipay\Common\AbstractResponse;
 
 /**
  * PayPal Express Class
