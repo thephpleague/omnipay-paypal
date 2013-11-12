@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ExpressCompleteAuthorizeRequestTest extends TestCase
 {

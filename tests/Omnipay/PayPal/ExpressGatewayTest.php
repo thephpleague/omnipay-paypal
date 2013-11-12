@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\GatewayTestCase;
+use Omnipay\Tests\GatewayTestCase;
 
 class ExpressGatewayTest extends GatewayTestCase
 {

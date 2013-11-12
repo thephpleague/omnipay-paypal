@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ExpressAuthorizeResponseTest extends TestCase
 {

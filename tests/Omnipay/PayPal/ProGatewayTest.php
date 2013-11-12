@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\GatewayTestCase;
+use Omnipay\Tests\GatewayTestCase;
 use Omnipay\Common\CreditCard;
 
 class ProGatewayTest extends GatewayTestCase

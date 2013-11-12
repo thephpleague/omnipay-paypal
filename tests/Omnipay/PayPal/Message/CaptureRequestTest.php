@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\CaptureRequest;
-use Omnipay\TestCase;
+use Omnipay\Tests\TestCase;
 
 class CaptureRequestTest extends TestCase
 {
