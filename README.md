@@ -29,7 +29,7 @@ And run composer to update your dependencies:
 
 ## Basic Usage
 
-The following gateways are supported:
+The following gateways are provided by this package:
 
 * PayPal_Express (PayPal Express Checkout)
 * PayPal_Pro (PayPal Website Payments Pro)
