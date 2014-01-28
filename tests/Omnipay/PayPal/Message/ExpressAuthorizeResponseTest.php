@@ -17,12 +17,15 @@ class ExpressAuthorizeResponseTest extends TestCase
     public function testExpressPurchaseSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('ExpressPurchaseSuccess.txt');
-        $response = new ExpressAuthorizeResponse($this->getMockRequest(), $httpResponse->getBody());
+        $request = $this->getMockRequest();
+        $request->shouldReceive('getTestMode')->once()->andReturn(true);
+        $response = new ExpressAuthorizeResponse($request, $httpResponse->getBody());
 
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getRedirectData());
+        $this->assertSame('https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());
     }
 
