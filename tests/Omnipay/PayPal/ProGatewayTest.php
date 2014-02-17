@@ -47,4 +47,12 @@ class ProGatewayTest extends GatewayTestCase
         $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
+
+    public function testFetchTransaction()
+    {
+        $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\FetchTransactionRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+    }
 }
