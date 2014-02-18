@@ -46,6 +46,16 @@ class ExpressGateway extends ProGateway
         return $this->setParameter('landingPage', $value);
     }
 
+    public function getBrandName()
+    {
+        return $this->getParameter('brandName');
+    }
+
+    public function setBrandName($value)
+    {
+        return $this->setParameter('brandName', $value);
+    }
+
     public function getHeaderImageUrl()
     {
         return $this->getParameter('headerImageUrl');

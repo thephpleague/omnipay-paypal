@@ -30,6 +30,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
             $data['HDRIMG'] = $headerImageUrl;
         }
 
+        if ($brandName = $this->getBrandName()) {
+            $data['BRANDNAME'] = $brandName;
+        }
+
         if (null !== ($noShipping = $this->getNoShipping())) {
             $data['NOSHIPPING'] = $noShipping;
         }
