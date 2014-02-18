@@ -40,6 +40,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 0,
             'allowNote' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Inc.',
         ));
 
         $data = $this->request->getData();
@@ -55,6 +56,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
         $this->assertSame(0, $data['NOSHIPPING']);
         $this->assertSame(0, $data['ALLOWNOTE']);
+        $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
     }
 
     public function testGetDataWithCard()
@@ -71,6 +73,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 2,
             'allowNote' => 1,
+            'brandName' => 'Dunder Mifflin Paper Company, Inc.',
         ));
 
         $card = new CreditCard(array(
@@ -115,6 +118,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOZIP' => '66605',
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '555-555-5555',
             'EMAIL' => 'test@email.com',
+            'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
         );
 
         $this->assertEquals($expected, $this->request->getData());

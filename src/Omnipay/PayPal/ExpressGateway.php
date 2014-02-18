@@ -21,6 +21,7 @@ class ExpressGateway extends ProGateway
         $settings = parent::getDefaultParameters();
         $settings['solutionType'] = array('Sole', 'Mark');
         $settings['landingPage'] = array('Billing', 'Login');
+        $settings['brandName'] = '';
         $settings['headerImageUrl'] = '';
 
         return $settings;
@@ -44,6 +45,16 @@ class ExpressGateway extends ProGateway
     public function setLandingPage($value)
     {
         return $this->setParameter('landingPage', $value);
+    }
+
+    public function getBrandName()
+    {
+        return $this->getParameter('brandName');
+    }
+
+    public function setBrandName($value)
+    {
+        return $this->setParameter('brandName', $value);
     }
 
     public function getHeaderImageUrl()
