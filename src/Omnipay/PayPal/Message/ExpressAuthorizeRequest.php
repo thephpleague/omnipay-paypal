@@ -25,24 +25,13 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['LANDINGPAGE'] = $this->getLandingPage();
         $data['RETURNURL'] = $this->getReturnUrl();
         $data['CANCELURL'] = $this->getCancelUrl();
+        $data['HDRIMG'] = $this->getHeaderImageUrl();
+        $data['BRANDNAME'] = $this->getBrandName();
+        $data['NOSHIPPING'] = $this->getNoShipping();
+        $data['ALLOWNOTE'] = $this->getAllowNote();
 
-        if ($headerImageUrl = $this->getHeaderImageUrl()) {
-            $data['HDRIMG'] = $headerImageUrl;
-        }
-
-        if ($brandName = $this->getBrandName()) {
-            $data['BRANDNAME'] = $brandName;
-        }
-
-        if (null !== ($noShipping = $this->getNoShipping())) {
-            $data['NOSHIPPING'] = $noShipping;
-        }
-
-        if (null !== ($allowNote = $this->getAllowNote())) {
-            $data['ALLOWNOTE'] = $allowNote;
-        }
-
-        if ($card = $this->getCard()) {
+        $card = $this->getCard();
+        if ($card) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
             $data['PAYMENTREQUEST_0_SHIPTOSTREET'] = $card->getAddress1();
             $data['PAYMENTREQUEST_0_SHIPTOSTREET2'] = $card->getAddress2();
