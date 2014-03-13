@@ -125,6 +125,22 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $data;
     }
 
+    protected function getItemData()
+    {
+        $data = array();
+        $items = $this->getItems();
+        if ($items) {
+            foreach ($items as $n => $item) {
+                $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
+                $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
+                $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
+                $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+            }
+        }
+
+        return $data;
+    }
+
     public function sendData($data)
     {
         $url = $this->getEndpoint().'?'.http_build_query($data, '', '&');

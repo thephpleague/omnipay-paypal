@@ -25,6 +25,8 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['TOKEN'] = $this->httpRequest->query->get('token');
         $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
 
+        $data = array_merge($data, $this->getItemData());
+
         return $data;
     }
 }
