@@ -33,6 +33,7 @@ class ExpressCompleteAuthorizeRequestTest extends TestCase
         $this->request->setSignature('SIG');
         $this->request->setSubject('SUB');
         $this->request->setDescription('DESC');
+        $this->request->setNotifyUrl('https://www.example.com/notify');
 
         $expected = array();
         $expected['METHOD'] = 'DoExpressCheckoutPayment';
@@ -41,6 +42,7 @@ class ExpressCompleteAuthorizeRequestTest extends TestCase
         $expected['PAYMENTREQUEST_0_CURRENCYCODE'] = 'USD';
         $expected['PAYMENTREQUEST_0_INVNUM'] = 'ABC-123';
         $expected['PAYMENTREQUEST_0_DESC'] = 'DESC';
+        $expected['PAYMENTREQUEST_0_NOTIFYURL'] = 'https://www.example.com/notify';
         $expected['USER'] = 'testuser';
         $expected['PWD'] = 'testpass';
         $expected['SIGNATURE'] = 'SIG';

@@ -35,7 +35,6 @@ class ExpressAuthorizeRequestTest extends TestCase
             'description' => 'Order Description',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-            'notifyUrl' => 'https://www.example.com/notify',
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 0,
@@ -51,7 +50,6 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('Order Description', $data['PAYMENTREQUEST_0_DESC']);
         $this->assertSame('https://www.example.com/return', $data['RETURNURL']);
         $this->assertSame('https://www.example.com/cancel', $data['CANCELURL']);
-        $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
         $this->assertSame('demo@example.com', $data['SUBJECT']);
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
         $this->assertSame(0, $data['NOSHIPPING']);
@@ -68,7 +66,6 @@ class ExpressAuthorizeRequestTest extends TestCase
             'description' => 'Order Description',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
-            'notifyUrl' => 'https://www.example.com/notify',
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 2,
@@ -106,7 +103,6 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_DESC' => 'Order Description',
             'RETURNURL' => 'https://www.example.com/return',
             'CANCELURL' => 'https://www.example.com/cancel',
-            'PAYMENTREQUEST_0_NOTIFYURL' => 'https://www.example.com/notify',
             'SUBJECT' => 'demo@example.com',
             'HDRIMG' => 'https://www.example.com/header.jpg',
             'PAYMENTREQUEST_0_SHIPTONAME' => 'John Doe',
