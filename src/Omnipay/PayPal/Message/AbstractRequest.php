@@ -7,10 +7,51 @@ namespace Omnipay\PayPal\Message;
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    /**
+     * Default API version for requests.
+     *
+     * @see getVersion() to get the version.
+     * @deprecated 3.0.0 getVersion() should be used instead.
+     *
+     * @var string
+     */
     const API_VERSION = '85.0';
 
     protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+
+    /**
+     * Operation for this request.
+     *
+     * @see getOperation() to get the operation.
+     * @deprecated 3.0.0 getOperation() must be overridden.
+     *
+     * @var string
+     */
+    private $operation;
+
+    /**
+     * Get the operation for this request.
+     *
+     * @return string operation
+     */
+    public function getOperation()
+    {
+        if (empty($this->operation)) {
+            throw new \BadFunctionCallException('getOperation() must be overridden');
+        }
+        return $this->operation;
+    }
+
+    /**
+     * Get the API version of this request.
+     *
+     * @return string version
+     */
+    public function getVersion()
+    {
+        return static::API_VERSION;
+    }
 
     public function getUsername()
     {
@@ -112,11 +153,39 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('allowNote', $value);
     }
 
-    protected function getBaseData($method)
+    /**
+     * Get the request data for this message.
+     *
+     * @return array request data
+     */
+    public function getData()
     {
+        $this->validate('username', 'password');
+
+        $operation = $this->getOperation();
+        return $this->getBaseData($operation);
+    }
+
+    /**
+     * Get the request data for this message.
+     *
+     * @see getData() to get the base data.
+     * @deprecated 3.0.0 getData() must be used instead.
+     *
+     * @param  string  $operation  operation for this request
+     * @return array               request data
+     */
+    protected function getBaseData($operation)
+    {
+        $this->operation = $operation;
+
         $data = array();
-        $data['METHOD'] = $method;
-        $data['VERSION'] = static::API_VERSION;
+
+        // Operation
+        $data['METHOD'] = $this->getOperation();
+        $data['VERSION'] = $this->getVersion();
+
+        // Credentials
         $data['USER'] = $this->getUsername();
         $data['PWD'] = $this->getPassword();
         $data['SIGNATURE'] = $this->getSignature();
