@@ -33,13 +33,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * Get the operation for this request.
      *
+     * @todo make this abstract to force override in v3.0.0
+     *
      * @return string operation
      */
     public function getOperation()
     {
-        if (empty($this->operation)) {
-            throw new \BadFunctionCallException('getOperation() must be overridden');
-        }
         return $this->operation;
     }
 
@@ -207,6 +206,12 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
+    /**
+     * Create a relevant response message.
+     *
+     * @param  array     $data  response data
+     * @return Response         response message
+     */
     protected function createResponse($data)
     {
         return $this->response = new Response($this, $data);
