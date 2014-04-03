@@ -19,7 +19,6 @@ class GetExpressCheckoutDetailsResponseTest extends TestCase
     {
         $httpResponse = $this->getMockHttpResponse('GetExpressCheckoutDetailsSuccess.txt');
         $request = $this->getMockRequest();
-        $request->shouldReceive('getTestMode')->once()->andReturn(true);
         $response = new GetExpressCheckoutDetailsResponse($request, $httpResponse->getBody());
 
         $this->assertTrue($response->isSuccessful());
