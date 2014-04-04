@@ -2,12 +2,12 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
-
 /**
- * PayPal Express Class
+ * PayPal Express Gateway
+ *
+ * @author Adrian Macneil <adrian@adrianmacneil.com>
+ * @author Joao Dias <joao.dias@cherrygroup.com>
+ * @license http://opensource.org/licenses/mit-license.php MIT
  */
 class ExpressGateway extends ProGateway
 {
@@ -97,13 +97,24 @@ class ExpressGateway extends ProGateway
     }
 
     /**
-     * Get details about a transaction.
+     * Get the details of a checkout.
      *
-     * @param  array                                     $parameters  options
+     * @param  array                                    $parameters options
      * @return Message\GetExpressCheckoutDetailsRequest
      */
     public function getDetails(array $parameters = array())
     {
         return $this->createRequest('Omnipay\PayPal\Message\GetExpressCheckoutDetailsRequest', $parameters);
+    }
+
+    /**
+     * Make a payment to one or more PayPal account holders.
+     *
+     * @param  array                  $parameters parameters
+     * @return Message\MassPayRequest
+     */
+    public function payout(array $parameters = array())
+    {
+        return $this->createRequest('Omnipay\PayPal\Message\MassPayRequest', $parameters);
     }
 }

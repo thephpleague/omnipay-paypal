@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: Apache
+Content-Length: 284
+Content-Type: text/plain; charset=utf-8
+DC: origin2-api-3t.sandbox.paypal.com
+Date: Fri, 04 Apr 2014 10:53:47 GMT
+Connection: keep-alive
+Set-Cookie: DC=origin2-api-3t.sandbox.paypal.com; secure
+
+TIMESTAMP=2014%2d04%2d04T10%3a53%3a47Z&CORRELATIONID=dbb9305372721&ACK=Failure&VERSION=112%2e0&BUILD=10433064&L_ERRORCODE0=10321&L_SHORTMESSAGE0=Insufficient%20funds&L_LONGMESSAGE0=The%20account%20does%20not%20have%20sufficient%20funds%20to%20do%20this%20masspay&L_SEVERITYCODE0=Error

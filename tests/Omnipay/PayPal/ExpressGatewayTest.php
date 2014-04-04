@@ -80,4 +80,22 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('Omnipay\PayPal\Message\GetExpressCheckoutDetailsResponse', $response);
         $this->assertTrue($response->isSuccessful());
     }
+
+    public function testPayoutFailure()
+    {
+        $this->setMockHttpResponse('MassPayFailure.txt');
+
+        $response = $this->gateway->payout(array(
+            'username' => 'phpunit',
+            'password' => 'password',
+            'currency' => 'SEK',
+            'recipients' => array(new Message\MassPayRecipient(array(
+                'phone'  => '987654321',
+                'amount' => '12.34',
+            ))),
+        ))->send();
+
+        $this->assertInstanceOf('Omnipay\PayPal\Message\MassPayResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+    }
 }

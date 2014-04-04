@@ -79,14 +79,17 @@ class Response extends AbstractResponse
     /**
      * Get the payment error code.
      *
-     * @return int|null
+     * @return int
      */
     public function getCode()
     {
         // @todo parse list
-        return isset($this->data['PAYMENTREQUESTINFO_0_ERRORCODE'])
-            ? (int) $this->data['PAYMENTREQUESTINFO_0_ERRORCODE']
-            : null;
+        foreach (array('L_ERRORCODE0', 'PAYMENTREQUESTINFO_0_ERRORCODE') as $key) {
+            if (isset($this->data[$key])) {
+                return (int) $this->data[$key];
+            }
+        }
+        return 0;
     }
 
     public function getMessage()

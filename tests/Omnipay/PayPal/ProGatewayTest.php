@@ -55,4 +55,22 @@ class ProGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('\Omnipay\PayPal\Message\FetchTransactionRequest', $request);
         $this->assertSame('abc123', $request->getTransactionReference());
     }
+
+    public function testPayoutFailure()
+    {
+        $this->setMockHttpResponse('MassPayFailure.txt');
+
+        $response = $this->gateway->payout(array(
+            'username' => 'phpunit',
+            'password' => 'password',
+            'currency' => 'SEK',
+            'recipients' => array(new Message\MassPayRecipient(array(
+                'email'  => 'phpunit@paypal.com',
+                'amount' => '12.34',
+            ))),
+        ))->send();
+
+        $this->assertInstanceOf('Omnipay\PayPal\Message\MassPayResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+    }
 }
