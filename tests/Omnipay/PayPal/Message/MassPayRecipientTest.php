@@ -16,7 +16,7 @@ class MassPayRecipientTest extends TestCase
         ));
         $recipient->validate();
     }
-    
+
     /**
      * @expectedException \Omnipay\Common\Exception\InvalidRequestException
      */

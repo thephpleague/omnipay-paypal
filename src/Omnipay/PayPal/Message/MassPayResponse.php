@@ -12,4 +12,4 @@ namespace Omnipay\PayPal\Message;
  */
 class MassPayResponse extends Response
 {
-} 
+}
