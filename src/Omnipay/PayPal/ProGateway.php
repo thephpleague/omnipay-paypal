@@ -81,4 +81,15 @@ class ProGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\PayPal\Message\FetchTransactionRequest', $parameters);
     }
+
+    /**
+     * Make a payment to one or more PayPal account holders.
+     *
+     * @param  array                  $parameters parameters
+     * @return Message\MassPayRequest
+     */
+    public function payout(array $parameters = array())
+    {
+        return $this->createRequest('Omnipay\PayPal\Message\MassPayRequest', $parameters);
+    }
 }

@@ -66,4 +66,36 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
+
+    public function testGetDetailsSuccess()
+    {
+        $this->setMockHttpResponse('GetExpressCheckoutDetailsSuccess.txt');
+
+        $response = $this->gateway->getDetails(array(
+            'username' => 'phpunit',
+            'password' => 'password',
+            'token'    => 'EC-6CG32037X9158254D',
+        ))->send();
+
+        $this->assertInstanceOf('Omnipay\PayPal\Message\GetExpressCheckoutDetailsResponse', $response);
+        $this->assertTrue($response->isSuccessful());
+    }
+
+    public function testPayoutFailure()
+    {
+        $this->setMockHttpResponse('MassPayFailure.txt');
+
+        $response = $this->gateway->payout(array(
+            'username' => 'phpunit',
+            'password' => 'password',
+            'currency' => 'SEK',
+            'recipients' => array(new Message\MassPayRecipient(array(
+                'phone'  => '987654321',
+                'amount' => '12.34',
+            ))),
+        ))->send();
+
+        $this->assertInstanceOf('Omnipay\PayPal\Message\MassPayResponse', $response);
+        $this->assertFalse($response->isSuccessful());
+    }
 }

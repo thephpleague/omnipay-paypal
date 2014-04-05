@@ -1,0 +1,10 @@
+HTTP/1.1 200 OK
+Server: Apache
+Content-Length: 109
+Content-Type: text/plain; charset=utf-8
+DC: origin2-api-3t.sandbox.paypal.com
+Date: Fri, 04 Apr 2014 14:41:50 GMT
+Connection: keep-alive
+Set-Cookie: DC=origin2-api-3t.sandbox.paypal.com; secure
+
+TIMESTAMP=2014%2d04%2d04T14%3a41%3a50Z&CORRELATIONID=54a7c4e9c9f55&ACK=Success&VERSION=112%2e0&BUILD=10433064
