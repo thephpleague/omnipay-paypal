@@ -24,7 +24,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\PayPal\\" : "src/" }
+        "psr-4": { "Omnipay\\PayPal\\" : "src/" }
     },
     "require": {
         "omnipay/common": "~2.0"
