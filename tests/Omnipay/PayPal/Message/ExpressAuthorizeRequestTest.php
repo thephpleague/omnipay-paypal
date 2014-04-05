@@ -39,6 +39,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 0,
             'allowNote' => 0,
+            'addressOverride' => 0,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
         ));
 
@@ -54,6 +55,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
         $this->assertSame(0, $data['NOSHIPPING']);
         $this->assertSame(0, $data['ALLOWNOTE']);
+        $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
     }
 
@@ -70,6 +72,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 2,
             'allowNote' => 1,
+            'addressOverride' => 1,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
         ));
 
@@ -97,6 +100,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'LANDINGPAGE' => null,
             'NOSHIPPING' => 2,
             'ALLOWNOTE' => 1,
+            'ADDROVERRIDE' => 1,
             'PAYMENTREQUEST_0_AMT' => '10.00',
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'AUD',
             'PAYMENTREQUEST_0_INVNUM' => '111',
