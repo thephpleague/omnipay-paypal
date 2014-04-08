@@ -25,8 +25,8 @@ class ProAuthorizeRequest extends AbstractRequest
         // add credit card details
         $data['ACCT'] = $this->getCard()->getNumber();
         $data['CREDITCARDTYPE'] = $this->getCard()->getBrand();
-        $data['EXPDATE'] = $this->getCard()->getExpiryMonth().$this->getCard()->getExpiryYear();
-        $data['STARTDATE'] = $this->getCard()->getStartMonth().$this->getCard()->getStartYear();
+        $data['EXPDATE'] = $this->getCard()->getExpiryDate('mY');
+        $data['STARTDATE'] = $this->getCard()->getStartDate('mY');
         $data['CVV2'] = $this->getCard()->getCvv();
         $data['ISSUENUMBER'] = $this->getCard()->getIssueNumber();
         $data['IPADDRESS'] = $this->getClientIp();
