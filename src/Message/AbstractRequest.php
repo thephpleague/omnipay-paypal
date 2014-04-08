@@ -122,10 +122,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
-    protected function getBaseData($method)
+    protected function getBaseData()
     {
         $data = array();
-        $data['METHOD'] = $method;
         $data['VERSION'] = static::API_VERSION;
         $data['USER'] = $this->getUsername();
         $data['PWD'] = $this->getPassword();

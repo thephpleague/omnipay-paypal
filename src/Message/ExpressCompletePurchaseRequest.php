@@ -7,5 +7,11 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressCompletePurchaseRequest extends ExpressCompleteAuthorizeRequest
 {
-    protected $action = 'Sale';
+    public function getData()
+    {
+        $data = parent::getData();
+        $data['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Sale';
+
+        return $data;
+    }
 }

@@ -7,15 +7,13 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressCompleteAuthorizeRequest extends AbstractRequest
 {
-    protected $action = 'Authorization';
-
     public function getData()
     {
-        $data = $this->getBaseData('DoExpressCheckoutPayment');
-
         $this->validate('amount');
 
-        $data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->action;
+        $data = $this->getBaseData();
+        $data['METHOD'] = 'DoExpressCheckoutPayment';
+        $data['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Authorization';
         $data['PAYMENTREQUEST_0_AMT'] = $this->getAmount();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_INVNUM'] = $this->getTransactionId();

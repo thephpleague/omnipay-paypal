@@ -9,10 +9,10 @@ class CaptureRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = $this->getBaseData('DoCapture');
-
         $this->validate('transactionReference', 'amount');
 
+        $data = $this->getBaseData();
+        $data['METHOD'] = 'DoCapture';
         $data['AMT'] = $this->getAmount();
         $data['CURRENCYCODE'] = $this->getCurrency();
         $data['AUTHORIZATIONID'] = $this->getTransactionReference();

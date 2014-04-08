@@ -9,10 +9,10 @@ class FetchTransactionRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = $this->getBaseData('GetTransactionDetails');
-
         $this->validate('transactionReference');
 
+        $data = $this->getBaseData();
+        $data['METHOD'] = 'GetTransactionDetails';
         $data['TRANSACTIONID'] = $this->getTransactionReference();
 
         return $data;

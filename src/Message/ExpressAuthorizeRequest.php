@@ -9,10 +9,10 @@ class ExpressAuthorizeRequest extends AbstractRequest
 {
     public function getData()
     {
-        $data = $this->getBaseData('SetExpressCheckout');
-
         $this->validate('amount', 'returnUrl', 'cancelUrl');
 
+        $data = $this->getBaseData();
+        $data['METHOD'] = 'SetExpressCheckout';
         $data['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Authorization';
         $data['PAYMENTREQUEST_0_AMT'] = $this->getAmount();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();

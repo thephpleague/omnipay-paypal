@@ -7,5 +7,11 @@ namespace Omnipay\PayPal\Message;
  */
 class ProPurchaseRequest extends ProAuthorizeRequest
 {
-    protected $action = 'Sale';
+    public function getData()
+    {
+        $data = parent::getData();
+        $data['PAYMENTACTION'] = 'Sale';
+
+        return $data;
+    }
 }
