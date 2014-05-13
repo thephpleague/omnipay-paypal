@@ -197,9 +197,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $url = $this->getEndpoint().'?'.http_build_query($data, '', '&');
         $httpResponse = $this->httpClient->get($url)->send();
-
-        file_put_contents('/tmp/paypal_' . $this->getOperation(), $httpResponse->getMessage());
-
         return $this->createResponse($httpResponse->getBody());
     }
 
