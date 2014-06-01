@@ -23,6 +23,8 @@ class ExpressGateway extends ProGateway
         $settings['landingPage'] = array('Billing', 'Login');
         $settings['brandName'] = '';
         $settings['headerImageUrl'] = '';
+        $settings['logoImageUrl'] = '';
+        $settings['borderColor'] = '';
 
         return $settings;
     }
@@ -62,18 +64,52 @@ class ExpressGateway extends ProGateway
         return $this->getParameter('headerImageUrl');
     }
 
+    public function getLogoImageUrl()
+    {
+        return $this->getParameter('logoImageUrl');
+    }
+
+    public function getBorderColor()
+    {
+        return $this->getParameter('borderColor');
+    }
+
     /**
      * Header Image URL (Optional)
      *
      * URL for the image you want to appear at the top left of the payment page.
      * The image has a maximum size of 750 pixels wide by 90 pixels high.
-     * PayPal recommends that you provide an image that is stored on a secure (https) server.
+     * PayPal recommends that you provide an image that is stored on a secure
+     * (HTTPS) server.
      * If you do not specify an image, the business name displays.
      * Character length and limitations: 127 single-byte alphanumeric characters
      */
     public function setHeaderImageUrl($value)
     {
         return $this->setParameter('headerImageUrl', $value);
+    }
+
+    /**
+     * Logo Image URL (Optional)
+     *
+     * URL for the image to appear above the order summary, in place of the
+     * brand name.
+     * The recommended size is 190 pixels wide and 60 pixels high.
+     */
+    public function setLogoImageUrl($value)
+    {
+        return $this->setParameter('logoImageUrl', $value);
+    }
+
+    /**
+     * Border Color (Optional)
+     *
+     * The color of the border gradient on payment pages.
+     * Should be a six character hexadecimal code (i.e. C0C0C0).
+     */
+    public function setBorderColor($value)
+    {
+        return $this->setParameter('borderColor', $value);
     }
 
     public function authorize(array $parameters = array())
