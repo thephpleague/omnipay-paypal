@@ -74,6 +74,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 1,
             'addressOverride' => 1,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'logoImageUrl' => 'https://www.example.com/logo.jpg',
+            'borderColor' => 'CCCCCC',
         ));
 
         $card = new CreditCard(array(
@@ -119,6 +121,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '555-555-5555',
             'EMAIL' => 'test@email.com',
             'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
+            'LOGOIMG' => 'https://www.example.com/logo.jpg',
+            'CARTBORDERCOLOR' => 'CCCCCC',
         );
 
         $this->assertEquals($expected, $this->request->getData());
