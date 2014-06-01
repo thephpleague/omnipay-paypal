@@ -82,6 +82,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('headerImageUrl', $value);
     }
 
+    public function getLogoImageUrl($value)
+    {
+        return $this->setParameter('logoImageUrl', $value);
+    }
+
+    public function getBorderColor($value)
+    {
+        return $this->setParameter('borderColor', $value);
+    }
+
     public function getBrandName()
     {
         return $this->getParameter('brandName');
