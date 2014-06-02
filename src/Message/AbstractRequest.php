@@ -122,6 +122,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
+    public function getMaxAmount()
+    {
+        return $this->getParameter('maxAmount');
+    }
+
+    public function setMaxAmount($value)
+    {
+        return $this->setParameter('maxAmount', $value);
+    }
+
     protected function getBaseData()
     {
         $data = array();

@@ -30,6 +30,8 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['ALLOWNOTE'] = $this->getAllowNote();
         $data['ADDROVERRIDE'] = $this->getAddressOverride();
 
+        $data['MAXAMT'] = $this->getMaxAmount();
+
         $card = $this->getCard();
         if ($card) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
