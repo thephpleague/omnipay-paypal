@@ -122,6 +122,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
+    public function getNotifyUrl()
+    {
+        return $this->getParameter('notifyUrl');
+    }
+
+    public function setNotifyUrl($value)
+    {
+        return $this->setParameter('notifyUrl', $value);
+    }
+
     protected function getBaseData()
     {
         $data = array();

@@ -29,6 +29,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['NOSHIPPING'] = $this->getNoShipping();
         $data['ALLOWNOTE'] = $this->getAllowNote();
         $data['ADDROVERRIDE'] = $this->getAddressOverride();
+        $data['NOTIFYURL'] = $this->getNotifyUrl();
 
         $card = $this->getCard();
         if ($card) {
