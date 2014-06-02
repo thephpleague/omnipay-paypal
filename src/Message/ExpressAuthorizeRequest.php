@@ -18,6 +18,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_INVNUM'] = $this->getTransactionId();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
+        $data['PAYMENTREQUEST_0_NOTIFYURL'] = $this->getNotifyUrl();
 
         // pp express specific fields
         $data['SOLUTIONTYPE'] = $this->getSolutionType();
@@ -29,7 +30,6 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['NOSHIPPING'] = $this->getNoShipping();
         $data['ALLOWNOTE'] = $this->getAllowNote();
         $data['ADDROVERRIDE'] = $this->getAddressOverride();
-        $data['NOTIFYURL'] = $this->getNotifyUrl();
 
         $card = $this->getCard();
         if ($card) {

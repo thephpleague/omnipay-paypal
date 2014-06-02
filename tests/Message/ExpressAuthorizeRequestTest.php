@@ -58,7 +58,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame(0, $data['ALLOWNOTE']);
         $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
-        $this->assertSame('https://www.example.com/notify', $data['NOTIFYURL']);
+        $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
     }
 
     public function testGetDataWithCard()
@@ -108,6 +108,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'AUD',
             'PAYMENTREQUEST_0_INVNUM' => '111',
             'PAYMENTREQUEST_0_DESC' => 'Order Description',
+            'PAYMENTREQUEST_0_NOTIFYURL' => 'https://www.example.com/notify',
             'RETURNURL' => 'https://www.example.com/return',
             'CANCELURL' => 'https://www.example.com/cancel',
             'SUBJECT' => 'demo@example.com',
@@ -122,7 +123,6 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '555-555-5555',
             'EMAIL' => 'test@email.com',
             'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
-            'NOTIFYURL' => 'https://www.example.com/notify',
         );
 
         $this->assertEquals($expected, $this->request->getData());
