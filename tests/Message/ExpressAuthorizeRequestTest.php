@@ -41,6 +41,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 0,
             'addressOverride' => 0,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'notifyUrl' => 'https://www.example.com/notify',
         ));
 
         $data = $this->request->getData();
@@ -57,6 +58,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame(0, $data['ALLOWNOTE']);
         $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
+        $this->assertSame('https://www.example.com/notify', $data['PAYMENTREQUEST_0_NOTIFYURL']);
     }
 
     public function testGetDataWithCard()
@@ -74,6 +76,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 1,
             'addressOverride' => 1,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'notifyUrl' => 'https://www.example.com/notify',
         ));
 
         $card = new CreditCard(array(
@@ -105,6 +108,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_CURRENCYCODE' => 'AUD',
             'PAYMENTREQUEST_0_INVNUM' => '111',
             'PAYMENTREQUEST_0_DESC' => 'Order Description',
+            'PAYMENTREQUEST_0_NOTIFYURL' => 'https://www.example.com/notify',
             'RETURNURL' => 'https://www.example.com/return',
             'CANCELURL' => 'https://www.example.com/cancel',
             'SUBJECT' => 'demo@example.com',
