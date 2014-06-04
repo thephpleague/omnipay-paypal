@@ -153,4 +153,15 @@ class ExpressAuthorizeRequestTest extends TestCase
         $data = $this->request->getData();
         $this->assertEquals('https://www.example.com/header.jpg', $data['HDRIMG']);
     }
+
+    public function testMaxAmount()
+    {
+        $this->request->setMaxAmount(321.54);
+
+        $this->assertSame(321.54, $this->request->getMaxAmount());
+
+        $data = $this->request->getData();
+
+        $this->assertSame(321.54, $data['MAXAMT']);
+    }
 }
