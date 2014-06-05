@@ -6,6 +6,15 @@ use Omnipay\Tests\GatewayTestCase;
 
 class ExpressGatewayTest extends GatewayTestCase
 {
+    /**
+     * @var \Omnipay\PayPal\ExpressGateway
+     */
+    protected $gateway;
+    /**
+     * @var array
+     */
+    protected $options;
+
     public function setUp()
     {
         parent::setUp();
@@ -65,5 +74,39 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
+    }
+
+    public function testFetchCheckoutSuccess()
+    {
+        // Test inherited Token
+        $requestWithToken = clone $this->getHttpRequest();
+        $requestWithToken->query->set('token', 'TOKEN1234');
+
+        $gatewayWithToken = new ExpressGateway($this->getHttpClient(), $requestWithToken);
+
+        $this->setMockHttpResponse('ExpressFetchCheckoutSuccess.txt');
+
+        $options = array();
+
+        $response = $gatewayWithToken->fetchCheckout($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+    }
+
+    public function testFetchCheckoutFailure()
+    {
+        //Test forcing token
+        $options = array('token' => 'TOKEN1234');
+
+        $this->setMockHttpResponse('ExpressFetchCheckoutFailure.txt');
+
+        $response = $this->gateway->fetchCheckout($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('The amount exceeds the maximum amount for a single transaction.', $response->getMessage());
     }
 }
