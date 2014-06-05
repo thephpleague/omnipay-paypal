@@ -13,7 +13,12 @@ class ExpressFetchCheckoutRequest extends AbstractRequest
 
         $data = $this->getBaseData();
         $data['METHOD'] = 'GetExpressCheckoutDetails';
-        $data['TOKEN'] = $this->httpRequest->query->get('token');
+        //Allow overwrite, useful for negative test conditions, GetExpressCheckoutDetails uses TOKEN
+        if (!is_null($this->getToken())) {
+            $data['TOKEN'] = $this->getToken();
+        } else {
+            $data['TOKEN'] = $this->httpRequest->query->get('token');
+        }
 
         return $data;
     }

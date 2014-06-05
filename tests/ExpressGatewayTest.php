@@ -11,10 +11,6 @@ class ExpressGatewayTest extends GatewayTestCase
      */
     protected $gateway;
     /**
-     * @var \Omnipay\PayPal\ExpressGateway
-     */
-    protected $gatewayWithToken;
-    /**
      * @var array
      */
     protected $options;
@@ -30,11 +26,6 @@ class ExpressGatewayTest extends GatewayTestCase
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
         );
-
-        $requestWithToken = clone $this->getHttpRequest();
-        $requestWithToken->query->set('token', 'TOKEN1234');
-
-        $this->gatewayWithToken = new ExpressGateway($this->getHttpClient(), $requestWithToken);
     }
 
     public function testAuthorizeSuccess()
@@ -87,14 +78,35 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testFetchCheckoutSuccess()
     {
+        // Test inherited Token
+        $requestWithToken = clone $this->getHttpRequest();
+        $requestWithToken->query->set('token', 'TOKEN1234');
+
+        $gatewayWithToken = new ExpressGateway($this->getHttpClient(), $requestWithToken);
+
         $this->setMockHttpResponse('ExpressFetchCheckoutSuccess.txt');
 
         $options = array();
 
-        $response = $this->gatewayWithToken->fetchCheckout($options)->send();
+        $response = $gatewayWithToken->fetchCheckout($options)->send();
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
+    }
+
+    public function testFetchCheckoutFailure()
+    {
+        //Test forcing token
+        $options = array('token' => 'TOKEN1234');
+
+        $this->setMockHttpResponse('ExpressFetchCheckoutFailure.txt');
+
+        $response = $this->gateway->fetchCheckout($options)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('The amount exceeds the maximum amount for a single transaction.', $response->getMessage());
     }
 }
