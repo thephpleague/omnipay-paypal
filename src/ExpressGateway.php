@@ -2,11 +2,6 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
-use Omnipay\PayPal\Message\ExpressFetchCheckoutRequest;
-
 /**
  * PayPal Express Class
  */
