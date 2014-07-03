@@ -2,10 +2,6 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
-use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
-
 /**
  * PayPal Express Class
  */
@@ -94,5 +90,10 @@ class ExpressGateway extends ProGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\ExpressCompletePurchaseRequest', $parameters);
+    }
+
+    public function fetchCheckout(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\ExpressFetchCheckoutRequest', $parameters);
     }
 }

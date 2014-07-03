@@ -6,6 +6,16 @@ use Omnipay\Tests\GatewayTestCase;
 
 class ExpressGatewayTest extends GatewayTestCase
 {
+    /**
+     * @var \Omnipay\PayPal\ExpressGateway
+     */
+    protected $gateway;
+
+    /**
+     * @var array
+     */
+    protected $options;
+
     public function setUp()
     {
         parent::setUp();
@@ -65,5 +75,14 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
+    }
+
+    public function testFetchCheckout()
+    {
+        $options = array('token' => 'abc123');
+        $request = $this->gateway->fetchCheckout($options);
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressFetchCheckoutRequest', $request);
+        $this->assertSame('abc123', $request->getToken());
     }
 }
