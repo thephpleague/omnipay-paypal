@@ -88,4 +88,29 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchTransactionRequest', $request);
         $this->assertSame('abc123', $request->getTransactionReference());
     }
+
+    public function testCreateCard()
+    {
+        $this->setMockHttpResponse('RestCreateCardSuccess.txt');
+
+        $response = $this->gateway->createCard($this->options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('CARD-70E78145XN686604FKO3L6OQ', $response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testPayWithSavedCard()
+    {
+        $this->setMockHttpResponse('RestCreateCardSuccess.txt');
+        $response = $this->gateway->createCard($this->options)->send();
+        $cardRef = $response->getCardReference();
+
+        $this->setMockHttpResponse('RestPurchaseSuccess.txt');
+        $response = $this->gateway->purchase(array('amount'=>'10.00', 'cardReference'=>$cardRef))->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+    }
+
 }

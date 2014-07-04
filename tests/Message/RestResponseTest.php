@@ -44,4 +44,14 @@ class RestResponseTest extends TestCase
         $this->assertSame('58N7596879166930B', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
     }
+
+    public function testCreateCardSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('RestCreateCardSuccess.txt');
+        $response = new RestResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('CARD-70E78145XN686604FKO3L6OQ', $response->getCardReference());
+        $this->assertNull($response->getMessage());
+    }
 }

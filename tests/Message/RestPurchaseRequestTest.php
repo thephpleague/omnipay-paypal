@@ -7,24 +7,8 @@ use Omnipay\Tests\TestCase;
 
 class RestPurchaseRequestTest extends TestCase
 {
-    /**
-     * @var ProPurchaseRequest
-     */
+    /** @var RestPurchaseRequest */
     private $request;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->request = new RestPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->initialize(
-            array(
-                'amount' => '10.00',
-                'currency' => 'USD',
-                'card' => $this->getValidCard(),
-            )
-        );
-    }
 
     public function testGetData()
     {
@@ -32,7 +16,13 @@ class RestPurchaseRequestTest extends TestCase
         $card->setStartMonth(1);
         $card->setStartYear(2000);
 
-        $this->request->setCard($card);
+        $this->request = new RestPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request->initialize(array(
+            'amount' => '10.00',
+            'currency' => 'USD',
+            'card' => $card
+        ));
+
         $this->request->setTransactionId('abc123');
         $this->request->setDescription('Sheep');
         $this->request->setClientIp('127.0.0.1');
@@ -61,5 +51,28 @@ class RestPurchaseRequestTest extends TestCase
         $this->assertSame($card->getState(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['state']);
         $this->assertSame($card->getPostcode(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['postal_code']);
         $this->assertSame($card->getCountry(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['country_code']);
+    }
+
+    public function testGetDataWithCardRef()
+    {
+        $this->request = new RestPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request->initialize(array(
+            'amount' => '10.00',
+            'currency' => 'USD',
+            'cardReference' => 'CARD-123',
+        ));
+
+        $this->request->setTransactionId('abc123');
+        $this->request->setDescription('Sheep');
+        $this->request->setClientIp('127.0.0.1');
+
+        $data = $this->request->getData();
+
+        $this->assertSame('sale', $data['intent']);
+        $this->assertSame('credit_card', $data['payer']['payment_method']);
+        $this->assertSame('10.00', $data['transactions'][0]['amount']['total']);
+        $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
+        $this->assertSame('Sheep', $data['transactions'][0]['description']);
+        $this->assertSame('CARD-123', $data['payer']['funding_instruments'][0]['credit_card_token']['credit_card_id']);
     }
 }

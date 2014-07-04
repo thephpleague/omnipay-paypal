@@ -50,4 +50,12 @@ class RestResponse extends AbstractResponse
     {
         return $this->statusCode;
     }
+
+    public function getCardReference()
+    {
+        if (isset($this->data['id'])) {
+            return $this->data['id'];
+        }
+    }
+
 }
