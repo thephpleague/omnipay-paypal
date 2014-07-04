@@ -81,11 +81,11 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
-//    public function testFetchTransaction()
-//    {
-//        $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
-//
-//        $this->assertInstanceOf('\Omnipay\PayPal\Message\FetchTransactionRequest', $request);
-//        $this->assertSame('abc123', $request->getTransactionReference());
-//    }
+    public function testFetchTransaction()
+    {
+        $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchTransactionRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+    }
 }

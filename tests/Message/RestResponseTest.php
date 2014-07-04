@@ -34,4 +34,14 @@ class RestResponseTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('Client secret does not match for this client', $response->getMessage());
     }
+
+    public function testAuthorizeSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('RestAuthorizationSuccess.txt');
+        $response = new RestResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('58N7596879166930B', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+    }
 }

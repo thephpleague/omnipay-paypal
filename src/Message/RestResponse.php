@@ -22,12 +22,18 @@ class RestResponse extends AbstractResponse
 
     public function getTransactionReference()
     {
-        if (
-            !empty($this->data['transactions']) &&
-            !empty($this->data['transactions'][0]['related_resources']) &&
-            !empty($this->data['transactions'][0]['related_resources'][0]['sale'])
-        ) {
-            return $this->data['transactions'][0]['related_resources'][0]['sale']['id'];
+        // This is usually correct for payments, authorizations, etc
+        if (!empty($this->data['transactions']) && !empty($this->data['transactions'][0]['related_resources'])) {
+            foreach (array('sale', 'authorization') as $type) {
+                if (!empty($this->data['transactions'][0]['related_resources'][0][$type])) {
+                    return $this->data['transactions'][0]['related_resources'][0][$type]['id'];
+                }
+            }
+        }
+
+        // This is a fallback, but is correct for fetch transaction and possibly others
+        if (!empty($this->data['id'])) {
+            return $this->data['id'];
         }
 
         return null;
