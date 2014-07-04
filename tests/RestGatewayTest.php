@@ -59,16 +59,16 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertEquals('A015GQlKQ6uCRzLHSGRliANi59BHw6egNVKEWRnxvTwvLr0', $this->gateway->getToken());
     }
 
-//    public function testAuthorize()
-//    {
-//        $this->setMockHttpResponse('RestPurchaseSuccess.txt');
-//
-//        $response = $this->gateway->authorize($this->options)->send();
-//
-//        $this->assertTrue($response->isSuccessful());
-//        $this->assertEquals('96U93778BD657313D', $response->getTransactionReference());
-//        $this->assertNull($response->getMessage());
-//    }
+    public function testAuthorize()
+    {
+        $this->setMockHttpResponse('RestPurchaseSuccess.txt');
+
+        $response = $this->gateway->authorize($this->options)->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+    }
 
     public function testPurchase()
     {

@@ -99,10 +99,10 @@ class RestGateway extends AbstractGateway
         return !empty($token) && time() < $expires;
     }
 
-//    public function authorize(array $parameters = array())
-//    {
-////        return $this->createRequest('\Omnipay\PayPal\Message\ProAuthorizeRequest', $parameters);
-//    }
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestAuthorizeRequest', $parameters);
+    }
 
     public function purchase(array $parameters = array())
     {
