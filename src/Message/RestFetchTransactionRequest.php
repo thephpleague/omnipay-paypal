@@ -5,7 +5,7 @@ namespace Omnipay\PayPal\Message;
 /**
  * PayPal REST Fetch Transaction Request
  */
-class RestFetchTransactionRequest extends AbstractRequest
+class RestFetchTransactionRequest extends AbstractRestRequest
 {
     public function getData()
     {

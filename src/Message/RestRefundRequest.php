@@ -6,7 +6,7 @@ namespace Omnipay\PayPal\Message;
  * PayPal REST Refund Request
  * TODO: There might be a problem here, in that refunding a capture requires a different URL.
  */
-class RestRefundRequest extends AbstractRequest
+class RestRefundRequest extends AbstractRestRequest
 {
     public function getData()
     {

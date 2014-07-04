@@ -5,7 +5,7 @@ namespace Omnipay\PayPal\Message;
 /**
  * PayPal REST Capture Request
  */
-class RestCaptureRequest extends AbstractRequest
+class RestCaptureRequest extends AbstractRestRequest
 {
     public function getData()
     {
