@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal REST Authorize Request
+ * PayPal REST Create Card Request
  */
 class RestCreateCardRequest extends AbstractRestRequest
 {

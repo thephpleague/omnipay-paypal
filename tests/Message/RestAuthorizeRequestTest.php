@@ -43,9 +43,7 @@ class RestAuthorizeRequestTest extends TestCase
         $this->assertSame('credit_card', $data['payer']['payment_method']);
         $this->assertSame('10.00', $data['transactions'][0]['amount']['total']);
         $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
-//        $this->assertSame('abc123', $data['INVNUM']);
-        $this->assertSame('Sheep', $data['transactions'][0]['description']);
-//        $this->assertSame('127.0.0.1', $data['IPADDRESS']);
+        $this->assertSame('abc123 : Sheep', $data['transactions'][0]['description']);
 
         $this->assertSame($card->getNumber(), $data['payer']['funding_instruments'][0]['credit_card']['number']);
         $this->assertSame($card->getBrand(), $data['payer']['funding_instruments'][0]['credit_card']['type']);
@@ -61,5 +59,24 @@ class RestAuthorizeRequestTest extends TestCase
         $this->assertSame($card->getState(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['state']);
         $this->assertSame($card->getPostcode(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['postal_code']);
         $this->assertSame($card->getCountry(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['country_code']);
+    }
+
+    public function testDescription()
+    {
+        $this->request->setTransactionId('');
+        $this->request->setDescription('');
+        $this->assertEmpty($this->request->getDescription());
+
+        $this->request->setTransactionId('');
+        $this->request->setDescription('Sheep');
+        $this->assertEquals('Sheep', $this->request->getDescription());
+
+        $this->request->setTransactionId('abc123');
+        $this->request->setDescription('');
+        $this->assertEquals('abc123', $this->request->getDescription());
+
+        $this->request->setTransactionId('abc123');
+        $this->request->setDescription('Sheep');
+        $this->assertEquals('abc123 : Sheep', $this->request->getDescription());
     }
 }

@@ -33,9 +33,7 @@ class RestPurchaseRequestTest extends TestCase
         $this->assertSame('credit_card', $data['payer']['payment_method']);
         $this->assertSame('10.00', $data['transactions'][0]['amount']['total']);
         $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
-//        $this->assertSame('abc123', $data['INVNUM']);
-        $this->assertSame('Sheep', $data['transactions'][0]['description']);
-//        $this->assertSame('127.0.0.1', $data['IPADDRESS']);
+        $this->assertSame('abc123 : Sheep', $data['transactions'][0]['description']);
 
         $this->assertSame($card->getNumber(), $data['payer']['funding_instruments'][0]['credit_card']['number']);
         $this->assertSame($card->getBrand(), $data['payer']['funding_instruments'][0]['credit_card']['type']);
@@ -72,7 +70,7 @@ class RestPurchaseRequestTest extends TestCase
         $this->assertSame('credit_card', $data['payer']['payment_method']);
         $this->assertSame('10.00', $data['transactions'][0]['amount']['total']);
         $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
-        $this->assertSame('Sheep', $data['transactions'][0]['description']);
+        $this->assertSame('abc123 : Sheep', $data['transactions'][0]['description']);
         $this->assertSame('CARD-123', $data['payer']['funding_instruments'][0]['credit_card_token']['credit_card_id']);
     }
 }

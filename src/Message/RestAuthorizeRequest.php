@@ -62,6 +62,25 @@ class RestAuthorizeRequest extends AbstractRestRequest
         return $data;
     }
 
+    /**
+     * The REST API does not currently have support for passing an invoice number
+     * or transaction ID.
+     * @return string
+     */
+    public function getDescription()
+    {
+        $id = $this->getTransactionId();
+        $desc = parent::getDescription();
+
+        if (empty($id)) {
+            return $desc;
+        } elseif (empty($desc)) {
+            return $id;
+        } else {
+            return "$id : $desc";
+        }
+    }
+
     protected function getEndpoint()
     {
         return parent::getEndpoint() . '/payments/payment';

@@ -8,10 +8,10 @@ use Omnipay\Tests\TestCase;
 class RestCreateCardRequestTest extends TestCase
 {
     /** @var RestCreateCardRequest */
-    private $request;
+    protected $request;
 
     /** @var CreditCard */
-    private $card;
+    protected $card;
 
     public function setUp()
     {
