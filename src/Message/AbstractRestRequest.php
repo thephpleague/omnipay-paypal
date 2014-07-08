@@ -1,6 +1,7 @@
 <?php
 
 namespace Omnipay\PayPal\Message;
+
 use Guzzle\Http\EntityBody;
 
 /**
@@ -81,5 +82,4 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
 
         return $this->response = new RestResponse($this, $httpResponse->json(), $httpResponse->getStatusCode());
     }
-
 }

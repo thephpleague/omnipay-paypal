@@ -89,8 +89,12 @@ class RestGateway extends AbstractGateway
     public function hasToken()
     {
         $token = $this->getParameter('token');
+
         $expires = $this->getTokenExpires();
-        if (!empty($expires) && !is_numeric($expires)) $expires = strtotime($expires);
+        if (!empty($expires) && !is_numeric($expires)) {
+            $expires = strtotime($expires);
+        }
+
         return !empty($token) && time() < $expires;
     }
 
@@ -181,8 +185,10 @@ class RestGateway extends AbstractGateway
      */
     public function createRequest($class, array $parameters = array())
     {
-        if (!$this->hasToken() && $class != '\Omnipay\PayPal\Message\RestTokenRequest') $this->getToken(true);
+        if (!$this->hasToken() && $class != '\Omnipay\PayPal\Message\RestTokenRequest') {
+            $this->getToken(true);
+        }
+
         return parent::createRequest($class, $parameters);
     }
-
 }

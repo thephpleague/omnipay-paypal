@@ -41,8 +41,14 @@ class RestResponse extends AbstractResponse
 
     public function getMessage()
     {
-        if (isset($this->data['error_description'])) return $this->data['error_description'];
-        if (isset($this->data['message'])) return $this->data['message'];
+        if (isset($this->data['error_description'])) {
+            return $this->data['error_description'];
+        }
+
+        if (isset($this->data['message'])) {
+            return $this->data['message'];
+        }
+        
         return null;
     }
 
@@ -57,5 +63,4 @@ class RestResponse extends AbstractResponse
             return $this->data['id'];
         }
     }
-
 }
