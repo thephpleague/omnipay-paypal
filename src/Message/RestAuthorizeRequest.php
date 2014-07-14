@@ -61,7 +61,9 @@ class RestAuthorizeRequest extends AbstractRestRequest
 	        // There's currently a quirk with the REST API that requires line2 to be
 	        // non-empty if it's present. Jul 14, 2014
 	        $line2 = $this->getCard()->getAddress2();
-	        if (!empty($line2)) $data['billing_address']['line2'] = $line2;
+	        if (!empty($line2)) {
+		        $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2'] = $line2;
+	        }
         }
 
         return $data;
