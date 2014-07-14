@@ -34,7 +34,7 @@ class RestCreateCardRequest extends AbstractRestRequest
         // non-empty if it's present. Jul 14, 2014
         $line2 = $this->getCard()->getAddress2();
         if (!empty($line2)) {
-	        $data['billing_address']['line2'] = $line2;
+            $data['billing_address']['line2'] = $line2;
         }
 
         return $data;
