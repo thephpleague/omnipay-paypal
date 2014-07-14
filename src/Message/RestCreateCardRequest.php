@@ -22,13 +22,18 @@ class RestCreateCardRequest extends AbstractRestRequest
             'last_name' => $this->getCard()->getLastName(),
             'billing_address' => array(
                 'line1' => $this->getCard()->getAddress1(),
-                'line2' => $this->getCard()->getAddress2(),
+                //'line2' => $this->getCard()->getAddress2(),
                 'city' => $this->getCard()->getCity(),
                 'state' => $this->getCard()->getState(),
                 'postal_code' => $this->getCard()->getPostcode(),
                 'country_code' => strtoupper($this->getCard()->getCountry()),
             )
         );
+
+        // There's currently a quirk with the REST API that requires line2 to be
+        // non-empty if it's present. Jul 14, 2014
+        $line2 = $this->getCard()->getAddress2();
+        if (!empty($line2)) $data['billing_address']['line2'] = $line2;
 
         return $data;
     }
