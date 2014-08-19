@@ -142,6 +142,56 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('addressOverride', $value);
     }
 
+    public function getTaxAmount()
+    {
+        return $this->getParameter('taxAmount');
+    }
+
+    public function setTaxAmount($value)
+    {
+        return $this->setParameter('taxAmount', $value);
+    }
+
+    public function getShippingAmount()
+    {
+        return $this->getParameter('shippingAmount');
+    }
+
+    public function setShippingAmount($value)
+    {
+        return $this->setParameter('shippingAmount', $value);
+    }
+
+    public function getHandlingAmount()
+    {
+        return $this->getParameter('handlingAmount');
+    }
+
+    public function setHandlingAmount($value)
+    {
+        return $this->setParameter('handlingAmount', $value);
+    }
+
+    public function getShippingDiscount()
+    {
+        return $this->getParameter('shippingDiscount');
+    }
+
+    public function setShippingDiscount($value)
+    {
+        return $this->setParameter('shippingDiscount', $value);
+    }
+
+    public function getInsuranceAmount()
+    {
+        return $this->getParameter('insuranceAmount');
+    }
+
+    public function setInsuranceAmount($value)
+    {
+        return $this->setParameter('insuranceAmount', $value);
+    }
+
     protected function getBaseData()
     {
         $data = array();
@@ -159,11 +209,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data = array();
         $items = $this->getItems();
         if ($items) {
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = 0;
             foreach ($items as $n => $item) {
                 $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
                 $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+
+                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
             }
         }
 

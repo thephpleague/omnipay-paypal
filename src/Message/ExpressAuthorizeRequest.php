@@ -32,6 +32,12 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['LOGOIMG'] = $this->getLogoImageUrl();
         $data['CARTBORDERCOLOR'] = $this->getBorderColor();
 
+        $data['PAYMENTREQUEST_0_TAXAMT'] = $this->getTaxAmount();
+        $data['PAYMENTREQUEST_0_SHIPPINGAMT'] = $this->getShippingAmount();
+        $data['PAYMENTREQUEST_0_HANDLINGAMT'] = $this->getHandlingAmount();
+        $data['PAYMENTREQUEST_0_SHIPDISCAMT'] = $this->getShippingDiscount();
+        $data['PAYMENTREQUEST_0_INSURANCEAMT'] = $this->getInsuranceAmount();
+
         $card = $this->getCard();
         if ($card) {
             $data['PAYMENTREQUEST_0_SHIPTONAME'] = $card->getName();
