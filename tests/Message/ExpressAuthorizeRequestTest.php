@@ -123,6 +123,11 @@ class ExpressAuthorizeRequestTest extends TestCase
             'EMAIL' => 'test@email.com',
             'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
             'MAXAMT' => 123.45,
+            'PAYMENTREQUEST_0_TAXAMT' => null,
+            'PAYMENTREQUEST_0_SHIPPINGAMT' => null,
+            'PAYMENTREQUEST_0_HANDLINGAMT' => null,
+            'PAYMENTREQUEST_0_SHIPDISCAMT' => null,
+            'PAYMENTREQUEST_0_INSURANCEAMT' => null,
             'LOGOIMG' => 'https://www.example.com/logo.jpg',
             'CARTBORDERCOLOR' => 'CCCCCC',
         );
@@ -147,6 +152,38 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('Windows 95', $data['L_PAYMENTREQUEST_0_DESC1']);
         $this->assertSame(1, $data['L_PAYMENTREQUEST_0_QTY1']);
         $this->assertSame('40.00', $data['L_PAYMENTREQUEST_0_AMT1']);
+
+        $this->assertSame(floatval(60), $data['PAYMENTREQUEST_0_ITEMAMT']);
+    }
+
+    public function testGetDataWithExtraOrderDetails()
+    {
+        $this->request->initialize(array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'noShipping' => 0,
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'taxAmount' => '2.00',
+            'shippingAmount' => '5.00',
+            'handlingAmount' => '1.00',
+            'shippingDiscount' => '-1.00',
+            'insuranceAmount' => '3.00',
+        ));
+
+        $data = $this->request->getData();
+        $this->assertSame('2.00', $data['PAYMENTREQUEST_0_TAXAMT']);
+        $this->assertSame('5.00', $data['PAYMENTREQUEST_0_SHIPPINGAMT']);
+        $this->assertSame('1.00', $data['PAYMENTREQUEST_0_HANDLINGAMT']);
+        $this->assertSame('-1.00', $data['PAYMENTREQUEST_0_SHIPDISCAMT']);
+        $this->assertSame('3.00', $data['PAYMENTREQUEST_0_INSURANCEAMT']);
     }
 
     public function testHeaderImageUrl()
