@@ -11,7 +11,7 @@
         "paypal",
         "purchase"
     ],
-    "homepage": "https://github.com/omnipay/paypal",
+    "homepage": "https://github.com/thephpleague/omnipay-paypal",
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +20,7 @@
         },
         {
             "name": "Omnipay Contributors",
-            "homepage": "https://github.com/omnipay/paypal/contributors"
+            "homepage": "https://github.com/thephpleague/omnipay-paypal/contributors"
         }
     ],
     "autoload": {
