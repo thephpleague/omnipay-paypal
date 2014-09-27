@@ -192,6 +192,24 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('insuranceAmount', $value);
     }
 
+    public function getLocaleCode()
+    {
+        return $this->getParameter('localeCode');
+    }
+
+    /*
+     * Used to change the locale of PayPal pages.
+     * Accepts 2 or 5 character language codes as described here:
+     * https://developer.paypal.com/docs/classic/express-checkout/integration-guide/ECCustomizing/
+     *
+     * If no value/invalid value is passed, the gateway will default it for you
+    */
+    public function setLocaleCode($value)
+    {
+        return $this->setParameter('localeCode', $value);
+    }
+
+
     protected function getBaseData()
     {
         $data = array();

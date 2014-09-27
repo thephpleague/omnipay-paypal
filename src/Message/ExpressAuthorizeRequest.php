@@ -31,6 +31,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['ADDROVERRIDE'] = $this->getAddressOverride();
         $data['LOGOIMG'] = $this->getLogoImageUrl();
         $data['CARTBORDERCOLOR'] = $this->getBorderColor();
+        $data['LOCALECODE'] = $this->getLocaleCode();
 
         $data['PAYMENTREQUEST_0_TAXAMT'] = $this->getTaxAmount();
         $data['PAYMENTREQUEST_0_SHIPPINGAMT'] = $this->getShippingAmount();
