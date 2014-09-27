@@ -38,6 +38,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'subject' => 'demo@example.com',
             'headerImageUrl' => 'https://www.example.com/header.jpg',
             'noShipping' => 0,
+            'localeCode' => 'EN',
             'allowNote' => 0,
             'addressOverride' => 0,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
@@ -55,6 +56,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/header.jpg', $data['HDRIMG']);
         $this->assertSame(0, $data['NOSHIPPING']);
         $this->assertSame(0, $data['ALLOWNOTE']);
+        $this->assertSame('EN', $data['LOCALECODE']);
         $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
     }
@@ -76,6 +78,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
             'logoImageUrl' => 'https://www.example.com/logo.jpg',
             'borderColor' => 'CCCCCC',
+            'localeCode' => 'EN'
         ));
 
         $card = new CreditCard(array(
@@ -128,6 +131,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_INSURANCEAMT' => null,
             'LOGOIMG' => 'https://www.example.com/logo.jpg',
             'CARTBORDERCOLOR' => 'CCCCCC',
+            'LOCALECODE' => 'EN',
         );
 
         $this->assertEquals($expected, $this->request->getData());
