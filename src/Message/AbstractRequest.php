@@ -209,6 +209,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('localeCode', $value);
     }
 
+    public function setCustomerServiceNumber($value)
+    {
+        return $this->setParameter('customerServiceNumber', $value);
+    }
+
+    public function getCustomerServiceNumber()
+    {
+        return $this->getParameter('customerServiceNumber');
+    }
 
     protected function getBaseData()
     {

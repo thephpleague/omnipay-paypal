@@ -42,6 +42,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 0,
             'addressOverride' => 0,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'customerServiceNumber' => '1-801-FLOWERS',
         ));
 
         $data = $this->request->getData();
@@ -59,6 +60,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('EN', $data['LOCALECODE']);
         $this->assertSame(0, $data['ADDROVERRIDE']);
         $this->assertSame('Dunder Mifflin Paper Company, Inc.', $data['BRANDNAME']);
+        $this->assertSame('1-801-FLOWERS', $data['CUSTOMERSERVICENUMBER']);
     }
 
     public function testGetDataWithCard()
@@ -78,7 +80,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
             'logoImageUrl' => 'https://www.example.com/logo.jpg',
             'borderColor' => 'CCCCCC',
-            'localeCode' => 'EN'
+            'localeCode' => 'EN',
+            'CUSTOMERSERVICENUMBER' => '1-801-FLOWERS',
         ));
 
         $card = new CreditCard(array(
@@ -132,6 +135,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'LOGOIMG' => 'https://www.example.com/logo.jpg',
             'CARTBORDERCOLOR' => 'CCCCCC',
             'LOCALECODE' => 'EN',
+            'CUSTOMERSERVICENUMBER' => '1-801-FLOWERS',
         );
 
         $this->assertEquals($expected, $this->request->getData());
