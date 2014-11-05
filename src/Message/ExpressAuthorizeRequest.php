@@ -34,6 +34,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['LOCALECODE'] = $this->getLocaleCode();
         $data['CUSTOMERSERVICENUMBER'] = $this->getCustomerServiceNumber();
 
+        $data['MAXAMT'] = $this->getMaxAmount();
         $data['PAYMENTREQUEST_0_TAXAMT'] = $this->getTaxAmount();
         $data['PAYMENTREQUEST_0_SHIPPINGAMT'] = $this->getShippingAmount();
         $data['PAYMENTREQUEST_0_HANDLINGAMT'] = $this->getHandlingAmount();

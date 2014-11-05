@@ -78,6 +78,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'allowNote' => 1,
             'addressOverride' => 1,
             'brandName' => 'Dunder Mifflin Paper Company, Inc.',
+            'maxAmount' => 123.45,
             'logoImageUrl' => 'https://www.example.com/logo.jpg',
             'borderColor' => 'CCCCCC',
             'localeCode' => 'EN',
@@ -127,6 +128,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'PAYMENTREQUEST_0_SHIPTOPHONENUM' => '555-555-5555',
             'EMAIL' => 'test@email.com',
             'BRANDNAME' => 'Dunder Mifflin Paper Company, Inc.',
+            'MAXAMT' => 123.45,
             'PAYMENTREQUEST_0_TAXAMT' => null,
             'PAYMENTREQUEST_0_SHIPPINGAMT' => null,
             'PAYMENTREQUEST_0_HANDLINGAMT' => null,
@@ -199,5 +201,16 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $data = $this->request->getData();
         $this->assertEquals('https://www.example.com/header.jpg', $data['HDRIMG']);
+    }
+
+    public function testMaxAmount()
+    {
+        $this->request->setMaxAmount(321.54);
+
+        $this->assertSame(321.54, $this->request->getMaxAmount());
+
+        $data = $this->request->getData();
+
+        $this->assertSame(321.54, $data['MAXAMT']);
     }
 }
