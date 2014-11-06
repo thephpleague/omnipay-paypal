@@ -40,6 +40,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_HANDLINGAMT'] = $this->getHandlingAmount();
         $data['PAYMENTREQUEST_0_SHIPDISCAMT'] = $this->getShippingDiscount();
         $data['PAYMENTREQUEST_0_INSURANCEAMT'] = $this->getInsuranceAmount();
+        $data['PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID'] = $this->getSellerPaypalAccountId();
 
         $card = $this->getCard();
         if ($card) {
