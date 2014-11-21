@@ -108,6 +108,16 @@ class ExpressGateway extends ProGateway
         return $this->setParameter('borderColor', $value);
     }
 
+    public function setSellerPaypalAccountId($value)
+    {
+        return $this->setParameter('sellerPaypalAccountId', $value);
+    }
+
+    public function getSellerPaypalAccountId()
+    {
+        return $this->getParameter('sellerPaypalAccountId');
+    }
+
     public function authorize(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\ExpressAuthorizeRequest', $parameters);

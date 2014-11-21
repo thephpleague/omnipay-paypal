@@ -229,6 +229,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getParameter('customerServiceNumber');
     }
 
+    public function setSellerPaypalAccountId($value)
+    {
+        return $this->setParameter('sellerPaypalAccountId', $value);
+    }
+
+    public function getSellerPaypalAccountId()
+    {
+        return $this->getParameter('sellerPaypalAccountId');
+    }
+
     protected function getBaseData()
     {
         $data = array();

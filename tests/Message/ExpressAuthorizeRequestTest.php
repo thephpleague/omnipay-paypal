@@ -82,7 +82,8 @@ class ExpressAuthorizeRequestTest extends TestCase
             'logoImageUrl' => 'https://www.example.com/logo.jpg',
             'borderColor' => 'CCCCCC',
             'localeCode' => 'EN',
-            'CUSTOMERSERVICENUMBER' => '1-801-FLOWERS',
+            'customerServiceNumber' => '1-801-FLOWERS',
+            'sellerPaypalAccountId' => 'billing@example.com',
         ));
 
         $card = new CreditCard(array(
@@ -138,6 +139,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'CARTBORDERCOLOR' => 'CCCCCC',
             'LOCALECODE' => 'EN',
             'CUSTOMERSERVICENUMBER' => '1-801-FLOWERS',
+            'PAYMENTREQUEST_0_SELLERPAYPALACCOUNTID' => 'billing@example.com',
         );
 
         $this->assertEquals($expected, $this->request->getData());
