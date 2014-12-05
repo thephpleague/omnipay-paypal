@@ -43,7 +43,8 @@ class RefundRequestTest extends TestCase
         $expected['SIGNATURE'] = 'SIG';
         $expected['SUBJECT'] = 'SUB';
         $expected['VERSION'] = RefundRequest::API_VERSION;
-        if ($amount) {
+        // $amount will be a formatted string, and '0.00' evaluates to true
+        if ((float)$amount) {
             $expected['AMT'] = $amount;
             $expected['CURRENCYCODE'] = 'USD';
         }
@@ -55,6 +56,7 @@ class RefundRequestTest extends TestCase
     {
         return array(
             'Partial' => array('Partial', '1.23'),
+            // All amounts must include decimals or be a float if the currency supports decimals.
             'Full' => array('Full', '0.00'),
         );
     }
