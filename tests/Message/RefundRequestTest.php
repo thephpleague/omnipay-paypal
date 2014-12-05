@@ -55,7 +55,7 @@ class RefundRequestTest extends TestCase
     {
         return array(
             'Partial' => array('Partial', '1.23'),
-            'Full' => array('Full', '0'),
+            'Full' => array('Full', '0.00'),
         );
     }
 }
