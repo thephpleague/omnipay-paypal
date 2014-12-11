@@ -101,7 +101,8 @@ class ExpressGatewayTest extends GatewayTestCase
             'currency' => 'BYR'
         ))->send();
 
-        $httpRequest = $this->getMockedRequests()[0];
+        $httpRequests = $this->getMockedRequests();
+        $httpRequest = $httpRequests[0];
         $queryArguments = $httpRequest->getQuery()->toArray();
         $this->assertSame('GET_TOKEN', $queryArguments['TOKEN']);
         $this->assertSame('GET_PAYERID', $queryArguments['PAYERID']);
@@ -126,7 +127,8 @@ class ExpressGatewayTest extends GatewayTestCase
             'payerid' => 'CUSTOM_PAYERID'
         ))->send();
 
-        $httpRequest = $this->getMockedRequests()[0];
+        $httpRequests = $this->getMockedRequests();
+        $httpRequest = $httpRequests[0];
         $queryArguments = $httpRequest->getQuery()->toArray();
         $this->assertSame('CUSTOM_TOKEN', $queryArguments['TOKEN']);
         $this->assertSame('CUSTOM_PAYERID', $queryArguments['PAYERID']);
