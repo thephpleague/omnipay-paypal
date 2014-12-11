@@ -20,11 +20,22 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
         $data['PAYMENTREQUEST_0_NOTIFYURL'] = $this->getNotifyUrl();
 
-        $data['TOKEN'] = $this->httpRequest->query->get('token');
-        $data['PAYERID'] = $this->httpRequest->query->get('PayerID');
+        $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->httpRequest->query->get('token');
+        $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->httpRequest->query->get('PayerID');
 
         $data = array_merge($data, $this->getItemData());
 
         return $data;
     }
+
+    public function getPayerID()
+    {
+        return $this->getParameter('payerID');
+    }
+
+    public function setPayerID($value)
+    {
+        return $this->setParameter('payerID', $value);
+    }
+
 }
