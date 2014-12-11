@@ -37,5 +37,4 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
     {
         return $this->setParameter('payerID', $value);
     }
-
 }
