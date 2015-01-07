@@ -33,6 +33,7 @@ The following gateways are provided by this package:
 
 * PayPal_Express (PayPal Express Checkout)
 * PayPal_Pro (PayPal Website Payments Pro)
+* PayPal_Rest (Paypal Rest API)
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.
