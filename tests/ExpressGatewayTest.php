@@ -85,4 +85,54 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressFetchCheckoutRequest', $request);
         $this->assertSame('abc123', $request->getToken());
     }
+
+    public function testCompletePurchaseHttpOptions()
+    {
+
+        $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
+
+        $this->getHttpRequest()->query->replace(array(
+            'token' => 'GET_TOKEN',
+            'PayerID' => 'GET_PAYERID',
+        ));
+
+        $response = $this->gateway->completePurchase(array(
+            'amount' => '10.00',
+            'currency' => 'BYR'
+        ))->send();
+
+        $httpRequests = $this->getMockedRequests();
+        $httpRequest = $httpRequests[0];
+        $queryArguments = $httpRequest->getQuery()->toArray();
+        $this->assertSame('GET_TOKEN', $queryArguments['TOKEN']);
+        $this->assertSame('GET_PAYERID', $queryArguments['PAYERID']);
+
+    }
+
+    public function testCompletePurchaseCustomOptions()
+    {
+
+        $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
+
+        // Those values should not be used if custom token or payerid are passed
+        $this->getHttpRequest()->query->replace(array(
+            'token' => 'GET_TOKEN',
+            'PayerID' => 'GET_PAYERID',
+        ));
+
+        $response = $this->gateway->completePurchase(array(
+            'amount' => '10.00',
+            'currency' => 'BYR',
+            'token' => 'CUSTOM_TOKEN',
+            'payerid' => 'CUSTOM_PAYERID'
+        ))->send();
+
+        $httpRequests = $this->getMockedRequests();
+        $httpRequest = $httpRequests[0];
+        $queryArguments = $httpRequest->getQuery()->toArray();
+        $this->assertSame('CUSTOM_TOKEN', $queryArguments['TOKEN']);
+        $this->assertSame('CUSTOM_PAYERID', $queryArguments['PAYERID']);
+
+    }
+
 }
