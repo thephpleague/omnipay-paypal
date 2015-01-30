@@ -1,18 +1,59 @@
 <?php
+/**
+ * PayPal Abstract REST Request
+ */
 
 namespace Omnipay\PayPal\Message;
 
 use Guzzle\Http\EntityBody;
 
 /**
- * PayPal Abstract Request
+ * PayPal Abstract REST Request
+ *
+ * This class forms the base class for PayPal REST requests via the PayPal REST APIs.
+ *
+ * A complete REST operation is formed by combining an HTTP method (or “verb”) with
+ * the full URI to the resource you’re addressing. For example, here is the operation
+ * to create a new payment:
+ *
+ * <code>
+ * POST https://api.paypal.com/v1/payments/payment
+ * </code>
+ *
+ * To create a complete request, combine the operation with the appropriate HTTP headers
+ * and any required JSON payload.
+ *
+ * @link https://developer.paypal.com/docs/api/
+ * @link https://devtools-paypal.com/integrationwizard/
+ * @link http://paypal.github.io/sdk/
+ * @see Omnipay\PayPal\RestGateway
  */
 abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     const API_VERSION = 'v1';
 
-    protected $liveEndpoint = 'https://api.paypal.com';
+    /**
+     * Sandbox Endpoint URL
+     *
+     * The PayPal REST APIs are supported in two environments. Use the Sandbox environment
+     * for testing purposes, then move to the live environment for production processing.
+     * When testing, generate an access token with your test credentials to make calls to
+     * the Sandbox URIs. When you’re set to go live, use the live credentials assigned to
+     * your app to generate a new access token to be used with the live URIs.
+     *
+     * @var string URL
+     */
     protected $testEndpoint = 'https://api.sandbox.paypal.com';
+
+    /**
+     * Live Endpoint URL
+     *
+     * When you’re set to go live, use the live credentials assigned to
+     * your app to generate a new access token to be used with the live URIs.
+     *
+     * @var string URL
+     */
+    protected $liveEndpoint = 'https://api.paypal.com';
 
     public function getClientId()
     {
