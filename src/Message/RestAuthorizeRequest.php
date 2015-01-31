@@ -1,9 +1,23 @@
 <?php
+/**
+ * PayPal REST Authorize Request
+ */
 
 namespace Omnipay\PayPal\Message;
 
 /**
  * PayPal REST Authorize Request
+ *
+ * To collect payment at a later time, first authorize a payment using the /payment resource.
+ * You can then capture the payment to complete the sale and collect payment.
+ *
+ * This looks exactly like a RestPurchaseRequest object except that the intent is
+ * set to "authorize" (to authorize a payment to be captured later) rather than
+ * "sale" (which is used to capture a payment immediately).
+ *
+ * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
+ * @link https://developer.paypal.com/docs/api/#authorizations
+ * @see RestPurchaseRequest
  */
 class RestAuthorizeRequest extends AbstractRestRequest
 {
@@ -70,8 +84,11 @@ class RestAuthorizeRequest extends AbstractRestRequest
     }
 
     /**
+     * Get transaction description.
+     *
      * The REST API does not currently have support for passing an invoice number
      * or transaction ID.
+     *
      * @return string
      */
     public function getDescription()
@@ -88,6 +105,13 @@ class RestAuthorizeRequest extends AbstractRestRequest
         }
     }
 
+    /**
+     * Get transaction endpoint.
+     *
+     * Authorization of payments is done using the /payment resource.
+     *
+     * @return string
+     */
     protected function getEndpoint()
     {
         return parent::getEndpoint() . '/payments/payment';

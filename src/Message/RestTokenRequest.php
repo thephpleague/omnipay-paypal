@@ -14,6 +14,7 @@ namespace Omnipay\PayPal\Message;
  * as your Basic Auth credentials.
  *
  * @link https://developer.paypal.com/docs/integration/direct/make-your-first-call/
+ * @link https://developer.paypal.com/docs/api/#authentication--headers
  */
 class RestTokenRequest extends AbstractRestRequest
 {
