@@ -18,6 +18,21 @@ namespace Omnipay\PayPal\Message;
  * indicate a final capture (prevent future captures) by setting the is_final_capture
  * value to true.
  *
+ * Example -- note this example assumes that the authorization has been successful
+ * and that the authorization ID returned from the authorization is held in $auth_id.
+ * See RestAuthorizeRequest for the first part of this example transaction:
+ *
+ * <code>
+ *   // Once the transaction has been authorized, we can capture it for final payment.
+ *   $transaction = $gateway->capture(array(
+ *       'amount'        => '10.00',
+ *       'currency'      => 'AUD',
+ *   ));
+ *   $transaction->setTransactionReference($auth_id);
+ *   $response = $transaction->send();
+ * </code>
+ *
+ * @see RestAuthorizeRequest
  * @link https://developer.paypal.com/docs/api/#capture-an-authorization
  */
 class RestCaptureRequest extends AbstractRestRequest

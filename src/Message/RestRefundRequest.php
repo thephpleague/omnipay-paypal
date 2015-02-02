@@ -22,9 +22,28 @@ namespace Omnipay\PayPal\Message;
  * provided (or is zero) then a full refund is made.
  *
  * TODO: There is a bug here.  Not providing a refund amount fails with a MALFORMED_REQUEST
- * error from the gateway.  This is because empty JSON data ([]) causes the Guzzle HTTP
- * client to emit a file called [] rather than actually sending the data along with the
- * HTTP POST request, causing an error at the PayPal gateway.
+ * error from the gateway.  I suspect that this is a bug in Guzzle HTTP client somewhere
+ * not sending through the correct (empty JSON) data.
+ *
+ * Example -- note this example assumes that the purchase has been successful
+ * and that the transaction ID returned from the purchase is held in $sale_id.
+ * See RestPurchaseRequest for the first part of this example transaction:
+ *
+ * <code>
+ *   $transaction = $gateway->refund(array(
+ *       'amount'    => '10.00',
+ *       'currency'  => 'AUD',
+ *   ));
+ *   $transaction->setTransactionReference($sale_id);
+ *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       echo "Refund transaction was successful!\n";
+ *       $data = $response->getData();
+ *       echo "Gateway refund response data == " . print_r($data, true) . "\n";
+ *   }
+ * </code>
+ *
+ * @see RestPurchaseRequest
  */
 class RestRefundRequest extends AbstractRestRequest
 {

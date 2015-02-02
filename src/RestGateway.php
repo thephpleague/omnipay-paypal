@@ -72,11 +72,8 @@ use Omnipay\PayPal\Message\RefundRequest;
  *   $gateway->initialize(array(
  *       'clientId' => 'MyPayPalClientId',
  *       'secret'   => 'MyPayPalSecret',
- *       'testMode' => false, // Or true to use the sandbox
+ *       'testMode' => true, // Or false when you are ready for live transactions
  *   ));
- *
- *   // Get the gateway parameters.
- *   $parameters = $gateway->getParameters();
  *
  *   // Create a credit card object
  *   // DO NOT USE THESE CARD VALUES -- substitute your own
@@ -85,19 +82,40 @@ use Omnipay\PayPal\Message\RefundRequest;
  *               'firstName' => 'Example',
  *               'lastName' => 'User',
  *               'number' => '4111111111111111',
- *               'expiryMonth' => '12',
- *               'expiryYear' => '2016',
- *               'cvv' => '123',
- *           ));
+ *               'expiryMonth'           => '01',
+ *               'expiryYear'            => '2020',
+ *               'cvv'                   => '123',
+ *               'billingAddress1'       => '1 Scrubby Creek Road',
+ *               'billingCountry'        => 'AU',
+ *               'billingCity'           => 'Scrubby Creek',
+ *               'billingPostcode'       => '4999',
+ *               'billingState'          => 'QLD',
+ *   ));
  *
  *   // Do an authorisation transaction on the gateway
  *   if ($gateway->supportsAuthorize()) {
- *       $gateway->authorize(array(
- *           'amount' => '10.00',
- *           'card'   => $card,
- *      ));
+ *       try {
+ *           $transaction = $gateway->authorize(array(
+ *               'amount'        => '10.00',
+ *               'currency'      => 'AUD',
+ *               'description'   => 'This is a test authorize transaction.',
+ *               'card'          => $card,
+ *           ));
+ *           $response = $transaction->send();
+ *           $data = $response->getData();
+ *           echo "Gateway authorize response data == " . print_r($data, true) . "\n";
+ *  
+ *           if ($response->isSuccessful()) {
+ *               echo "Authorize transaction was successful!\n";
+ *           }
+ *       } catch (\Exception $e) {
+ *           echo "Exception caught while attempting authorize.\n";
+ *           echo "Exception type == " . get_class($e) . "\n";
+ *           echo "Message == " . $e->getMessage() . "\n";
+ *       }
+ *      
  *   } else {
- *       throw new \Exception('Gateway does not support authorize()');
+ *       echo "Gateway does not support authorize.\n";
  *   }
  * </code>
  *
