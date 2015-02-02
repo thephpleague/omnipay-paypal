@@ -49,13 +49,20 @@ use Omnipay\PayPal\Message\RefundRequest;
  * To create production and sandbox credentials for your PayPal account:
  *
  * * Log into your PayPal account.
- * * Navigate to your Sandbox accounts at https://developer.paypal.com/webapps/developer/applications/accounts to ensure that you have a valid sandbox account to use for testing.  If you don't already have a sandbox account, one can be created on this page.  You will actually need 2 accounts, a personal account and a business account, the business account is the one you need to use for creating API applications. 
- * * Check your account status on https://developer.paypal.com/webapps/developer/account/status to ensure that it is valid for live transactions.
+ * * Navigate to your Sandbox accounts at https://developer.paypal.com/webapps/developer/applications/accounts
+ *   to ensure that you have a valid sandbox account to use for testing.  If you don't already have a sandbox
+ *   account, one can be created on this page.  You will actually need 2 accounts, a personal account and a
+ *   business account, the business account is the one you need to use for creating API applications. 
+ * * Check your account status on https://developer.paypal.com/webapps/developer/account/status to ensure
+ *   that it is valid for live transactions.
  * * Navigate to the My REST apps page: https://developer.paypal.com/webapps/developer/applications/myapps
  * * Click *Create App*
  * * On the next page, enter an App name and select the sandbox account to use, then click *Create app*.
- * * On the next page the sandbox account, endpoint, Client ID and Secret should be displayed.  Record these.  The Sandbox account should match the one that you selected on the previous page, and the sandbox endpoint should be ai.sandbox.paypal.com
- * * Adjacent to *Live credentials* click *Show* to display your live credentials.  The endpoint for these should be api.paypal.com, there should also be a Client ID and Secret.
+ * * On the next page the sandbox account, endpoint, Client ID and Secret should be displayed.
+ *   Record these.  The Sandbox account should match the one that you selected on the previous
+ *   page, and the sandbox endpoint should be ai.sandbox.paypal.com
+ * * Adjacent to *Live credentials* click *Show* to display your live credentials.  The endpoint
+ *   for these should be api.paypal.com, there should also be a Client ID and Secret.
  *
  * You can create additional REST APIs apps for other websites -- because the webhooks are
  * stored per app then it pays to have one API app per website that you are using (and an
@@ -124,6 +131,8 @@ use Omnipay\PayPal\Message\RefundRequest;
  * of your PayPal sandbox business test account.  You will then see the result
  * of those transactions on the "My recent activity" list under the My Account
  * tab.
+ *
+ * TODO: Billing Plans and Agreements -- set up recurring payments.
  *
  * @link https://developer.paypal.com/docs/api/
  * @link https://devtools-paypal.com/integrationwizard/
@@ -461,7 +470,4 @@ class RestGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestDeleteCardRequest', $parameters);
     }
-    
-    // TODO: Billing Plans and Agreements -- set up recurring payments.
-
 }
