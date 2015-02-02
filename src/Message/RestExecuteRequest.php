@@ -37,8 +37,6 @@ namespace Omnipay\PayPal\Message;
  *   echo "Gateway execute response data == " . print_r($data, true) . "\n";
  * </code>
  *
- * TODO: I'm not sure how this works for PayPal authorizations.
- *
  * TODO: Need a test case.
  *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
@@ -131,7 +129,9 @@ class RestExecuteRequest extends AbstractRestRequest
     /**
      * Get transaction endpoint.
      *
-     * Authorization of payments is done using the /payment resource.
+     * Execution of payments is done using the /payment resource.  Note
+     * that executions of authorize transactions and executions of payment
+     * transactions are both done using the /payment resource.
      *
      * @return string
      */

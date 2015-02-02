@@ -65,6 +65,11 @@ namespace Omnipay\PayPal\Message;
  *   }
  * </code>
  *
+ * Direct credit card payment and related features are restricted in
+ * some countries.
+ * As of January 2015 these transactions are only supported in the UK
+ * and in the USA.
+ *
  * Example 2, with PayPal as the payment method:
  *
  * <code>
@@ -97,13 +102,12 @@ namespace Omnipay\PayPal\Message;
  *   }
  * </code>
  *
- * Direct credit card payment and related features are restricted in
- * some countries.
- * As of January 2015 these transactions are only supported in the UK
- * and in the USA.
+ * In this second example you would need to execute the purchase at
+ * the Return URL before the payment was completed.  See RestExecuteRequest.
  *
  * @link https://developer.paypal.com/docs/api/#create-a-payment
  * @see RestAuthorizeRequest
+ * @see RestExecuteRequest
  */
 class RestPurchaseRequest extends RestAuthorizeRequest
 {
