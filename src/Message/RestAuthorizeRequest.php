@@ -84,7 +84,6 @@ class RestAuthorizeRequest extends AbstractRestRequest
             'intent' => 'authorize',
             'payer' => array(
                 'payment_method' => 'credit_card',
-                'funding_instruments' => array()
             ),
             'transactions' => array(
                 array(
@@ -97,18 +96,24 @@ class RestAuthorizeRequest extends AbstractRestRequest
             )
         );
 
+        // If a credit card reference (created using RestCreateCard) has been
+        // provided then set that as the funding instrument.
         if ($this->getCardReference()) {
             $this->validate('amount');
 
+            $data['payer']['funding_instruments'] = array();
             $data['payer']['funding_instruments'][] = array(
                 'credit_card_token' => array(
                     'credit_card_id' => $this->getCardReference(),
                 ),
             );
-        } else {
+            
+        // If a credit card has been provided then set that as the funding instrument.
+        } elseif ($this->getCard()) {
             $this->validate('amount', 'card');
             $this->getCard()->validate();
 
+            $data['payer']['funding_instruments'] = array();
             $data['payer']['funding_instruments'][] = array(
                 'credit_card' => array(
                     'number' => $this->getCard()->getNumber(),
@@ -135,6 +140,15 @@ class RestAuthorizeRequest extends AbstractRestRequest
             if (!empty($line2)) {
                 $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2'] = $line2;
             }
+        
+        // In other cases we assumme that the funding instrument is PayPal
+        } else {
+            $this->validate('returnUrl', 'cancelUrl');
+            $data['payer']['payment_method'] = 'paypal';
+            $data['redirect_urls'] = array(
+                'return_url'    => $this->getReturnUrl(),
+                'cancel_url'    => $this->getCancelUrl(),
+            );
         }
 
         return $data;

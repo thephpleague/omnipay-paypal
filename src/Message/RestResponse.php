@@ -7,13 +7,16 @@ namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
+use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * PayPal REST Response
  */
-class RestResponse extends AbstractResponse
+class RestResponse extends AbstractResponse implements RedirectResponseInterface
 {
     protected $statusCode;
+    protected $liveCheckoutEndpoint = 'https://www.paypal.com/cgi-bin/webscr';
+    protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
     public function __construct(RequestInterface $request, $data, $statusCode = 200)
     {
@@ -68,5 +71,49 @@ class RestResponse extends AbstractResponse
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
+    }
+
+    //    
+    // Redirect functions -- only used when payment_method = paypal in the request.
+    //
+    
+    public function isRedirect() {
+        if (! empty($this->data['links'])) {
+            foreach ($this->data['links'] as $key => $val) {
+                if ($val['rel'] = 'approval_url') {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    public function getRedirectUrl()
+    {
+        if (! empty($this->data['links'])) {
+            foreach ($this->data['links'] as $key => $val) {
+                if ($val['rel'] == 'approval_url') {
+                    return $val['href'];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function getRedirectMethod()
+    {
+        return 'GET';
+    }
+
+    public function getRedirectData()
+    {
+        return null;
+    }
+
+    protected function getCheckoutEndpoint()
+    {
+        return $this->getRequest()->getTestMode() ? $this->testCheckoutEndpoint : $this->liveCheckoutEndpoint;
     }
 }
