@@ -1,9 +1,32 @@
 <?php
+/**
+ * PayPal Abstract Request
+ */
 
 namespace Omnipay\PayPal\Message;
 
 /**
  * PayPal Abstract Request
+ *
+ * This class forms the base class for PayPal Express Checkout and Pro Checkout
+ * requests.  These are also known as "Payflow Gateway" requests and also
+ * "PayPal Classic APIs".
+ *
+ * According to the PayPal documentation:
+ *
+ * * This is the recommended way to integrate when you want to accept payments
+ *   with a completely customizable solution. This integration method leverages
+ *   the PayPal Payflow Gateway to transmit payments your PayPal Internet Merchant
+ *   Account; it also gives the merchant the flexibility to change payment
+ *   processors without having to re-do their technical integration. When using
+ *   PayPal Payments Pro (Payflow Edition) using Payflow Gateway integration,
+ *   merchants can use Transparent Redirect feature to help manage PCI compliance. 
+ *
+ * @link https://developer.paypal.com/docs/classic/products/payflow-gateway/
+ * @link https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
+ * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/ 
+ * @link https://devtools-paypal.com/integrationwizard/
+ * @link http://paypal.github.io/sdk/
  */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {

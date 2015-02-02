@@ -3,3 +3,9 @@ composer.lock
 composer.phar
 phpunit.xml
 .idea/
+
+.directory
+dirlist.app
+dirlist.vendor
+dirlist.cache
+documents/
