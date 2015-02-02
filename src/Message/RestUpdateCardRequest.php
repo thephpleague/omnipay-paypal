@@ -21,9 +21,6 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
- * TODO: This class does not work.  See issue 41 on github
- * https://github.com/thephpleague/omnipay-paypal/issues/41
- *
  * @link https://developer.paypal.com/docs/api/#vault
  * @link https://developer.paypal.com/docs/api/#update-a-stored-credit-card
  * @link http://bit.ly/1wUQ33R
@@ -31,13 +28,28 @@ namespace Omnipay\PayPal\Message;
  */
 class RestUpdateCardRequest extends RestCreateCardRequest
 {
-    public function getEndpoint()
+    public function getData()
     {
-        return parent::getEndpoint() . '/vault/credit-card/' . $this->getCardReference();
+        $data = parent::getData();
+        
+        // Reformat the data array and add the additional fields that
+        // are required to complete an update request.  Assume that all
+        // of the card data are being replaced.
+        $newdata = array();
+        $newdata['op'] = 'replace';
+        $newdata['path'] = '/';
+        $newdata['value'] = $data;
+
+        return $newdata;
     }
 
     public function getHttpMethod()
     {
         return 'PATCH';
+    }
+
+    public function getEndpoint()
+    {
+        return parent::getEndpoint() . '/' . $this->getCardReference();
     }
 }
