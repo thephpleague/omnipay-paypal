@@ -137,6 +137,6 @@ class RestExecuteRequest extends AbstractRestRequest
      */
     protected function getEndpoint()
     {
-        return parent::getEndpoint() . '/payments/payment/' . $this->getPaymentId() . '/execute;
+        return parent::getEndpoint() . '/payments/payment/' . $this->getPaymentId() . '/execute';
     }
 }
