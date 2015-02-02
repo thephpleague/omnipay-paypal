@@ -85,6 +85,13 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         return $this->setParameter('token', $value);
     }
 
+    /**
+     * Get HTTP Method.
+     *
+     * This is nearly always POST but can be over-ridden in sub classes.
+     *
+     * @return string
+     */
     protected function getHttpMethod()
     {
         return 'POST';
@@ -108,16 +115,35 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
             }
         );
 
-        $httpRequest = $this->httpClient->createRequest(
-            $this->getHttpMethod(),
-            $this->getEndpoint(),
-            array(
-                'Accept'        => 'application/json',
-                'Authorization' => 'Bearer ' . $this->getToken(),
-                'Content-type'  => 'application/json',
-            ),
-            json_encode($data)
-        );
+        // Guzzle HTTP Client createRequest does funny things when a GET request
+        // has attached data, so don't send the data if the method is GET.
+        if ($this->getHttpMethod() == 'GET') {
+            $httpRequest = $this->httpClient->createRequest(
+                $this->getHttpMethod(),
+                $this->getEndpoint(),
+                array(
+                    'Accept'        => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getToken(),
+                    'Content-type'  => 'application/json',
+                )
+            );
+        } else {
+            $httpRequest = $this->httpClient->createRequest(
+                $this->getHttpMethod(),
+                $this->getEndpoint(),
+                array(
+                    'Accept'        => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getToken(),
+                    'Content-type'  => 'application/json',
+                ),
+                json_encode($data)
+            );
+        }
+        
+        // Might be useful to have some debug code here, PayPal especially can be
+        // a bit fussy about data formats and ordering.  Perhaps hook to whatever
+        // logging engine is being used.
+        // echo "Data == " . json_encode($data) . "\n";
 
         $httpResponse = $httpRequest->send();
 

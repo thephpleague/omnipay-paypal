@@ -1,10 +1,16 @@
 <?php
+/**
+ * PayPal REST Response
+ */
 
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RequestInterface;
 
+/**
+ * PayPal REST Response
+ */
 class RestResponse extends AbstractResponse
 {
     protected $statusCode;
