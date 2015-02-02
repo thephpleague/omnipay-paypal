@@ -72,7 +72,7 @@ namespace Omnipay\PayPal\Message;
  *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#authorizations
- * @link https://developer.paypal.com/docs/integration/direct/rest_api_payment_country_currency_support/#direct-credit-card-payments
+ * @link http://bit.ly/1wUQ33R
  * @see RestCaptureRequest
  * @see RestPurchaseRequest
  */
