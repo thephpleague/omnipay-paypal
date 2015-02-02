@@ -353,7 +353,7 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestPurchaseRequest', $parameters);
     }
 
-    // TODO: Execute an approved PayPal payment 
+    // TODO: Execute an approved PayPal payment
     //   https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment
     // TODO: Look up a payment resource https://developer.paypal.com/docs/api/#look-up-a-payment-resource
     // TODO: Update a payment resource https://developer.paypal.com/docs/api/#update-a-payment-resource
@@ -446,6 +446,14 @@ class RestGateway extends AbstractGateway
     //
 
     /**
+     * Store a credit card in the vault
+     *
+     * You can currently use the /vault API to store credit card details
+     * with PayPal instead of storing them on your own server. After storing
+     * a credit card, you can then pass the credit card id instead of the
+     * related credit card details to complete a payment.
+     * 
+     * @link https://developer.paypal.com/docs/api/#store-a-credit-card
      * @param array $parameters
      * @return \Omnipay\PayPal\Message\RestCreateCardRequest
      */
@@ -455,8 +463,11 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Update a credit card in the vault
+     *
+     * @link https://developer.paypal.com/docs/api/#update-a-stored-credit-card
      * @param array $parameters
-     * @return \Omnipay\PayPal\Message\RestCreateCardRequest
+     * @return \Omnipay\PayPal\Message\RestUpdateCardRequest
      */
     public function updateCard(array $parameters = array())
     {
@@ -464,6 +475,9 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Delete a credit card from the vault.
+     *
+     * @link https://developer.paypal.com/docs/api/#delete-a-stored-credit-card
      * @param array $parameters
      * @return \Omnipay\PayPal\Message\RestDeleteCardRequest
      */

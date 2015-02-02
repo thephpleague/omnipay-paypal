@@ -61,8 +61,18 @@ namespace Omnipay\PayPal\Message;
  *   }
  * </code>
  *
+ * Direct credit card payment and related features are restricted in
+ * some countries.
+ * As of January 2015 these transactions are only supported in the UK
+ * and in the USA.
+ *
+ * TODO: This class only works for direct credit card payments.  It should
+ * be able to be made to work for PayPal payments too (by changing the
+ * payer/payment_method parameter and adding linkback URLs). 
+ *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#authorizations
+ * @link https://developer.paypal.com/docs/integration/direct/rest_api_payment_country_currency_support/#direct-credit-card-payments
  * @see RestCaptureRequest
  * @see RestPurchaseRequest
  */
