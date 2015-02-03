@@ -73,11 +73,12 @@ class RestResponse extends AbstractResponse implements RedirectResponseInterface
         }
     }
 
-    //    
+    //
     // Redirect functions -- only used when payment_method = paypal in the request.
     //
     
-    public function isRedirect() {
+    public function isRedirect()
+    {
         if (! empty($this->data['links'])) {
             foreach ($this->data['links'] as $key => $val) {
                 if ($val['rel'] = 'approval_url') {
