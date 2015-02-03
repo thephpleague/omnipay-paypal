@@ -57,6 +57,6 @@ class RestDeleteCardRequest extends AbstractRestRequest
 
     public function getEndpoint()
     {
-        return parent::getEndpoint() . '/vault/credit-card/' . $this->getCardReference();
+        return parent::getEndpoint() . '/vault/credit-cards/' . $this->getCardReference();
     }
 }
