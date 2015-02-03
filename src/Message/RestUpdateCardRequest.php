@@ -21,6 +21,12 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
+ * TODO: As of January 2015 this update card request does not work.  A
+ * support request has been put to PayPal and there is also a stackoverflow
+ * ticket about this:
+ *
+ * @link http://stackoverflow.com/questions/20858910/paypal-rest-api-update-a-stored-credit-card
+ *
  * @link https://developer.paypal.com/docs/api/#vault
  * @link https://developer.paypal.com/docs/api/#update-a-stored-credit-card
  * @link http://bit.ly/1wUQ33R
