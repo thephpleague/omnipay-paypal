@@ -143,7 +143,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         // Might be useful to have some debug code here, PayPal especially can be
         // a bit fussy about data formats and ordering.  Perhaps hook to whatever
         // logging engine is being used.
-        echo "Data == " . json_encode($data) . "\n";
+        // echo "Data == " . json_encode($data) . "\n";
 
         $httpResponse = $httpRequest->send();
 
