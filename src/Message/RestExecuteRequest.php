@@ -37,8 +37,6 @@ namespace Omnipay\PayPal\Message;
  *   echo "Gateway execute response data == " . print_r($data, true) . "\n";
  * </code>
  *
- * TODO: Need a test case.
- *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment
  * @see RestAuthorizeRequest
