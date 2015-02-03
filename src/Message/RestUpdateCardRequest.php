@@ -26,6 +26,7 @@ namespace Omnipay\PayPal\Message;
  * ticket about this:
  *
  * @link http://stackoverflow.com/questions/20858910/paypal-rest-api-update-a-stored-credit-card
+ * @link https://ppmts.custhelp.com/app/account/questions/detail/i_id/1081166
  *
  * @link https://developer.paypal.com/docs/api/#vault
  * @link https://developer.paypal.com/docs/api/#update-a-stored-credit-card
