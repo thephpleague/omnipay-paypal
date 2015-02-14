@@ -147,7 +147,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
 
         $httpResponse = $httpRequest->send();
 
-        return $this->response = new RestResponse($this, $httpResponse->json(), $httpResponse->getStatusCode());
+        return $this->response = $this->createResponse($httpResponse->json(), $httpResponse->getStatusCode());
     }
 
     /**
@@ -168,5 +168,10 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
             return json_encode($data, $options | 64);
         }
         return str_replace('\\/', '/', json_encode($data, $options));
+    }
+
+    protected function createResponse($data, $statusCode)
+    {
+        return $this->response = new RestResponse($this, $data, $statusCode);
     }
 }

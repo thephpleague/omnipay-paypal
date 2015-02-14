@@ -194,4 +194,9 @@ class RestAuthorizeRequest extends AbstractRestRequest
     {
         return parent::getEndpoint() . '/payments/payment';
     }
+
+    protected function createResponse($data, $statusCode)
+    {
+        return $this->response = new RestAuthorizeResponse($this, $data, $statusCode);
+    }
 }
