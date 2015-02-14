@@ -40,6 +40,9 @@ class RestAuthorizeRequestTest extends TestCase
         $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
         $this->assertSame('abc123 : Sheep', $data['transactions'][0]['description']);
 
+        // Funding instruments must not be set, otherwise paypal API will give error 500.
+        $this->assertArrayNotHasKey('funding_instruments', $data['payer']);
+
         $this->assertSame('https://www.example.com/return', $data['redirect_urls']['return_url']);
         $this->assertSame('https://www.example.com/cancel', $data['redirect_urls']['cancel_url']);
     }

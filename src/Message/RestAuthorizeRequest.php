@@ -149,6 +149,8 @@ class RestAuthorizeRequest extends AbstractRestRequest
         } else {
             $this->validate('amount', 'returnUrl', 'cancelUrl');
 
+            unset($data['payer']['funding_instruments']);
+
             $data['payer']['payment_method'] = 'paypal';
             $data['redirect_urls'] = [
                 'return_url' => $this->getReturnUrl(),
