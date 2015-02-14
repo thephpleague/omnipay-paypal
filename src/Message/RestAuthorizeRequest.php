@@ -66,10 +66,6 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
- * TODO: This class only works for direct credit card payments.  It should
- * be able to be made to work for PayPal payments too (by changing the
- * payer/payment_method parameter and adding linkback URLs). 
- *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#authorizations
  * @link http://bit.ly/1wUQ33R
@@ -97,6 +93,21 @@ class RestAuthorizeRequest extends AbstractRestRequest
             )
         );
 
+        $items = $this->getItems();
+        if ($items) {
+            $itemList = [];
+            foreach ($items as $n => $item) {
+                $itemList[] = [
+                    'name' => $item->getName(),
+                    'description' => $item->getDescription(),
+                    'quantity' => $item->getQuantity(),
+                    'price' => $this->formatCurrency($item->getPrice()),
+                    'currency' => $this->getCurrency()
+                ];
+            }
+            $data['transactions'][0]['item_list']["items"] = $itemList;
+        }
+
         if ($this->getCardReference()) {
             $this->validate('amount');
 
@@ -105,7 +116,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
                     'credit_card_id' => $this->getCardReference(),
                 ),
             );
-        } else {
+        } elseif ($this->getCard()) {
             $this->validate('amount', 'card');
             $this->getCard()->validate();
 
@@ -135,6 +146,14 @@ class RestAuthorizeRequest extends AbstractRestRequest
             if (!empty($line2)) {
                 $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2'] = $line2;
             }
+        } else {
+            $this->validate('amount', 'returnUrl', 'cancelUrl');
+
+            $data['payer']['payment_method'] = 'paypal';
+            $data['redirect_urls'] = [
+                'return_url' => $this->getReturnUrl(),
+                'cancel_url' => $this->getCancelUrl(),
+            ];
         }
 
         return $data;
