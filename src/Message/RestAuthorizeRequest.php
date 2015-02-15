@@ -152,10 +152,10 @@ class RestAuthorizeRequest extends AbstractRestRequest
             unset($data['payer']['funding_instruments']);
 
             $data['payer']['payment_method'] = 'paypal';
-            $data['redirect_urls'] = [
+            $data['redirect_urls'] = array(
                 'return_url' => $this->getReturnUrl(),
                 'cancel_url' => $this->getCancelUrl(),
-            ];
+            );
         }
 
         return $data;
