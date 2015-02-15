@@ -95,15 +95,15 @@ class RestAuthorizeRequest extends AbstractRestRequest
 
         $items = $this->getItems();
         if ($items) {
-            $itemList = [];
+            $itemList = array();
             foreach ($items as $n => $item) {
-                $itemList[] = [
+                $itemList[] = array(
                     'name' => $item->getName(),
                     'description' => $item->getDescription(),
                     'quantity' => $item->getQuantity(),
                     'price' => $this->formatCurrency($item->getPrice()),
                     'currency' => $this->getCurrency()
-                ];
+                );
             }
             $data['transactions'][0]['item_list']["items"] = $itemList;
         }
