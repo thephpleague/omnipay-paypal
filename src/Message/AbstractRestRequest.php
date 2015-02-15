@@ -137,9 +137,9 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
                 $this->getHttpMethod(),
                 $this->getEndpoint(),
                 array(
-                    'Accept'        => 'application/json',
+                    'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getToken(),
-                    'Content-type'  => 'application/json',
+                    'Content-type' => 'application/json',
                 )
             );
         } else {
@@ -147,9 +147,9 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
                 $this->getHttpMethod(),
                 $this->getEndpoint(),
                 array(
-                    'Accept'        => 'application/json',
+                    'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getToken(),
-                    'Content-type'  => 'application/json',
+                    'Content-type' => 'application/json',
                 ),
                 $this->toJSON($data)
             );
@@ -169,7 +169,8 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      * Returns object JSON representation required by PayPal.
      * The PayPal REST API requires the use of JSON_UNESCAPED_SLASHES.
      *
-     * Adapted from the official PayPal REST API PHP SDK (https://github.com/paypal/PayPal-PHP-SDK/blob/master/lib/PayPal/Common/PayPalModel.php)
+     * Adapted from the official PayPal REST API PHP SDK.
+     * (https://github.com/paypal/PayPal-PHP-SDK/blob/master/lib/PayPal/Common/PayPalModel.php)
      *
      * @param int $options http://php.net/manual/en/json.constants.php
      * @return string

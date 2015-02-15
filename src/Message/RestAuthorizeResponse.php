@@ -4,7 +4,8 @@ namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
-class RestAuthorizeResponse extends RestResponse implements RedirectResponseInterface {
+class RestAuthorizeResponse extends RestResponse implements RedirectResponseInterface
+{
     public function isSuccessful()
     {
         return empty($this->data['error']) && $this->getCode() == 201;
