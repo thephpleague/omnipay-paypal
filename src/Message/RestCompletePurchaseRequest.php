@@ -13,9 +13,13 @@ class RestCompletePurchaseRequest extends AbstractRestRequest {
      */
     public function getData()
     {
-        $this->validate('transactionReference');
+        $this->validate('transactionReference', 'payerId');
 
-        return [];
+        $data = array(
+            'payer_id' => $this->getPayerId()
+        );
+
+        return $data;
     }
 
     public function getEndpoint()
