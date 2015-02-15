@@ -27,11 +27,11 @@ class RestCompletePurchaseRequestTest extends TestCase
 
     public function testGetData()
     {
+        $this->request->setTransactionReference('abc123');
+        $this->request->setPayerId('Payer12345');
 
-    }
+        $data = $this->request->getData();
 
-    public function testGetDataWithItems()
-    {
-
+        $this->assertSame('Payer12345', $data['payer_id']);
     }
 }

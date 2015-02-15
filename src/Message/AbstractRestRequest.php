@@ -5,8 +5,6 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Guzzle\Http\EntityBody;
-
 /**
  * PayPal Abstract REST Request
  *
@@ -55,6 +53,13 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      */
     protected $liveEndpoint = 'https://api.paypal.com';
 
+    /**
+     * PayPal Payer ID
+     *
+     * @var string PayerID
+     */
+    protected $payerId = null;
+
     public function getClientId()
     {
         return $this->getParameter('clientId');
@@ -83,6 +88,16 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
     public function setToken($value)
     {
         return $this->setParameter('token', $value);
+    }
+
+    public function getPayerId()
+    {
+        return $this->getParameter('payerId');
+    }
+
+    public function setPayerId($value)
+    {
+        return $this->setParameter('payerId', $value);
     }
 
     /**
@@ -139,7 +154,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
                 $this->toJSON($data)
             );
         }
-        
+
         // Might be useful to have some debug code here, PayPal especially can be
         // a bit fussy about data formats and ordering.  Perhaps hook to whatever
         // logging engine is being used.
