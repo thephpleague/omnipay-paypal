@@ -20,6 +20,13 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
         $data['PAYMENTREQUEST_0_NOTIFYURL'] = $this->getNotifyUrl();
 
+        $data['MAXAMT'] = $this->getMaxAmount();
+        $data['PAYMENTREQUEST_0_TAXAMT'] = $this->getTaxAmount();
+        $data['PAYMENTREQUEST_0_SHIPPINGAMT'] = $this->getShippingAmount();
+        $data['PAYMENTREQUEST_0_HANDLINGAMT'] = $this->getHandlingAmount();
+        $data['PAYMENTREQUEST_0_SHIPDISCAMT'] = $this->getShippingDiscount();
+        $data['PAYMENTREQUEST_0_INSURANCEAMT'] = $this->getInsuranceAmount();
+
         $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->httpRequest->query->get('token');
         $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->httpRequest->query->get('PayerID');
 
