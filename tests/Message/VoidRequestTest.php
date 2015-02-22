@@ -32,9 +32,6 @@ class VoidRequestTest extends TestCase
         $expected = array();
         $expected['METHOD'] = 'DoVoid';
         $expected['AUTHORIZATIONID'] = 'ABC-123';
-        $expected['AMT'] = '1.23';
-        $expected['CURRENCYCODE'] = 'USD';
-        $expected['COMPLETETYPE'] = 'Complete';
         $expected['USER'] = 'testuser';
         $expected['PWD'] = 'testpass';
         $expected['SIGNATURE'] = 'SIG';
