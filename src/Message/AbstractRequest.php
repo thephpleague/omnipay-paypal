@@ -263,16 +263,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * The BN Code is for PayPal Partners taking payments for a 3rd party
+     * The Button Source (BN Code) is for PayPal Partners taking payments for a 3rd party
      */
-    public function setBNCode($value)
+    public function setButtonSource($value)
     {
-        return $this->setParameter('BNCode', $value);
+        return $this->setParameter('ButtonSource', $value);
     }
 
-    public function getBNCode()
+    public function getButtonSource()
     {
-        return $this->getParameter('BNCode');
+        return $this->getParameter('ButtonSource');
     }
 
     protected function getBaseData()
@@ -283,9 +283,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['PWD'] = $this->getPassword();
         $data['SIGNATURE'] = $this->getSignature();
         $data['SUBJECT'] = $this->getSubject();
-        $bnCode = $this->getBNCode();
+        $bnCode = $this->getButtonSource();
         if (!empty($bnCode)) {
-            $data['BNCODE'] = $bnCode;
+            $data['BUTTONSOURCE'] = $bnCode;
         }
         
         return $data;
