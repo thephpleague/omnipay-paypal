@@ -28,6 +28,7 @@ class CaptureRequestTest extends TestCase
         $this->request->setPassword('testpass');
         $this->request->setSignature('SIG');
         $this->request->setSubject('SUB');
+        $this->request->setBNCode('BNCode_PP');
 
         $expected = array();
         $expected['METHOD'] = 'DoCapture';
@@ -39,6 +40,7 @@ class CaptureRequestTest extends TestCase
         $expected['PWD'] = 'testpass';
         $expected['SIGNATURE'] = 'SIG';
         $expected['SUBJECT'] = 'SUB';
+        $expected['BNCODE'] = 'BNCode_PP';
         $expected['VERSION'] = CaptureRequest::API_VERSION;
 
         $this->assertEquals($expected, $this->request->getData());
