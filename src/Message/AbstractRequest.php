@@ -262,6 +262,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->getParameter('sellerPaypalAccountId');
     }
 
+    /**
+     * The BN Code is for PayPal Partners taking payments for a 3rd party
+     */
+    public function setBNCode($value)
+    {
+        return $this->setParameter('BNCode', $value);
+    }
+
+    public function getBNCode()
+    {
+        return $this->getParameter('BNCode');
+    }
+
     protected function getBaseData()
     {
         $data = array();
@@ -270,7 +283,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['PWD'] = $this->getPassword();
         $data['SIGNATURE'] = $this->getSignature();
         $data['SUBJECT'] = $this->getSubject();
-
+        $bnCode = $this->getBNCode();
+        if (!empty($bnCode)) {
+            $data['BNCODE'] = $bnCode;
+        }
+        
         return $data;
     }
 
