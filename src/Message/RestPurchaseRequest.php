@@ -50,7 +50,7 @@ namespace Omnipay\PayPal\Message;
  *               'billingState'          => 'QLD',
  *   ));
  *
- *   // Do an authorisation transaction on the gateway
+ *   // Do a purchase transaction on the gateway
  *   $transaction = $gateway->purchase(array(
  *       'amount'        => '10.00',
  *       'currency'      => 'AUD',
@@ -70,12 +70,44 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
- * TODO: This class only works for direct credit card payments.  It should
- * be able to be made to work for PayPal payments too (by changing the
- * payer/payment_method parameter and adding linkback URLs). 
+ * Example 2, with PayPal as the payment method:
+ *
+ * <code>
+ *   // Create a gateway for the PayPal RestGateway
+ *   // (routes to GatewayFactory::create)
+ *   $gateway = Omnipay::create('RestGateway');
+ *
+ *   // Initialise the gateway
+ *   $gateway->initialize(array(
+ *       'clientId' => 'MyPayPalClientId',
+ *       'secret'   => 'MyPayPalSecret',
+ *       'testMode' => true, // Or false when you are ready for live transactions
+ *   ));
+ *
+ *   // Do a purchase transaction on the gateway
+ *   $transaction = $gateway->purchase(array(
+ *       'amount'        => '10.00',
+ *       'currency'      => 'AUD',
+ *       'description'   => 'This is a test purchase transaction.',
+ *   ))->setReturnUrl('http://www.example.com/your_return_url/')
+ *     ->setCancelUrl('http://www.example.com/your_cancel_url/');
+ *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       echo "Purchase transaction was successful!\n";
+ *       if ($response->isRedirect()) {
+ *           echo "Response is a redirect.\n";
+ *           echo "Redirect URL == " . $response->getRedirectUrl() .
+ *                " method == " . $response->getRedirectMethod() . "\n";
+ *       }
+ *   }
+ * </code>
+ *
+ * In this second example you would need to execute the purchase at
+ * the Return URL before the payment was completed.  See RestExecuteRequest.
  *
  * @link https://developer.paypal.com/docs/api/#create-a-payment
  * @see RestAuthorizeRequest
+ * @see RestExecuteRequest
  */
 class RestPurchaseRequest extends RestAuthorizeRequest
 {

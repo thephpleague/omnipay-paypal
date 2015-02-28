@@ -66,15 +66,47 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
- * TODO: This class only works for direct credit card payments.  It should
- * be able to be made to work for PayPal payments too (by changing the
- * payer/payment_method parameter and adding linkback URLs). 
+ * Example 2, with PayPal as the payment method:
+ *
+ * <code>
+ *   // Create a gateway for the PayPal RestGateway
+ *   // (routes to GatewayFactory::create)
+ *   $gateway = Omnipay::create('RestGateway');
+ *
+ *   // Initialise the gateway
+ *   $gateway->initialize(array(
+ *       'clientId' => 'MyPayPalClientId',
+ *       'secret'   => 'MyPayPalSecret',
+ *       'testMode' => true, // Or false when you are ready for live transactions
+ *   ));
+ *
+ *   // Do an authorize transaction on the gateway
+ *   $transaction = $gateway->authorize(array(
+ *       'amount'        => '10.00',
+ *       'currency'      => 'AUD',
+ *       'description'   => 'This is a test authorize transaction.',
+ *   ))->setReturnUrl('http://www.example.com/your_return_url/')
+ *     ->setCancelUrl('http://www.example.com/your_cancel_url/');
+ *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       echo "Authorize transaction was successful!\n";
+ *       if ($response->isRedirect()) {
+ *           echo "Response is a redirect.\n";
+ *           echo "Redirect URL == " . $response->getRedirectUrl() .
+ *                " method == " . $response->getRedirectMethod() . "\n";
+ *       }
+ *   }
+ * </code>
+ *
+ * In this second example you would need to execute the authorization
+ * before doing a capture.  See RestExecuteRequest.
  *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#authorizations
  * @link http://bit.ly/1wUQ33R
  * @see RestCaptureRequest
  * @see RestPurchaseRequest
+ * @see RestExecuteRequest
  */
 class RestAuthorizeRequest extends AbstractRestRequest
 {
@@ -84,7 +116,6 @@ class RestAuthorizeRequest extends AbstractRestRequest
             'intent' => 'authorize',
             'payer' => array(
                 'payment_method' => 'credit_card',
-                'funding_instruments' => array()
             ),
             'transactions' => array(
                 array(
@@ -97,18 +128,24 @@ class RestAuthorizeRequest extends AbstractRestRequest
             )
         );
 
+        // If a credit card reference (created using RestCreateCard) has been
+        // provided then set that as the funding instrument.
         if ($this->getCardReference()) {
             $this->validate('amount');
 
+            $data['payer']['funding_instruments'] = array();
             $data['payer']['funding_instruments'][] = array(
                 'credit_card_token' => array(
                     'credit_card_id' => $this->getCardReference(),
                 ),
             );
-        } else {
+            
+        // If a credit card has been provided then set that as the funding instrument.
+        } elseif ($this->getCard()) {
             $this->validate('amount', 'card');
             $this->getCard()->validate();
 
+            $data['payer']['funding_instruments'] = array();
             $data['payer']['funding_instruments'][] = array(
                 'credit_card' => array(
                     'number' => $this->getCard()->getNumber(),
@@ -135,6 +172,15 @@ class RestAuthorizeRequest extends AbstractRestRequest
             if (!empty($line2)) {
                 $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2'] = $line2;
             }
+        
+        // In other cases we assumme that the funding instrument is PayPal
+        } else {
+            $this->validate('returnUrl', 'cancelUrl');
+            $data['payer']['payment_method'] = 'paypal';
+            $data['redirect_urls'] = array(
+                'return_url'    => $this->getReturnUrl(),
+                'cancel_url'    => $this->getCancelUrl(),
+            );
         }
 
         return $data;

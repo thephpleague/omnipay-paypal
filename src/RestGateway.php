@@ -353,12 +353,25 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestPurchaseRequest', $parameters);
     }
 
-    // TODO: Execute an approved PayPal payment
-    //   https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment
+    /**
+     * Execute a purchase request.
+     *
+     * PayPal provides various payment related operations using the /payment
+     * resource and related sub-resources. This function executes a payment
+     * transaction where the payment type == paypal.
+     *
+     * @link https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestExecuteRequest
+     */
+    public function execute(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestExecuteRequest', $parameters);
+    }
+
     // TODO: Look up a payment resource https://developer.paypal.com/docs/api/#look-up-a-payment-resource
     // TODO: Update a payment resource https://developer.paypal.com/docs/api/#update-a-payment-resource
     // TODO: List payment resources https://developer.paypal.com/docs/api/#list-payment-resources
-    // TODO: Payments with payment_method == paypal.
 
     //
     // Authorizations -- Capture, reauthorize, void and look up authorizations.

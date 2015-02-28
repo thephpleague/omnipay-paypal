@@ -26,6 +26,16 @@ class RestResponseTest extends TestCase
         $this->assertSame('Invalid request - see details', $response->getMessage());
     }
 
+    public function testExecuteSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('RestExecuteSuccess.txt');
+        $response = new RestResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('9905168056260241A', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+    }
+
     public function testTokenFailure()
     {
         $httpResponse = $this->getMockHttpResponse('RestTokenFailure.txt');
