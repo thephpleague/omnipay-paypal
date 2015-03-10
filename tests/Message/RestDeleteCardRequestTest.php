@@ -30,6 +30,6 @@ class RestDeleteCardRequestTest extends TestCase
 
     public function testEndpoint()
     {
-        $this->assertStringEndsWith('/vault/credit-card/CARD-TEST123', $this->request->getEndpoint());
+        $this->assertStringEndsWith('/vault/credit-cards/CARD-TEST123', $this->request->getEndpoint());
     }
 }

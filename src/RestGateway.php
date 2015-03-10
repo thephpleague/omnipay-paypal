@@ -472,19 +472,12 @@ class RestGateway extends AbstractGateway
     }
 
     /**
-     * Update a credit card in the vault
-     *
-     * @link https://developer.paypal.com/docs/api/#update-a-stored-credit-card
-     * @param array $parameters
-     * @return \Omnipay\PayPal\Message\RestUpdateCardRequest
-     */
-    public function updateCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\PayPal\Message\RestUpdateCardRequest', $parameters);
-    }
-
-    /**
      * Delete a credit card from the vault.
+     *
+     * Updating a card in the vault is no longer supported -- see
+     * http://stackoverflow.com/questions/20858910/paypal-rest-api-update-a-stored-credit-card
+     * Therefore the only way to update a card is to remove it using deleteCard and
+     * then re-add it using createCard. 
      *
      * @link https://developer.paypal.com/docs/api/#delete-a-stored-credit-card
      * @param array $parameters
