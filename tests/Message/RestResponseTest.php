@@ -26,6 +26,26 @@ class RestResponseTest extends TestCase
         $this->assertSame('Invalid request - see details', $response->getMessage());
     }
 
+    public function testCompletePurchaseSuccess()
+    {
+        $httpResponse = $this->getMockHttpResponse('RestCompletePurchaseSuccess.txt');
+        $response = new RestResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertSame('9EA05739TH369572R', $response->getTransactionReference());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testCompletePurchaseFailure()
+    {
+        $httpResponse = $this->getMockHttpResponse('RestCompletePurchaseFailure.txt');
+        $response = new RestResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('This request is invalid due to the current state of the payment', $response->getMessage());
+    }
+
     public function testTokenFailure()
     {
         $httpResponse = $this->getMockHttpResponse('RestTokenFailure.txt');
