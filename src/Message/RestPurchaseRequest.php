@@ -72,7 +72,7 @@ namespace Omnipay\PayPal\Message;
  *
  * TODO: This class only works for direct credit card payments.  It should
  * be able to be made to work for PayPal payments too (by changing the
- * payer/payment_method parameter and adding linkback URLs). 
+ * payer/payment_method parameter and adding linkback URLs).
  *
  * @link https://developer.paypal.com/docs/api/#create-a-payment
  * @see RestAuthorizeRequest
@@ -84,5 +84,10 @@ class RestPurchaseRequest extends RestAuthorizeRequest
         $data = parent::getData();
         $data['intent'] = 'sale';
         return $data;
+    }
+
+    protected function createResponse($data, $statusCode)
+    {
+        return $this->response = new RestPurchaseResponse($this, $data, $statusCode);
     }
 }
