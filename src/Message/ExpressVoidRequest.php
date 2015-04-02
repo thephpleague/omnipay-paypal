@@ -10,7 +10,7 @@ class ExpressVoidRequest extends AbstractRequest
 
         $data = $this->getBaseData();
         $data['METHOD'] = 'DoVoid';
-        $data['TRANSACTIONID'] = $this->getTransactionReference();
+        $data['AUTHORIZATIONID'] = $this->getTransactionReference();
 
         return $data;
     }
