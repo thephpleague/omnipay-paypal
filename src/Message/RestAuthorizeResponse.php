@@ -1,9 +1,15 @@
 <?php
-namespace Omnipay\PayPal\Message;
+/**
+ * PayPal REST Authorize Response
+ */
 
+namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Message\RedirectResponseInterface;
 
+/**
+ * PayPal REST Authorize Response
+ */
 class RestAuthorizeResponse extends RestResponse implements RedirectResponseInterface
 {
     public function isSuccessful()
@@ -28,6 +34,8 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
 
     /**
      * Get the required redirect method (either GET or POST).
+     *
+     * @return string
      */
     public function getRedirectMethod()
     {
@@ -36,6 +44,8 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
 
     /**
      * Gets the redirect form data array, if the redirect method is POST.
+     *
+     * @return null
      */
     public function getRedirectData()
     {

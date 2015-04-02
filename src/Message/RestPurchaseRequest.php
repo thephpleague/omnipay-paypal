@@ -70,10 +70,6 @@ namespace Omnipay\PayPal\Message;
  * As of January 2015 these transactions are only supported in the UK
  * and in the USA.
  *
- * TODO: This class only works for direct credit card payments.  It should
- * be able to be made to work for PayPal payments too (by changing the
- * payer/payment_method parameter and adding linkback URLs). 
- *
  * @link https://developer.paypal.com/docs/api/#create-a-payment
  * @see RestAuthorizeRequest
  */
