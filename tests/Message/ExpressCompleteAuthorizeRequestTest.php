@@ -34,6 +34,12 @@ class ExpressCompleteAuthorizeRequestTest extends TestCase
         $this->request->setSubject('SUB');
         $this->request->setDescription('DESC');
         $this->request->setNotifyUrl('https://www.example.com/notify');
+        $this->request->setMaxAmount('0.00');
+        $this->request->setTaxAmount('0.00');
+        $this->request->setShippingAmount('0.00');
+        $this->request->setHandlingAmount('0.00');
+        $this->request->setShippingDiscount('0.00');
+        $this->request->setInsuranceAmount('0.00');
 
         $expected = array();
         $expected['METHOD'] = 'DoExpressCheckoutPayment';
@@ -50,6 +56,12 @@ class ExpressCompleteAuthorizeRequestTest extends TestCase
         $expected['VERSION'] = ExpressCompleteAuthorizeRequest::API_VERSION;
         $expected['TOKEN'] = 'TOKEN1234';
         $expected['PAYERID'] = 'Payer-1234';
+        $expected['MAXAMT'] = '0.00';
+        $expected['PAYMENTREQUEST_0_TAXAMT'] = '0.00';
+        $expected['PAYMENTREQUEST_0_SHIPPINGAMT'] = '0.00';
+        $expected['PAYMENTREQUEST_0_HANDLINGAMT'] = '0.00';
+        $expected['PAYMENTREQUEST_0_SHIPDISCAMT'] = '0.00';
+        $expected['PAYMENTREQUEST_0_INSURANCEAMT'] = '0.00';
 
         $this->assertEquals($expected, $this->request->getData());
     }
