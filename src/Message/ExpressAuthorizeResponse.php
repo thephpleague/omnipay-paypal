@@ -9,8 +9,8 @@ use Omnipay\Common\Message\RedirectResponseInterface;
  */
 class ExpressAuthorizeResponse extends Response implements RedirectResponseInterface
 {
-    protected $liveCheckoutEndpoint = 'https://www.paypal.com/webscr';
-    protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/webscr';
+    protected $liveCheckoutEndpoint = 'https://www.paypal.com/cgi-bin/webscr';
+    protected $testCheckoutEndpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 
     public function isSuccessful()
     {
