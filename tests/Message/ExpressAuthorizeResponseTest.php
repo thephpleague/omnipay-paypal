@@ -25,7 +25,7 @@ class ExpressAuthorizeResponseTest extends TestCase
         $this->assertSame('EC-42721413K79637829', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getRedirectData());
-        $this->assertSame('https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
+        $this->assertSame('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());
     }
 
