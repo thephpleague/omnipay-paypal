@@ -163,7 +163,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame(1, $data['L_PAYMENTREQUEST_0_QTY1']);
         $this->assertSame('40.00', $data['L_PAYMENTREQUEST_0_AMT1']);
 
-        $this->assertSame(floatval(60), $data['PAYMENTREQUEST_0_ITEMAMT']);
+        $this->assertSame('60.00', $data['PAYMENTREQUEST_0_ITEMAMT']);
     }
 
     public function testGetDataWithExtraOrderDetails()
