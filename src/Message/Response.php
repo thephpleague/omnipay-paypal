@@ -23,7 +23,10 @@ class Response extends AbstractResponse
 
     public function getTransactionReference()
     {
-        foreach (array('REFUNDTRANSACTIONID', 'TRANSACTIONID', 'PAYMENTINFO_0_TRANSACTIONID') as $key) {
+        foreach (array('REFUNDTRANSACTIONID',
+            'TRANSACTIONID',
+            'PAYMENTINFO_0_TRANSACTIONID',
+            'AUTHORIZATIONID') as $key) {
             if (isset($this->data[$key])) {
                 return $this->data[$key];
             }

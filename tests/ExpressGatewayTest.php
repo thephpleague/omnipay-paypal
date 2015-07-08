@@ -16,6 +16,11 @@ class ExpressGatewayTest extends GatewayTestCase
      */
     protected $options;
 
+    /**
+     * @var array
+     */
+    protected $voidOptions;
+
     public function setUp()
     {
         parent::setUp();
@@ -26,6 +31,9 @@ class ExpressGatewayTest extends GatewayTestCase
             'amount' => '10.00',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
+        );
+        $this->voidOptions = array(
+            'transactionReference' => 'ASDFASDFASDF',
         );
     }
 
@@ -75,6 +83,28 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertFalse($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
+    }
+
+    public function testVoidSuccess()
+    {
+        $this->setMockHttpResponse('ExpressVoidSuccess.txt');
+
+        $response = $this->gateway->void($this->voidOptions)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertEquals('ASDFASDFASDF', $response->getTransactionReference());
+    }
+
+    public function testVoidFailure()
+    {
+        $this->setMockHttpResponse('ExpressVoidFailure.txt');
+
+        $response = $this->gateway->void($this->voidOptions)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\Response', $response);
+        $this->assertFalse($response->isSuccessful());
     }
 
     public function testFetchCheckout()
