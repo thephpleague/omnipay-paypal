@@ -154,6 +154,8 @@ class RestGateway extends AbstractGateway
     const BILLING_PLAN_FREQUENCY_WEEK   = 'WEEK';
     const BILLING_PLAN_FREQUENCY_MONTH  = 'MONTH';
     const BILLING_PLAN_FREQUENCY_YEAR   = 'YEAR';
+    const PAYMENT_TRIAL                 = 'TRIAL';
+    const PAYMENT_REGULAR               = 'REGULAR';
 
     public function getName()
     {
@@ -509,7 +511,12 @@ class RestGateway extends AbstractGateway
     // TODO: Update a plan (required to set a plan active)
     // TODO: Retrieve a plan
     // TODO: List plans
-    // TODO: Create an agreement
+
+    public function createSubscription(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestCreateSubscriptionRequest', $parameters);
+    }
+
     // TODO: Execute an agreement
     // TODO: Update an agreement
     // TODO: Retrieve an agreement

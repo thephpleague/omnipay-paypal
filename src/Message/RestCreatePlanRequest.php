@@ -20,6 +20,8 @@ namespace Omnipay\PayPal\Message;
  * is in a CREATED state. A user cannot subscribe to the billing plan unless it
  * has been set to the ACTIVE state.
  *
+ * ### Request Data
+ *
  * In order to create a new billing plan you must submit the following details:
  *
  * * name (string). Required.
@@ -46,6 +48,17 @@ namespace Omnipay\PayPal\Message;
  *   $transaction = $gateway->createPlan(array(
  *       'name'                     => 'Test Plan',
  *       'description'              => 'A plan created for testing',
+ *       'type'                     => $gateway::BILLING_PLAN_TYPE_FIXED,
+ *       'paymentDefinitions'       => [
+ *           [
+ *               'name'                 => 'Monthly Payments for 12 months',
+ *               'type'                 => $gateway::PAYMENT_TRIAL,
+ *               'frequency'            => $gateway::BILLING_PLAN_FREQUENCY_MONTH,
+ *               'frequency_interval'   => 1,
+ *               'cycles'               => 12,
+ *               'amount'               => ['value' => 10.00, 'currency' => 'USD'],
+ *           ],
+ *       ],
  *   ));
  *   $response = $transaction->send();
  *   if ($response->isSuccessful()) {
@@ -108,6 +121,72 @@ namespace Omnipay\PayPal\Message;
  *         "max_fail_attempts": "0"
  *     }
  * }'
+ * </code>
+ *
+ * ### Response Sample
+ *
+ * This is from the PayPal web site:
+ *
+ * <code>
+ * {
+ *     "id": "P-94458432VR012762KRWBZEUA",
+ *     "state": "CREATED",
+ *     "name": "T-Shirt of the Month Club Plan",
+ *     "description": "Template creation.",
+ *     "type": "FIXED",
+ *     "payment_definitions": [
+ *         {
+ *             "id": "PD-50606817NF8063316RWBZEUA",
+ *             "name": "Regular Payments",
+ *             "type": "REGULAR",
+ *             "frequency": "Month",
+ *             "amount": {
+ *                 "currency": "USD",
+ *                 "value": "100"
+ *             },
+ *             "charge_models": [
+ *                 {
+ *                     "id": "CHM-55M5618301871492MRWBZEUA",
+ *                     "type": "SHIPPING",
+ *                     "amount": {
+ *                         "currency": "USD",
+ *                         "value": "10"
+ *                     }
+ *                 },
+ *                 {
+ *                     "id": "CHM-92S85978TN737850VRWBZEUA",
+ *                     "type": "TAX",
+ *                     "amount": {
+ *                         "currency": "USD",
+ *                         "value": "12"
+ *                     }
+ *                 }
+ *             ],
+ *             "cycles": "12",
+ *             "frequency_interval": "2"
+ *         }
+ *     ],
+ *     "merchant_preferences": {
+ *         "setup_fee": {
+ *             "currency": "USD",
+ *             "value": "1"
+ *         },
+ *         "max_fail_attempts": "0",
+ *         "return_url": "http://www.return.com",
+ *         "cancel_url": "http://www.cancel.com",
+ *         "auto_bill_amount": "YES",
+ *         "initial_fail_amount_action": "CONTINUE"
+ *     },
+ *     "create_time": "2014-07-31T17:41:55.920Z",
+ *     "update_time": "2014-07-31T17:41:55.920Z",
+ *     "links": [
+ *         {
+ *             "href": "https://api.sandbox.paypal.com/v1/payments/billing-plans/P-94458432VR012762KRWBZEUA",
+ *             "rel": "self",
+ *             "method": "GET"
+ *         }
+ *     ]
+ * }
  * </code>
  *
  * @link https://developer.paypal.com/docs/api/#create-a-plan
@@ -182,7 +261,7 @@ class CreatePlanRequest extends AbstractRestRequest
      * @return CreatePlanRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#paymentdefinition-object
      */
-    public function setPaymentDefinitions($value)
+    public function setPaymentDefinitions(array $value)
     {
         return $this->setParameter('paymentDefinitions', $value);
     }
@@ -211,7 +290,7 @@ class CreatePlanRequest extends AbstractRestRequest
      * @return CreatePlanRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#merchantpreferences-object
      */
-    public function setMerchantPreferences($value)
+    public function setMerchantPreferences(array $value)
     {
         return $this->setParameter('merchantPreferences', $value);
     }

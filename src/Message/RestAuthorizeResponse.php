@@ -24,12 +24,15 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
 
     public function getRedirectUrl()
     {
-        $redirectUrl = null;
-        if (isset($this->data['links'][1]) && $this->data['links'][1]['rel'] == 'approval_url') {
-            $redirectUrl = $this->data['links'][1]['href'];
+        if (isset($this->data['links']) && is_array($this->data['links'])) {
+            foreach ($this->data['links'] as $key => $value) {
+                if ($value['rel'] == 'approval_url') {
+                    return $value['href'];
+                }
+            }
         }
 
-        return $redirectUrl;
+        return null;
     }
 
     /**
