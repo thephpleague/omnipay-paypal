@@ -146,6 +146,15 @@ use Omnipay\PayPal\Message\RefundRequest;
  */
 class RestGateway extends AbstractGateway
 {
+
+    // Constants used in plan creation
+    const BILLING_PLAN_TYPE_FIXED       = 'FIXED';
+    const BILLING_PLAN_TYPE_INFINITE    = 'INFINITE';
+    const BILLING_PLAN_FREQUENCY_DAY    = 'DAY';
+    const BILLING_PLAN_FREQUENCY_WEEK   = 'WEEK';
+    const BILLING_PLAN_FREQUENCY_MONTH  = 'MONTH';
+    const BILLING_PLAN_FREQUENCY_YEAR   = 'YEAR';
+
     public function getName()
     {
         return 'PayPal REST';
@@ -487,4 +496,27 @@ class RestGateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestDeleteCardRequest', $parameters);
     }
+
+    //
+    // Billing Plans and Agreements -- Set up recurring payments.
+    // @link https://developer.paypal.com/docs/api/#billing-plans-and-agreements
+    //
+    public function createPlan(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestCreatePlanRequest', $parameters);
+    }
+
+    // TODO: Update a plan (required to set a plan active)
+    // TODO: Retrieve a plan
+    // TODO: List plans
+    // TODO: Create an agreement
+    // TODO: Execute an agreement
+    // TODO: Update an agreement
+    // TODO: Retrieve an agreement
+    // TODO: Suspend an agreement
+    // TODO: Reactivate an agreement
+    // TODO: Cancel an agreement
+    // TODO: Search for transactions
+    // TODO: Set outstanding agreement amounts
+    // TODO: Bill outstanding agreement amounts
 }
