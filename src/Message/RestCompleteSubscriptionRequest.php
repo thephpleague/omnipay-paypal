@@ -108,7 +108,7 @@ class RestCompleteSubscriptionRequest extends AbstractRestRequest
     /**
      * Get transaction endpoint.
      *
-     * Complete Subscriptions are created using the /purchases resource.
+     * Subscriptions are executed using the /billing-agreements resource.
      *
      * @return string
      */

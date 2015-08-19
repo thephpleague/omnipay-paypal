@@ -312,7 +312,7 @@ class RestCreatePlanRequest extends AbstractRestRequest
     /**
      * Get transaction endpoint.
      *
-     * Create Plans are created using the /purchases resource.
+     * Billing plans are created using the /billing-plans resource.
      *
      * @return string
      */
