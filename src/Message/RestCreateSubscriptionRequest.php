@@ -89,6 +89,8 @@ namespace Omnipay\PayPal\Message;
  *       if ($response->isRedirect()) {
  *           echo "Response is a redirect\n";
  *           echo "Redirect URL = " . $response->getRedirectUrl();
+ *           $subscription_id = $response->getTransactionReference();
+ *           echo "Subscription reference = " . $subscription_id;
  *       }
  *   }
  * </code>
@@ -200,7 +202,7 @@ namespace Omnipay\PayPal\Message;
  * @see RestCreatePlanRequest
  * @see Omnipay\PayPal\RestGateway
  */
-class CreateSubscriptionRequest extends AbstractRestRequest
+class RestCompleteSubscriptionRequest extends AbstractRestRequest
 {
     /**
      * Get the agreement name
@@ -216,7 +218,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * Set the agreement name
      *
      * @param string $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      */
     public function setName($value)
     {
@@ -237,7 +239,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * Set the plan ID
      *
      * @param string $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      */
     public function setPlanId($value)
     {
@@ -258,7 +260,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * Set the agreement start date
      *
      * @param \DateTime $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      */
     public function setStartDate(\DateTime $value)
     {
@@ -286,7 +288,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#agreementdetails-object
      */
     public function setAgreementDetails(array $value)
@@ -315,7 +317,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#payer-object
      */
     public function setPayerDetails(array $value)
@@ -344,7 +346,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#address-object
      */
     public function setShippingAddress(array $value)
@@ -373,7 +375,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#merchantpreferences-object
      */
     public function setMerchantPreferences(array $value)
@@ -402,7 +404,7 @@ class CreateSubscriptionRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreateSubscriptionRequest provides a fluent interface.
+     * @return RestCompleteSubscriptionRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#merchantpreferences-object
      */
     public function setChargeModel(array $value)
@@ -412,8 +414,6 @@ class CreateSubscriptionRequest extends AbstractRestRequest
 
     public function getData()
     {
-        // An amount parameter is required.  All amounts are in
-        // Australian dollars.
         $this->validate('name', 'description', 'startDate', 'payer', 'planId');
         $data = array(
             'name'                              => $this->getName(),

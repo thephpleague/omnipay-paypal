@@ -192,7 +192,7 @@ namespace Omnipay\PayPal\Message;
  * @link https://developer.paypal.com/docs/api/#create-a-plan
  * @see Omnipay\PayPal\RestGateway
  */
-class CreatePlanRequest extends AbstractRestRequest
+class RestCreatePlanRequest extends AbstractRestRequest
 {
     /**
      * Get the plan name
@@ -208,7 +208,7 @@ class CreatePlanRequest extends AbstractRestRequest
      * Set the plan name
      *
      * @param string $value
-     * @return CreatePlanRequest provides a fluent interface.
+     * @return RestCreatePlanRequest provides a fluent interface.
      */
     public function setName($value)
     {
@@ -230,7 +230,7 @@ class CreatePlanRequest extends AbstractRestRequest
      *
      * @param string $value either RestGateway::BILLING_PLAN_TYPE_FIXED
      *                      or RestGateway::BILLING_PLAN_TYPE_INFINITE
-     * @return CreatePlanRequest provides a fluent interface.
+     * @return RestCreatePlanRequest provides a fluent interface.
      */
     public function setType($value)
     {
@@ -258,7 +258,7 @@ class CreatePlanRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreatePlanRequest provides a fluent interface.
+     * @return RestCreatePlanRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#paymentdefinition-object
      */
     public function setPaymentDefinitions(array $value)
@@ -287,7 +287,7 @@ class CreatePlanRequest extends AbstractRestRequest
      * a description of the array elements.
      *
      * @param array $value
-     * @return CreatePlanRequest provides a fluent interface.
+     * @return RestCreatePlanRequest provides a fluent interface.
      * @link https://developer.paypal.com/docs/api/#merchantpreferences-object
      */
     public function setMerchantPreferences(array $value)
@@ -297,8 +297,6 @@ class CreatePlanRequest extends AbstractRestRequest
 
     public function getData()
     {
-        // An amount parameter is required.  All amounts are in
-        // Australian dollars.
         $this->validate('name', 'description', 'type');
         $data = array(
             'name'                  => $this->getName(),

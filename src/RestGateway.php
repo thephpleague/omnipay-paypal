@@ -503,6 +503,20 @@ class RestGateway extends AbstractGateway
     // Billing Plans and Agreements -- Set up recurring payments.
     // @link https://developer.paypal.com/docs/api/#billing-plans-and-agreements
     //
+
+    /**
+     * Create a billing plan.
+     *
+     * You can create an empty billing plan and add a trial period and/or regular
+     * billing. Alternatively, you can create a fully loaded plan that includes
+     * both a trial period and regular billing. Note: By default, a created billing
+     * plan is in a CREATED state. A user cannot subscribe to the billing plan
+     * unless it has been set to the ACTIVE state.
+     *
+     * @link https://developer.paypal.com/docs/api/#create-a-plan
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCreatePlanRequest
+     */
     public function createPlan(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestCreatePlanRequest', $parameters);
@@ -512,12 +526,34 @@ class RestGateway extends AbstractGateway
     // TODO: Retrieve a plan
     // TODO: List plans
 
+    /**
+     * Create a subscription.
+     *
+     * Use this call to create a billing agreement for the buyer.
+     *
+     * @link https://developer.paypal.com/docs/api/#create-an-agreement
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCreateSubscriptionRequest
+     */
     public function createSubscription(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestCreateSubscriptionRequest', $parameters);
     }
 
-    // TODO: Execute an agreement
+    /**
+     * Complete (execute) a subscription.
+     *
+     * Use this call to execute an agreement after the buyer approves it.
+     *
+     * @link https://developer.paypal.com/docs/api/#execute-an-agreement
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCompleteSubscriptionRequest
+     */
+    public function completeSubscription(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestCompleteSubscriptionRequest', $parameters);
+    }
+
     // TODO: Update an agreement
     // TODO: Retrieve an agreement
     // TODO: Suspend an agreement
