@@ -154,6 +154,10 @@ class RestGateway extends AbstractGateway
     const BILLING_PLAN_FREQUENCY_WEEK   = 'WEEK';
     const BILLING_PLAN_FREQUENCY_MONTH  = 'MONTH';
     const BILLING_PLAN_FREQUENCY_YEAR   = 'YEAR';
+    const BILLING_PLAN_STATE_CREATED    = 'CREATED';
+    const BILLING_PLAN_STATE_ACTIVE     = 'ACTIVE';
+    const BILLING_PLAN_STATE_INACTIVE   = 'INACTIVE';
+    const BILLING_PLAN_STATE_DELETED    = 'DELETED';
     const PAYMENT_TRIAL                 = 'TRIAL';
     const PAYMENT_REGULAR               = 'REGULAR';
 
@@ -522,7 +526,21 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestCreatePlanRequest', $parameters);
     }
 
-    // TODO: Update a plan (required to set a plan active)
+    /**
+     * Update a billing plan.
+     *
+     * You can update the information for an existing billing plan. The state of a plan
+     * must be active before a billing agreement is created.
+     *
+     * @link https://developer.paypal.com/docs/api/#update-a-plan
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestUpdatePlanRequest
+     */
+    public function updatePlan(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestUpdatePlanRequest', $parameters);
+    }
+
     // TODO: Retrieve a plan
     // TODO: List plans
 
