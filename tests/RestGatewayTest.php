@@ -147,6 +147,28 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertEmpty($data);
     }
 
+    public function testListPurchase()
+    {
+        $request = $this->gateway->listPurchase(array(
+            'count'         => 15,
+            'startId'       => 'PAY123',
+            'startIndex'    => 1,
+            'startTime'     => '2015-09-07T00:00:00Z',
+            'endTime'       => '2015-09-08T00:00:00Z',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestListPurchaseRequest', $request);
+        $this->assertSame(15, $request->getCount());
+        $this->assertSame('PAY123', $request->getStartId());
+        $this->assertSame(1, $request->getStartIndex());
+        $this->assertSame('2015-09-07T00:00:00Z', $request->getStartTime());
+        $this->assertSame('2015-09-08T00:00:00Z', $request->getEndTime());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/payment', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
+    }
+
     public function testCreateCard()
     {
         $this->setMockHttpResponse('RestCreateCardSuccess.txt');

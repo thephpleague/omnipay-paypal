@@ -369,6 +369,22 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * List purchase requests.
+     *
+     * Use this call to get a list of payments in any state (created, approved,
+     * failed, etc.). The payments returned are the payments made to the merchant
+     * making the call.
+     *
+     * @link https://developer.paypal.com/docs/api/#list-payment-resources
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestListPurchaseRequest
+     */
+    public function listPurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestListPurchaseRequest', $parameters);
+    }
+
+    /**
      * Completes a purchase request.
      *
      * @link https://developer.paypal.com/docs/api/#execute-an-approved-paypal-payment
