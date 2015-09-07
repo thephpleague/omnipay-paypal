@@ -396,9 +396,7 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestCompletePurchaseRequest', $parameters);
     }
 
-    // TODO: Look up a payment resource https://developer.paypal.com/docs/api/#look-up-a-payment-resource
     // TODO: Update a payment resource https://developer.paypal.com/docs/api/#update-a-payment-resource
-    // TODO: List payment resources https://developer.paypal.com/docs/api/#list-payment-resources
 
     //
     // Authorizations -- Capture, reauthorize, void and look up authorizations.
