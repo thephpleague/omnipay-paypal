@@ -81,12 +81,70 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
+    public function testCapture()
+    {
+        $request = $this->gateway->capture(array(
+            'transactionReference' => 'abc123',
+            'amount' => 10.00,
+            'currency' => 'AUD',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestCaptureRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/authorization/abc123/capture', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
+    }
+
+    public function testRefund()
+    {
+        $request = $this->gateway->refund(array(
+            'transactionReference' => 'abc123',
+            'amount' => 10.00,
+            'currency' => 'AUD',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestRefundRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/sale/abc123/refund', $endPoint);
+        $data = $request->getData();
+        $this->assertNotEmpty($data);
+    }
+
+    public function testFullRefund()
+    {
+        $request = $this->gateway->refund(array(
+            'transactionReference' => 'abc123',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestRefundRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $endPoint = $request->getEndpoint();
+        $this->assertSame('https://api.paypal.com/v1/payments/sale/abc123/refund', $endPoint);
+        $data = $request->getData();
+        $this->assertEmpty($data);
+    }
+
     public function testFetchTransaction()
     {
         $request = $this->gateway->fetchTransaction(array('transactionReference' => 'abc123'));
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchTransactionRequest', $request);
         $this->assertSame('abc123', $request->getTransactionReference());
+        $data = $request->getData();
+        $this->assertEmpty($data);
+    }
+
+    public function testFetchPurchase()
+    {
+        $request = $this->gateway->fetchPurchase(array('transactionReference' => 'abc123'));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\RestFetchPurchaseRequest', $request);
+        $this->assertSame('abc123', $request->getTransactionReference());
+        $data = $request->getData();
+        $this->assertEmpty($data);
     }
 
     public function testCreateCard()
