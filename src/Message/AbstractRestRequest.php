@@ -135,7 +135,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         if ($this->getHttpMethod() == 'GET') {
             $httpRequest = $this->httpClient->createRequest(
                 $this->getHttpMethod(),
-                $this->getEndpoint(),
+                $this->getEndpoint() . '?' . http_build_query($data),
                 array(
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $this->getToken(),
