@@ -73,7 +73,7 @@ use Omnipay\PayPal\Message\RefundRequest;
  * <code>
  *   // Create a gateway for the PayPal RestGateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('RestGateway');
+ *   $gateway = Omnipay::create('PayPal_Rest');
  *
  *   // Initialise the gateway
  *   $gateway->initialize(array(
