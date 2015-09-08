@@ -421,9 +421,9 @@ class RestCreateSubscriptionRequest extends AbstractRestRequest
             'start_date'                        => $this->getStartDate()->format('c'),
             'agreement_details'                 => $this->getAgreementDetails(),
             'payer'                             => $this->getPayerDetails(),
-            'plan'                              => [
+            'plan'                              => array(
                 'id'    => $this->getPlanId(),
-            ],
+            ),
             'shipping_address'                  => $this->getShippingAddress(),
             'override_merchant_preferences'     => $this->getMerchantPreferences(),
             'override_charge_models'            => $this->getChargeModel(),
