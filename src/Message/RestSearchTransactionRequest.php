@@ -31,7 +31,7 @@ namespace Omnipay\PayPal\Message;
  * This is from the PayPal web site:
  *
  * <code>
- * curl -v GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS/transactions?start_date=yyyy-mm-dd&end_date=yyyy-mm-dd \
+ * curl -v GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS/transactions \
  *     -H 'Content-Type:application/json' \
  *     -H 'Authorization: Bearer <Access-Token>'
  * </code>
