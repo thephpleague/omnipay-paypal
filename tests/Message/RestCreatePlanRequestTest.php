@@ -3,10 +3,11 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Tests\TestCase;
+use Omnipay\PayPal\RestGateway;
 
 class RestCreatePlanRequestTest extends TestCase
 {
-    /** @var \Omnipay\PayPal\Message\RestFetchTransactionRequest */
+    /** @var \Omnipay\PayPal\Message\RestCreatePlanRequest */
     private $request;
 
     public function setUp()
@@ -17,12 +18,13 @@ class RestCreatePlanRequestTest extends TestCase
 
         $this->request->initialize(array(
             'name'                  => 'Super Duper Billing Plan',
-            'type'                  => \Omnipay\PayPal\RestGateway::BILLING_PLAN_TYPE_FIXED,
+            'description'           => 'Test Billing Plan',
+            'type'                  => RestGateway::BILLING_PLAN_TYPE_FIXED,
             'paymentDefinitions'    => array(
                 array(
                     'name'                  => 'Monthly Payments',
-                    'type'                  => \Omnipay\PayPal\RestGateway::PAYMENT_REGULAR,
-                    'frequency'             => \Omnipay\PayPal\RestGateway::BILLING_PLAN_FREQUENCY_MONTH,
+                    'type'                  => RestGateway::PAYMENT_REGULAR,
+                    'frequency'             => RestGateway::BILLING_PLAN_FREQUENCY_MONTH,
                     'frequency_interval'    => 1,
 	                'cycles'                => 12,
 	                'amount'                => array(
@@ -31,7 +33,9 @@ class RestCreatePlanRequestTest extends TestCase
                     )
                 )
             ),
-            'merchantPrefrences'    => array(),
+            'merchantPreferences'    => array(
+                'name'  => 'asdf',
+            ),
         ));
     }
 
@@ -39,13 +43,7 @@ class RestCreatePlanRequestTest extends TestCase
     {
         $data = $this->request->getData();
         $this->assertEquals('Super Duper Billing Plan', $data['name']);
-        $this->request->setTransactionReference('ABC-123');
-        $this->assertStringEndsWith('/payments/sale/ABC-123', $this->request->getEndpoint());
-    }
-
-    public function testGetEndpoint()
-    {
-        $endpoint = $this->request->getEndpoint();
-        $this->assertStringEndsWith('/payments/billing-plans', $endpoint);
+        $this->assertEquals(RestGateway::BILLING_PLAN_TYPE_FIXED, $data['type']);
+        $this->assertEquals('Monthly Payments', $data['payment_definitions'][0]['name']);
     }
 }

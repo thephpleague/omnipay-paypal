@@ -414,7 +414,7 @@ class RestCreateSubscriptionRequest extends AbstractRestRequest
 
     public function getData()
     {
-        $this->validate('name', 'description', 'startDate', 'payer', 'planId');
+        $this->validate('name', 'description', 'startDate', 'payerDetails', 'planId');
         $data = array(
             'name'                              => $this->getName(),
             'description'                       => $this->getDescription(),
