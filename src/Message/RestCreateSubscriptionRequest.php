@@ -184,14 +184,14 @@ namespace Omnipay\PayPal\Message;
  *     },
  *     "links": [
  *         {
- *             "href": "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-0JP008296V451950C",
- *             "rel": "approval_url",
- *             "method": "REDIRECT"
+ * "href": "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-0JP008296V451950C",
+ * "rel": "approval_url",
+ * "method": "REDIRECT"
  *         },
  *         {
- *             "href": "https://api.sandbox.paypal.com/v1/payments/billing-agreements/EC-0JP008296V451950C/agreement-execute",
- *             "rel": "execute",
- *             "method": "POST"
+ * "href": "https://api.sandbox.paypal.com/v1/payments/billing-agreements/EC-0JP008296V451950C/agreement-execute",
+ * "rel": "execute",
+ * "method": "POST"
  *         }
  *     ],
  *     "start_date": "2015-02-19T00:37:04Z"
@@ -421,9 +421,9 @@ class RestCreateSubscriptionRequest extends AbstractRestRequest
             'start_date'                        => $this->getStartDate()->format('c'),
             'agreement_details'                 => $this->getAgreementDetails(),
             'payer'                             => $this->getPayerDetails(),
-            'plan'                              => [
+            'plan'                              => array(
                 'id'    => $this->getPlanId(),
-            ],
+            ),
             'shipping_address'                  => $this->getShippingAddress(),
             'override_merchant_preferences'     => $this->getMerchantPreferences(),
             'override_charge_models'            => $this->getChargeModel(),
