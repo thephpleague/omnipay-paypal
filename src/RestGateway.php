@@ -572,12 +572,31 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestCompleteSubscriptionRequest', $parameters);
     }
 
+    /**
+     * Search for transactions.
+     *
+     * Use this call to search for the transactions within a billing agreement.
+     * Note that this is not a generic transaction search function -- for that
+     * see RestListPurchaseRequest.  It only searches for transactions within
+     * a billing agreement.
+     *
+     * This should be used on a regular basis to determine the success / failure
+     * state of transactions on active billing agreements.
+     *
+     * @link https://developer.paypal.com/docs/api/#search-for-transactions
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCompleteSubscriptionRequest
+     */
+    public function searchTransaction(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestSearchTransactionRequest', $parameters);
+    }
+
     // TODO: Update an agreement
     // TODO: Retrieve an agreement
     // TODO: Suspend an agreement
     // TODO: Reactivate an agreement
     // TODO: Cancel an agreement
-    // TODO: Search for transactions
     // TODO: Set outstanding agreement amounts
     // TODO: Bill outstanding agreement amounts
 }
