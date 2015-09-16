@@ -217,7 +217,8 @@ class RestListPurchaseRequest extends AbstractRestRequest
     public function setStartTime($value)
     {
         if ($value instanceof \DateTime) {
-            $value = $value->format(\DateTime::RFC3339);
+            $value->setTimezone(new \DateTimeZone('UTC'));
+            $value = $value->format('Y-m-d\TH:i:s\Z');
         }
         return $this->setParameter('startTime', $value);
     }
@@ -235,11 +236,15 @@ class RestListPurchaseRequest extends AbstractRestRequest
     /**
      * Set the request endTime
      *
-     * @param string $value
+     * @param string|\DateTime $value
      * @return AbstractRestRequest provides a fluent interface.
      */
     public function setEndTime($value)
     {
+        if ($value instanceof \DateTime) {
+            $value->setTimezone(new \DateTimeZone('UTC'));
+            $value = $value->format('Y-m-d\TH:i:s\Z');
+        }
         return $this->setParameter('endTime', $value);
     }
 
