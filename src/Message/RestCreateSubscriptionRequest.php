@@ -409,7 +409,7 @@ class RestCreateSubscriptionRequest extends AbstractRestRequest
      */
     public function setChargeModel(array $value)
     {
-        return $this->setParameter('merchantPreferences', $value);
+        return $this->setParameter('chargeModel', $value);
     }
 
     public function getData()

@@ -132,8 +132,6 @@ use Omnipay\PayPal\Message\RefundRequest;
  * of those transactions on the "My recent activity" list under the My Account
  * tab.
  *
- * TODO: Billing Plans and Agreements -- set up recurring payments.
- *
  * @link https://developer.paypal.com/docs/api/
  * @link https://devtools-paypal.com/integrationwizard/
  * @link http://paypal.github.io/sdk/
