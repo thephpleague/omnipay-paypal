@@ -114,6 +114,6 @@ class RestCompleteSubscriptionRequest extends AbstractRestRequest
      */
     protected function getEndpoint()
     {
-        return parent::getEndpoint() . '/payments/billing-agreements/' . $this->getTransactionReference() . '/execute';
+        return parent::getEndpoint() . '/payments/billing-agreements/' . $this->getTransactionReference() . '/agreement-execute';
     }
 }
