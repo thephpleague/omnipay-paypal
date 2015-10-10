@@ -31,33 +31,6 @@ class ExpressAuthorizeRequest extends AbstractRequest
     }
 
     /**
-     * @param int    $index
-     * @param string $name
-     * @param float  $amount
-     * @param bool   $isDefault
-     * @param string $label
-     */
-    public function setShippingOption($index, $name, $amount, $isDefault, $label = null)
-    {
-        $data['L_SHIPPINGOPTIONNAME' . $index] = $name;
-        $data['L_SHIPPINGOPTIONAMOUNT' . $index] = number_format($amount, 2);
-        $data['L_SHIPPINGOPTIONISDEFAULT' . $index] = $isDefault ? '1' : '0';
-
-        if (!is_null($label)) {
-            $data['L_SHIPPINGOPTIONLABEL' . $index] = $name;
-        }
-
-        $currentShippingOptions = $this->getParameter('shippingOptions');
-        if (empty($currentShippingOptions)) {
-            $currentShippingOptions = array();
-        }
-
-        $currentShippingOptions[$index] = $data;
-
-        $this->setParameter('shippingOptions', $currentShippingOptions);
-    }
-
-    /**
      * Multi-dimensional array of shipping options, containing:
      *  - index, name, amount, isDefault, label
      * index is 0-based as per PayPal's docs. label is optional
