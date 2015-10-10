@@ -215,4 +215,77 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $this->assertSame(321.54, $data['MAXAMT']);
     }
+
+    public function testDataWithCallback()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        // with a default callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'shippingOptions' => array(
+                array(
+                    'index' => 0,
+                    'name' => 'First Class',
+                    'label' => '1-2 days',
+                    'amount' => 1.20,
+                    'isDefault' => true,
+                ),
+                array(
+                    'index' => 1,
+                    'name' => 'Second Class',
+                    'label' => '3-5 days',
+                    'amount' => 0.70,
+                    'isDefault' => false,
+                ),
+                array(
+                    'index' => 2,
+                    'name' => 'International',
+                    'amount' => 3.50,
+                    'isDefault' => false,
+                )
+            ),
+        )));
+
+        $data = $this->request->getData();
+        $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
+        $this->assertSame(ExpressAuthorizeRequest::DEFAULT_CALLBACK_TIMEOUT, $data['CALLBACKTIMEOUT']);
+
+        $this->assertSame('First Class', $data['L_SHIPPINGOPTIONNAME0']);
+        $this->assertSame('1.20', $data['L_SHIPPINGOPTIONAMOUNT0']);
+        $this->assertSame('1', $data['L_SHIPPINGOPTIONISDEFAULT0']);
+        $this->assertSame('1-2 days', $data['L_SHIPPINGOPTIONLABEL0']);
+
+        $this->assertSame('Second Class', $data['L_SHIPPINGOPTIONNAME1']);
+        $this->assertSame('0.70', $data['L_SHIPPINGOPTIONAMOUNT1']);
+        $this->assertSame('0', $data['L_SHIPPINGOPTIONISDEFAULT1']);
+        $this->assertSame('3-5 days', $data['L_SHIPPINGOPTIONLABEL1']);
+
+        $this->assertSame('International', $data['L_SHIPPINGOPTIONNAME2']);
+        $this->assertSame('3.50', $data['L_SHIPPINGOPTIONAMOUNT2']);
+        $this->assertSame('0', $data['L_SHIPPINGOPTIONISDEFAULT2']);
+
+        // with a defined callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'callbackTimeout' => 10,
+        )));
+
+        $data = $this->request->getData();
+        $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
+        $this->assertSame(10, $data['CALLBACKTIMEOUT']);
+    }
+
 }
