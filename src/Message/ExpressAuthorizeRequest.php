@@ -32,8 +32,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
 
     /**
      * Multi-dimensional array of shipping options, containing:
-     *  - index, name, amount, isDefault, label
-     * index is 0-based as per PayPal's docs. label is optional
+     *  name, amount, isDefault, and an optional label
      *
      * @param array $data
      */
