@@ -76,7 +76,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $callback = $this->getCallback();
 
         if (!empty($callback)) {
-            $data['CALLBACK']        = $callback;
+            $data['CALLBACK'] = $callback;
             // callback timeout MUST be included and > 0
             $timeout = $this->getCallbackTimeout();
 
@@ -87,13 +87,13 @@ class ExpressAuthorizeRequest extends AbstractRequest
 
             if (!empty($shippingOptions)) {
                 foreach ($shippingOptions as $index => $shipping) {
-                    $name      = $shipping['name'];
+                    $name = $shipping['name'];
                     $isDefault = $shipping['isDefault'];
-                    $amount    = $shipping['amount'];
-                    $label     = isset($shipping['label']) ? $shipping['label'] : '';
+                    $amount = $shipping['amount'];
+                    $label = isset($shipping['label']) ? $shipping['label'] : '';
 
-                    $data['L_SHIPPINGOPTIONNAME' . $index]      = $name;
-                    $data['L_SHIPPINGOPTIONAMOUNT' . $index]    = number_format($amount, 2);
+                    $data['L_SHIPPINGOPTIONNAME' . $index] = $name;
+                    $data['L_SHIPPINGOPTIONAMOUNT' . $index] = number_format($amount, 2);
                     $data['L_SHIPPINGOPTIONISDEFAULT' . $index] = $isDefault ? '1' : '0';
 
                     if (!empty($label)) {
