@@ -237,21 +237,18 @@ class ExpressAuthorizeRequestTest extends TestCase
             'callback' => 'https://www.example.com/calculate-shipping',
             'shippingOptions' => array(
                 array(
-                    'index' => 0,
                     'name' => 'First Class',
                     'label' => '1-2 days',
                     'amount' => 1.20,
                     'isDefault' => true,
                 ),
                 array(
-                    'index' => 1,
                     'name' => 'Second Class',
                     'label' => '3-5 days',
                     'amount' => 0.70,
                     'isDefault' => false,
                 ),
                 array(
-                    'index' => 2,
                     'name' => 'International',
                     'amount' => 3.50,
                     'isDefault' => false,

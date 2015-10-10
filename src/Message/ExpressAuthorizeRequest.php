@@ -114,8 +114,7 @@ class ExpressAuthorizeRequest extends AbstractRequest
             $shippingOptions = $this->getShippingOptions();
 
             if (!empty($shippingOptions)) {
-                foreach ($shippingOptions as $shipping) {
-                    $index     = $shipping['index'];
+                foreach ($shippingOptions as $index => $shipping) {
                     $name      = $shipping['name'];
                     $isDefault = $shipping['isDefault'];
                     $amount    = $shipping['amount'];
