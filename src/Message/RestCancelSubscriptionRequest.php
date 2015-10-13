@@ -70,7 +70,7 @@ class RestCancelSubscriptionRequest extends AbstractRestRequest
 {
     public function getData()
     {
-        $this->validate('transactionReference');
+        $this->validate('transactionReference', 'description');
         $data = array(
             'note'  => $this->getDescription(),
         );
