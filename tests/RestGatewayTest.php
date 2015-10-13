@@ -7,6 +7,15 @@ use Omnipay\Common\CreditCard;
 
 class RestGatewayTest extends GatewayTestCase
 {
+    /** @var RestGateway */
+    public $gateway;
+
+    /** @var array */
+    public $options;
+
+    /** @var array */
+    public $subscription_options;
+
     public function setUp()
     {
         parent::setUp();
@@ -25,6 +34,11 @@ class RestGatewayTest extends GatewayTestCase
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+        );
+
+        $this->subscription_options = array(
+            'transactionReference'  => 'ABC-1234',
+            'description'           => 'Description goes here',
         );
     }
 
@@ -113,4 +127,39 @@ class RestGatewayTest extends GatewayTestCase
         $this->assertNull($response->getMessage());
     }
 
+    // Incomplete generic tests for subscription payments
+
+    public function testCompleteSubscription()
+    {
+        $this->setMockHttpResponse('RestExecuteSubscriptionSuccess.txt');
+        $response = $this->gateway->completeSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+
+        $this->assertEquals('I-0LN988D3JACS', $response->getTransactionReference());
+    }
+
+    public function testCancelSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->cancelSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testSuspendSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->suspendSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
+
+    public function testReactivateSubscription()
+    {
+        $this->setMockHttpResponse('RestGenericSubscriptionSuccess.txt');
+        $response = $this->gateway->reactivateSubscription($this->subscription_options)->send();
+        $this->assertTrue($response->isSuccessful());
+        $this->assertNull($response->getMessage());
+    }
 }
