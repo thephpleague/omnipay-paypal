@@ -571,6 +571,20 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Cancel a subscription.
+     *
+     * Use this call to cancel an agreement.
+     *
+     * @link https://developer.paypal.com/docs/api/#cancel-an-agreement
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCancelSubscriptionRequest
+     */
+    public function cancelSubscription(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestCancelSubscriptionRequest', $parameters);
+    }
+
+    /**
      * Search for transactions.
      *
      * Use this call to search for the transactions within a billing agreement.
@@ -594,7 +608,6 @@ class RestGateway extends AbstractGateway
     // TODO: Retrieve an agreement
     // TODO: Suspend an agreement
     // TODO: Reactivate an agreement
-    // TODO: Cancel an agreement
     // TODO: Set outstanding agreement amounts
     // TODO: Bill outstanding agreement amounts
 }
