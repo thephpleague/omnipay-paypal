@@ -1,19 +1,19 @@
 <?php
 /**
- * PayPal REST Cancel Subscription Request
+ * PayPal REST Reactivate Subscription Request
  */
 
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal REST Cancel Subscription Request
+ * PayPal REST Reactivate Subscription Request
  *
- * Use this call to cancel an agreement after the buyer approves it.
+ * Use this call to reactivate an agreement.
  *
  * ### Request Data
  *
  * Pass the agreement id in the URI of a POST call.  Also include a description,
- * which is the reason for cancelling the subscription.
+ * which is the reason for reactivating the subscription.
  *
  * ### Example
  *
@@ -31,14 +31,14 @@ namespace Omnipay\PayPal\Message;
  *       'testMode' => true, // Or false when you are ready for live transactions
  *   ));
  *
- *   // Do a cancel subscription transaction on the gateway
- *   $transaction = $gateway->cancelSubscription(array(
+ *   // Do a reactivate subscription transaction on the gateway
+ *   $transaction = $gateway->reactivateSubscription(array(
  *       'transactionReference'     => $subscription_id,
- *       'description'              => "Cancelling the agreement.",
+ *       'description'              => "Reactivating the agreement.",
  *   ));
  *   $response = $transaction->send();
  *   if ($response->isSuccessful()) {
- *       echo "Cancel Subscription transaction was successful!\n";
+ *       echo "Reactivate Subscription transaction was successful!\n";
  *   }
  * </code>
  *
@@ -54,19 +54,19 @@ namespace Omnipay\PayPal\Message;
  * This is from the PayPal web site:
  *
  * <code>
- * curl -v POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS/cancel \
+ * curl -v POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS/re-activate \
  *     -H 'Content-Type:application/json' \
  *     -H 'Authorization: Bearer <Access-Token>' \
  *     -d '{
- *         "note": "Canceling the agreement."
+ *         "note": "Reactivating the agreement."
  *     }'
  * </code>
  *
- * @link https://developer.paypal.com/docs/api/#cancel-an-agreement
+ * @link https://developer.paypal.com/docs/api/#reactivate-an-agreement
  * @see RestCreateSubscriptionRequest
  * @see Omnipay\PayPal\RestGateway
  */
-class RestCancelSubscriptionRequest extends AbstractRestRequest
+class RestReactivateSubscriptionRequest extends AbstractRestRequest
 {
     public function getData()
     {
@@ -88,6 +88,6 @@ class RestCancelSubscriptionRequest extends AbstractRestRequest
     protected function getEndpoint()
     {
         return parent::getEndpoint() . '/payments/billing-agreements/' .
-            $this->getTransactionReference() . '/cancel';
+            $this->getTransactionReference() . '/re-activate';
     }
 }

@@ -614,6 +614,34 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Suspend a subscription.
+     *
+     * Use this call to suspend an agreement.
+     *
+     * @link https://developer.paypal.com/docs/api/#suspend-an-agreement
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestSuspendSubscriptionRequest
+     */
+    public function suspendSubscription(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestSuspendSubscriptionRequest', $parameters);
+    }
+
+    /**
+     * Reactivate a suspended subscription.
+     *
+     * Use this call to reactivate or un-suspend an agreement.
+     *
+     * @link https://developer.paypal.com/docs/api/#reactivate-an-agreement
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestReactivateSubscriptionRequest
+     */
+    public function reactivateSubscription(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestReactivateSubscriptionRequest', $parameters);
+    }
+
+    /**
      * Search for transactions.
      *
      * Use this call to search for the transactions within a billing agreement.
@@ -635,8 +663,6 @@ class RestGateway extends AbstractGateway
 
     // TODO: Update an agreement
     // TODO: Retrieve an agreement
-    // TODO: Suspend an agreement
-    // TODO: Reactivate an agreement
     // TODO: Set outstanding agreement amounts
     // TODO: Bill outstanding agreement amounts
 }
