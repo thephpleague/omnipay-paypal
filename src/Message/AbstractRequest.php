@@ -305,6 +305,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
                 $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
             }
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = $this->formatCurrency($data["PAYMENTREQUEST_0_ITEMAMT"]);
         }
 
         return $data;
