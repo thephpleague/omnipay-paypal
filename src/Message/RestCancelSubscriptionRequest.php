@@ -1,36 +1,23 @@
 <?php
 /**
- * PayPal REST Complete Subscription Request
+ * PayPal REST Cancel Subscription Request
  */
 
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal REST Complete Subscription Request
+ * PayPal REST Cancel Subscription Request
  *
- * Use this call to execute an agreement after the buyer approves it.
- *
- * Note: This request is only necessary for PayPal payments. Billing
- * agreements for credit card payments execute automatically at the time
- * of creation and so this request is not necessary for credit card payments.
+ * Use this call to cancel an agreement after the buyer approves it.
  *
  * ### Request Data
  *
- * Pass the token in the URI of a POST call to execute the subscription
- * agreement after buyer approval. You can find the token in the execute
- * link returned by the request to create a billing agreement.
- *
- * No other data is required.
+ * Pass the agreement id in the URI of a POST call.  Also include a description,
+ * which is the reason for cancelling the subscription.
  *
  * ### Example
  *
  * To create the agreement, see the code example in RestCreateSubscriptionRequest.
- *
- * At the completion of a createSubscription call, the customer should be
- * redirected to the redirect URL contained in $response->getRedirectUrl().  Once
- * the customer has approved the agreement and be returned to the returnUrl
- * in the call.  The returnUrl can contain the following code to complete
- * the agreement:
  *
  * <code>
  *   // Create a gateway for the PayPal REST Gateway
@@ -45,14 +32,13 @@ namespace Omnipay\PayPal\Message;
  *   ));
  *
  *   // Do a complete subscription transaction on the gateway
- *   $transaction = $gateway->completeSubscription(array(
+ *   $transaction = $gateway->cancelSubscription(array(
  *       'transactionReference'     => $subscription_id,
+ *       'description'              => "Cancelling the agreement.",
  *   ));
  *   $response = $transaction->send();
  *   if ($response->isSuccessful()) {
- *       echo "Complete Subscription transaction was successful!\n";
- *       $subscription_id = $response->getTransactionReference();
- *       echo "Subscription reference = " . $subscription_id;
+ *       echo "Cancel Subscription transaction was successful!\n";
  *   }
  * </code>
  *
@@ -68,39 +54,26 @@ namespace Omnipay\PayPal\Message;
  * This is from the PayPal web site:
  *
  * <code>
- * curl -v POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/EC-0JP008296V451950C/agreement-execute \
+ * curl -v POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS/cancel \
  *     -H 'Content-Type:application/json' \
  *     -H 'Authorization: Bearer <Access-Token>' \
- *     -d '{}'
+ *     -d '{
+ *         "note": "Canceling the agreement."
+ *     }'
  * </code>
  *
- * ### Response Sample
- *
- * This is from the PayPal web site:
- *
- * <code>
- * {
- *     "id": "I-0LN988D3JACS",
- *     "links": [
- *         {
- *             "href": "https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-0LN988D3JACS",
- *             "rel": "self",
- *             "method": "GET"
- *         }
- *     ]
- * }
- * </code>
- *
- * @link https://developer.paypal.com/docs/api/#execute-an-agreement
+ * @link https://developer.paypal.com/docs/api/#cancel-an-agreement
  * @see RestCreateSubscriptionRequest
  * @see Omnipay\PayPal\RestGateway
  */
-class RestCompleteSubscriptionRequest extends AbstractRestRequest
+class RestCancelSubscriptionRequest extends AbstractRestRequest
 {
     public function getData()
     {
         $this->validate('transactionReference');
-        $data = array();
+        $data = array(
+            'note'  => $this->getDescription(),
+        );
 
         return $data;
     }
@@ -115,6 +88,6 @@ class RestCompleteSubscriptionRequest extends AbstractRestRequest
     protected function getEndpoint()
     {
         return parent::getEndpoint() . '/payments/billing-agreements/' .
-            $this->getTransactionReference() . '/agreement-execute';
+            $this->getTransactionReference() . '/cancel';
     }
 }
