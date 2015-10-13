@@ -16,8 +16,10 @@ class Response extends AbstractResponse
         parse_str($data, $this->data);
     }
 
-    public function isPending() {
-        return isset($this->data['PAYMENTINFO_0_PAYMENTSTATUS']) && $this->data['PAYMENTINFO_0_PAYMENTSTATUS'] == 'Pending';
+    public function isPending()
+    {
+        return isset($this->data['PAYMENTINFO_0_PAYMENTSTATUS'])
+            && $this->data['PAYMENTINFO_0_PAYMENTSTATUS'] == 'Pending';
     }
 
     public function isSuccessful()
