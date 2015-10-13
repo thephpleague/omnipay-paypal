@@ -98,17 +98,20 @@ namespace Omnipay\PayPal\Message;
  *                                 "parent_payment": "PAY-4D099447DD202993VKEFMRJQ",
  *                                 "links": [
  *                                     {
- *                                         "href": "https://api.sandbox.paypal.com/v1/payments/sale/1D971400A7097562W",
+ *                                         "href":
+ * "https://api.sandbox.paypal.com/v1/payments/sale/1D971400A7097562W",
  *                                         "rel": "self",
  *                                         "method": "GET"
  *                                     },
  *                                     {
- *                                         "href": "https://api.sandbox.paypal.com/v1/payments/sale/1D971400A7097562W/refund",
+ *                                         "href":
+ * "https://api.sandbox.paypal.com/v1/payments/sale/1D971400A7097562W/refund",
  *                                         "rel": "refund",
  *                                         "method": "POST"
  *                                     },
  *                                     {
- *                                         "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAY-4D099447DD202993VKEFMRJQ",
+ *                                         "href":
+ * "https://api.sandbox.paypal.com/v1/payments/payment/PAY-4D099447DD202993VKEFMRJQ",
  *                                         "rel": "parent_payment",
  *                                         "method": "GET"
  *                                     }
@@ -120,7 +123,8 @@ namespace Omnipay\PayPal\Message;
  *             ],
  *             "links": [
  *                          {
- *                              "href": "https://api.sandbox.paypal.com/v1/payments/payment/PAY-4D099447DD202993VKEFMRJQ",
+ *                              "href":
+ * "https://api.sandbox.paypal.com/v1/payments/payment/PAY-4D099447DD202993VKEFMRJQ",
  *                              "rel": "self",
  *                              "method": "GET"
  *                          }
