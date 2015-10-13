@@ -232,28 +232,30 @@ class ExpressAuthorizeRequestTest extends TestCase
             'brandName' => 'Dunder Mifflin Paper Company, Incy.',
         );
 
+        $shippingOptions = array(
+            array(
+                'name'      => 'First Class',
+                'label'     => '1-2 days',
+                'amount'    => 1.20,
+                'isDefault' => true,
+            ),
+            array(
+                'name'      => 'Second Class',
+                'label'     => '3-5 days',
+                'amount'    => 0.70,
+                'isDefault' => false,
+            ),
+            array(
+                'name'      => 'International',
+                'amount'    => 3.50,
+                'isDefault' => false,
+            )
+        );
+
         // with a default callback timeout
         $this->request->initialize(array_merge($baseData, array(
             'callback' => 'https://www.example.com/calculate-shipping',
-            'shippingOptions' => array(
-                array(
-                    'name' => 'First Class',
-                    'label' => '1-2 days',
-                    'amount' => 1.20,
-                    'isDefault' => true,
-                ),
-                array(
-                    'name' => 'Second Class',
-                    'label' => '3-5 days',
-                    'amount' => 0.70,
-                    'isDefault' => false,
-                ),
-                array(
-                    'name' => 'International',
-                    'amount' => 3.50,
-                    'isDefault' => false,
-                )
-            ),
+            'shippingOptions' => $shippingOptions,
         )));
 
         $data = $this->request->getData();
@@ -278,11 +280,71 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize(array_merge($baseData, array(
             'callback' => 'https://www.example.com/calculate-shipping',
             'callbackTimeout' => 10,
+            'shippingOptions' => $shippingOptions,
         )));
 
         $data = $this->request->getData();
         $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
         $this->assertSame(10, $data['CALLBACKTIMEOUT']);
+    }
+
+    public function testNoAmount()
+    {
+        $baseData = array(// nothing here - should cause a certain exception
+        );
+
+        $this->request->initialize($baseData);
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'The amount parameter is required'
+        );
+
+        $this->request->getData();
+    }
+
+    public function testAmountButNoReturnUrl()
+    {
+        $baseData = array(
+            'amount' => 10.00,
+        );
+
+        $this->request->initialize($baseData);
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'The returnUrl parameter is required'
+        );
+
+        $this->request->getData();
+    }
+
+    public function testBadCallbackConfiguration()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+        )));
+
+        // from the docblock on this exception -
+        // Thrown when a request is invalid or missing required fields.
+        // callback has been set but no shipping options so expect one of these:
+        $this->setExpectedException('\Omnipay\Common\Exception\InvalidRequestException');
+
+        $this->request->getData();
     }
 
 }

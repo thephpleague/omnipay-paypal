@@ -2,6 +2,8 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 /**
  * PayPal Express Authorize Request
  */
@@ -46,9 +48,25 @@ class ExpressAuthorizeRequest extends AbstractRequest
         return $this->getParameter('shippingOptions');
     }
 
+    protected function validateCallback()
+    {
+        $callback = $this->getCallback();
+
+        if (!empty($callback)) {
+            $shippingOptions = $this->getShippingOptions();
+
+            if (empty($shippingOptions)) {
+                throw new InvalidRequestException(
+                    'When setting a callback for the Instant Update API you must set shipping options'
+                );
+            }
+        }
+    }
+
     public function getData()
     {
         $this->validate('amount', 'returnUrl', 'cancelUrl');
+        $this->validateCallback();
 
         $data = $this->getBaseData();
         $data['METHOD'] = 'SetExpressCheckout';
