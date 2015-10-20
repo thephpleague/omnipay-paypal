@@ -19,6 +19,7 @@ class ProAuthorizeRequest extends AbstractRequest
         $data['CURRENCYCODE'] = $this->getCurrency();
         $data['INVNUM'] = $this->getTransactionId();
         $data['DESC'] = $this->getDescription();
+        $data['BUTTONSOURCE'] = $this->getButtonSource();
 
         // add credit card details
         $data['ACCT'] = $this->getCard()->getNumber();

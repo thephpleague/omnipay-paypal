@@ -21,6 +21,7 @@ class ProGateway extends AbstractGateway
             'password' => '',
             'signature' => '',
             'testMode' => false,
+            'buttonSource' => '',
         );
     }
 
@@ -52,6 +53,16 @@ class ProGateway extends AbstractGateway
     public function setSignature($value)
     {
         return $this->setParameter('signature', $value);
+    }
+
+    public function getButtonSource()
+    {
+        return $this->getParameter('buttonSource');
+    }
+
+    public function setButtonSource($value)
+    {
+        return $this->setParameter('buttonSource', $value);
     }
 
     public function authorize(array $parameters = array())
