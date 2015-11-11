@@ -39,6 +39,12 @@ namespace Omnipay\PayPal\Message;
  *   }
  * </code>
  *
+ * ### Known Issues
+ *
+ * PayPal subscription payments cannot be refunded. PayPal is working on this functionality
+ * for their future API release.  In order to refund a PayPal subscription payment, you will
+ * need to use the PayPal web interface to refund it manually.
+ *
  * @see RestPurchaseRequest
  */
 class RestRefundRequest extends AbstractRestRequest
