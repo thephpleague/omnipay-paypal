@@ -21,10 +21,6 @@ namespace Omnipay\PayPal\Message;
  * A non-zero amount can be provided for the refund using setAmount(), if this is not
  * provided (or is zero) then a full refund is made.
  *
- * TODO: There is a bug here.  Not providing a refund amount fails with a MALFORMED_REQUEST
- * error from the gateway.  I suspect that this is a bug in Guzzle HTTP client somewhere
- * not sending through the correct (empty JSON) data.
- *
  * Example -- note this example assumes that the purchase has been successful
  * and that the transaction ID returned from the purchase is held in $sale_id.
  * See RestPurchaseRequest for the first part of this example transaction:
@@ -66,7 +62,7 @@ class RestRefundRequest extends AbstractRestRequest
                 'description' => $this->getDescription(),
             );
         } else {
-            return array();
+            return new \stdClass();
         }
     }
 
