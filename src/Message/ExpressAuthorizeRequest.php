@@ -3,6 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 
 /**
  * PayPal Express Authorize Request
@@ -33,16 +34,16 @@ class ExpressAuthorizeRequest extends AbstractRequest
     }
 
     /**
-     * Multi-dimensional array of shipping options, containing:
-     *  name, amount, isDefault, and an optional label
-     *
-     * @param array $data
+     * @param ShippingOption[] $data
      */
     public function setShippingOptions($data)
     {
         $this->setParameter('shippingOptions', $data);
     }
 
+    /**
+     * @return ShippingOption[]
+     */
     public function getShippingOptions()
     {
         return $this->getParameter('shippingOptions');
@@ -59,6 +60,20 @@ class ExpressAuthorizeRequest extends AbstractRequest
                 throw new InvalidRequestException(
                     'When setting a callback for the Instant Update API you must set shipping options'
                 );
+            } else {
+                $hasDefault = false;
+                foreach ($shippingOptions as $shippingOption) {
+                    if ($shippingOption->isDefault()) {
+                        $hasDefault = true;
+                        continue;
+                    }
+                }
+
+                if (!$hasDefault) {
+                    throw new InvalidRequestException(
+                        'One of the supplied shipping options must be set as default'
+                    );
+                }
             }
         }
     }
@@ -105,17 +120,12 @@ class ExpressAuthorizeRequest extends AbstractRequest
 
             if (!empty($shippingOptions)) {
                 foreach ($shippingOptions as $index => $shipping) {
-                    $name = $shipping['name'];
-                    $isDefault = $shipping['isDefault'];
-                    $amount = $shipping['amount'];
-                    $label = isset($shipping['label']) ? $shipping['label'] : '';
+                    $data['L_SHIPPINGOPTIONNAME' . $index] = $shipping->getName();
+                    $data['L_SHIPPINGOPTIONAMOUNT' . $index] = number_format($shipping->getAmount(), 2);
+                    $data['L_SHIPPINGOPTIONISDEFAULT' . $index] = $shipping->isDefault() ? '1' : '0';
 
-                    $data['L_SHIPPINGOPTIONNAME' . $index] = $name;
-                    $data['L_SHIPPINGOPTIONAMOUNT' . $index] = number_format($amount, 2);
-                    $data['L_SHIPPINGOPTIONISDEFAULT' . $index] = $isDefault ? '1' : '0';
-
-                    if (!empty($label)) {
-                        $data['L_SHIPPINGOPTIONLABEL' . $index] = $label;
+                    if ($shipping->hasLabel()) {
+                        $data['L_SHIPPINGOPTIONLABEL' . $index] = $shipping->getLabel();
                     }
                 }
             }

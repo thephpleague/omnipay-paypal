@@ -3,6 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\CreditCard;
+use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 use Omnipay\Tests\TestCase;
 
 class ExpressAuthorizeRequestTest extends TestCase
@@ -233,23 +234,9 @@ class ExpressAuthorizeRequestTest extends TestCase
         );
 
         $shippingOptions = array(
-            array(
-                'name'      => 'First Class',
-                'label'     => '1-2 days',
-                'amount'    => 1.20,
-                'isDefault' => true,
-            ),
-            array(
-                'name'      => 'Second Class',
-                'label'     => '3-5 days',
-                'amount'    => 0.70,
-                'isDefault' => false,
-            ),
-            array(
-                'name'      => 'International',
-                'amount'    => 3.50,
-                'isDefault' => false,
-            )
+            new ShippingOption('First Class', 1.20, true, '1-2 days'),
+            new ShippingOption('Second Class', 0.70, false, '3-5 days'),
+            new ShippingOption('International', 3.50),
         );
 
         // with a default callback timeout
