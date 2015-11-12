@@ -275,6 +275,42 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame(10, $data['CALLBACKTIMEOUT']);
     }
 
+    public function testDataWithCallbackAndNoDefaultShippingOption()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        $shippingOptions = array(
+            new ShippingOption('First Class', 1.20, false, '1-2 days'),
+            new ShippingOption('Second Class', 0.70, false, '3-5 days'),
+            new ShippingOption('International', 3.50),
+        );
+
+        // with a default callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'shippingOptions' => $shippingOptions,
+        )));
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'One of the supplied shipping options must be set as default'
+        );
+
+        $this->request->getData();
+    }
+
     public function testNoAmount()
     {
         $baseData = array(// nothing here - should cause a certain exception
