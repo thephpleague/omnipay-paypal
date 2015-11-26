@@ -15,19 +15,31 @@ namespace Omnipay\PayPal\Message;
  * This call only works after a buyer has approved the payment using the
  * provided PayPal approval URL.
  *
- * Example -- note this example assumes that the purchase has been successful
- * and that the payer ID returned from the callback after the purchase is held
- * in $payer_id, and that the transaction ID returned by the initial payment is
- * held in $sale_id
+ * ### Example
+ *
+ * The payer ID and the payment ID returned from the callback after the purchase
+ * will be passed to the return URL as GET parameters payerId and paymentId
+ * respectively.
+ *
  * See RestPurchaseRequest for the first part of this example transaction:
  *
  * <code>
+ *   $paymentId = $_GET['paymentId'];
+ *   $payerId = $_GET['payerId'];
+ *
  *   // Once the transaction has been approved, we need to complete it.
  *   $transaction = $gateway->completePurchase(array(
  *       'payer_id'             => $payer_id,
  *       'transactionReference' => $sale_id,
  *   ));
  *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       // The customer has successfully paid.
+ *   } else {
+ *       // There was an error returned by completePurchase().  You should
+ *       // check the error code and message from PayPal, which may be something
+ *       // like "card declined", etc.
+ *   }
  * </code>
  *
  * @see RestPurchaseRequest
