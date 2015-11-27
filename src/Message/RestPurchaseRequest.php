@@ -44,7 +44,7 @@ namespace Omnipay\PayPal\Message;
  *
  * This does not require the customer to have a PayPal account.
  *
- * </code>
+ * <code>
  *   // Create a credit card object
  *   // DO NOT USE THESE CARD VALUES -- substitute your own
  *   // see the documentation in the class header.
@@ -115,7 +115,7 @@ namespace Omnipay\PayPal\Message;
  *
  * Step 2 is to send the purchase request.
  *
- * </code>
+ * <code>
  *   // Do a purchase transaction on the gateway
  *   try {
  *       $transaction = $gateway->purchase(array(
@@ -134,7 +134,7 @@ namespace Omnipay\PayPal\Message;
  *       }
  *
  *   } catch (\Exception $e) {
- *       echo "Exception caught while attempting authorize.\n";
+ *       echo "Exception caught while attempting purchase.\n";
  *       echo "Exception type == " . get_class($e) . "\n";
  *       echo "Message == " . $e->getMessage() . "\n";
  *   }
@@ -149,7 +149,7 @@ namespace Omnipay\PayPal\Message;
  * this point.  For the below example I will assume that there is a
  * function called redirectTo() which can handle it for you.
  *
- * </code>
+ * <code>
  *   if ($response->isRedirect()) {
  *       // Redirect the customer to PayPal so that they can sign in and
  *       // authorize the payment.

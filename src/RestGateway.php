@@ -56,7 +56,7 @@ use Omnipay\PayPal\Message\RefundRequest;
  * * Navigate to your Sandbox accounts at https://developer.paypal.com/webapps/developer/applications/accounts
  *   to ensure that you have a valid sandbox account to use for testing.  If you don't already have a sandbox
  *   account, one can be created on this page.  You will actually need 2 accounts, a personal account and a
- *   business account, the business account is the one you need to use for creating API applications. 
+ *   business account, the business account is the one you need to use for creating API applications.
  * * Check your account status on https://developer.paypal.com/webapps/developer/account/status to ensure
  *   that it is valid for live transactions.
  * * Navigate to the My REST apps page: https://developer.paypal.com/webapps/developer/applications/myapps
@@ -91,7 +91,7 @@ use Omnipay\PayPal\Message\RefundRequest;
  *
  * #### Direct Credit Card Payment
  *
- * </code>
+ * <code>
  *   // Create a credit card object
  *   // DO NOT USE THESE CARD VALUES -- substitute your own
  *   // see the documentation in the class header.
@@ -120,7 +120,7 @@ use Omnipay\PayPal\Message\RefundRequest;
  *       $response = $transaction->send();
  *       $data = $response->getData();
  *       echo "Gateway purchase response data == " . print_r($data, true) . "\n";
- *  
+ *
  *       if ($response->isSuccessful()) {
  *           echo "Purchase transaction was successful!\n";
  *       }
@@ -189,7 +189,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 client ID for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -203,7 +203,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 client ID for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -218,7 +218,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 secret for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -232,7 +232,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 secret for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -279,7 +279,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 access token.
-     * 
+     *
      * @param string $value
      * @return RestGateway provides a fluent interface
      */
@@ -290,7 +290,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 access token expiry time.
-     * 
+     *
      * @return integer
      */
     public function getTokenExpires()
@@ -300,7 +300,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 access token expiry time.
-     * 
+     *
      * @param integer $value
      * @return RestGateway provides a fluent interface
      */
@@ -510,7 +510,7 @@ class RestGateway extends AbstractGateway
      * with PayPal instead of storing them on your own server. After storing
      * a credit card, you can then pass the credit card id instead of the
      * related credit card details to complete a payment.
-     * 
+     *
      * @link https://developer.paypal.com/docs/api/#store-a-credit-card
      * @param array $parameters
      * @return \Omnipay\PayPal\Message\RestCreateCardRequest
@@ -526,7 +526,7 @@ class RestGateway extends AbstractGateway
      * Updating a card in the vault is no longer supported -- see
      * http://stackoverflow.com/questions/20858910/paypal-rest-api-update-a-stored-credit-card
      * Therefore the only way to update a card is to remove it using deleteCard and
-     * then re-add it using createCard. 
+     * then re-add it using createCard.
      *
      * @link https://developer.paypal.com/docs/api/#delete-a-stored-credit-card
      * @param array $parameters
