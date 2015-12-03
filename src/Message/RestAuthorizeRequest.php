@@ -183,6 +183,30 @@ namespace Omnipay\PayPal\Message;
  *   }
  * </code>
  *
+ * #### Note on Handling Error Messages
+ *
+ * PayPal account payments are a 2 step process.  Firstly the customer needs to
+ * authorize the payment from PayPal to your application.  Secondly, assuming that
+ * the customer does not have enough balance to pay the invoice from their PayPal
+ * balance, PayPal needs to transfer the funds from the customer's credit card to
+ * their PayPal account.  This transaction is between PayPal and the customer, and
+ * not between the customer and you.
+ *
+ * If the second transaction fails then a call to completePurchase() will return
+ * an error.  However this error message will be fairly generic.  For privacy
+ * reasons, PayPal will not disclose to the merchant the full reason for the
+ * failure, they will only disclose this to the customer.
+ *
+ * Therefore on a failed completePurchase() call you could display an error message
+ * like this one:
+ *
+ * "PayPal failed to process the transaction from your card. For privacy reasons,
+ * PayPal are unable to disclose to us the reason for this failure. You should try
+ * a different payment method, a different card within PayPal, or contact PayPal
+ * support if you need to understand the reason for the failed transaction. PayPal
+ * may advise you to use a different card if the particular card is rejected
+ * by the card issuer."
+ *
  * @link https://developer.paypal.com/docs/integration/direct/capture-payment/#authorize-the-payment
  * @link https://developer.paypal.com/docs/api/#authorizations
  * @link http://bit.ly/1wUQ33R
