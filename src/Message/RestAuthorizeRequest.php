@@ -197,7 +197,7 @@ namespace Omnipay\PayPal\Message;
  * reasons, PayPal will not disclose to the merchant the full reason for the
  * failure, they will only disclose this to the customer.
  *
- * Therefore on a failed completePurchase() call you could display an error message
+ * Therefore on a failed completeAuthorize() call you could display an error message
  * like this one:
  *
  * "PayPal failed to process the transaction from your card. For privacy reasons,
