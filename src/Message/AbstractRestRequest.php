@@ -5,6 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidResponseException;
+
 /**
  * PayPal Abstract REST Request
  *
@@ -160,9 +162,15 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         // logging engine is being used.
         // echo "Data == " . json_encode($data) . "\n";
 
-        $httpResponse = $httpRequest->send();
-
-        return $this->response = $this->createResponse($httpResponse->json(), $httpResponse->getStatusCode());
+        try {
+            $httpResponse = $httpRequest->send();
+            return $this->response = $this->createResponse($httpResponse->json(), $httpResponse->getStatusCode());
+        } catch (\Exception $e) {
+            throw new InvalidResponseException(
+                'Error communicating with payment gateway: ' . $e->getMessage(),
+                $e->getCode()
+            );
+        }
     }
 
     /**
