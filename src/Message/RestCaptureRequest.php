@@ -18,7 +18,9 @@ namespace Omnipay\PayPal\Message;
  * indicate a final capture (prevent future captures) by setting the is_final_capture
  * value to true.
  *
- * Example -- note this example assumes that the authorization has been successful
+ * ### Example
+ *
+ * Note this example assumes that the authorization has been successful
  * and that the authorization ID returned from the authorization is held in $auth_id.
  * See RestAuthorizeRequest for the first part of this example transaction:
  *

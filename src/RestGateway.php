@@ -24,6 +24,8 @@ use Omnipay\PayPal\Message\RefundRequest;
  * the Sandbox URIs. When you’re set to go live, use the live credentials assigned to
  * your app to generate a new access token to be used with the live URIs.
  *
+ * ### Test Mode
+ *
  * In order to use this for testing in sandbox mode you will need at least two sandbox
  * test accounts.  One will need to be a business account, and one will need to be a
  * personal account with credit card details.  To create these yo will need to go to
@@ -46,13 +48,15 @@ use Omnipay\PayPal\Message\RefundRequest;
  * you need to do is provide the clientId and secret when you initialize the gateway,
  * or use the set*() calls to set them after creating the gateway object.
  *
+ * ### Credentials
+ *
  * To create production and sandbox credentials for your PayPal account:
  *
  * * Log into your PayPal account.
  * * Navigate to your Sandbox accounts at https://developer.paypal.com/webapps/developer/applications/accounts
  *   to ensure that you have a valid sandbox account to use for testing.  If you don't already have a sandbox
  *   account, one can be created on this page.  You will actually need 2 accounts, a personal account and a
- *   business account, the business account is the one you need to use for creating API applications. 
+ *   business account, the business account is the one you need to use for creating API applications.
  * * Check your account status on https://developer.paypal.com/webapps/developer/account/status to ensure
  *   that it is valid for live transactions.
  * * Navigate to the My REST apps page: https://developer.paypal.com/webapps/developer/applications/myapps
@@ -68,7 +72,9 @@ use Omnipay\PayPal\Message\RefundRequest;
  * stored per app then it pays to have one API app per website that you are using (and an
  * additional one for things like command line testing, etc).
  *
- * Example:
+ * ### Example
+ *
+ * #### Initialize Gateway
  *
  * <code>
  *   // Create a gateway for the PayPal RestGateway
@@ -81,7 +87,11 @@ use Omnipay\PayPal\Message\RefundRequest;
  *       'secret'   => 'MyPayPalSecret',
  *       'testMode' => true, // Or false when you are ready for live transactions
  *   ));
+ * </code>
  *
+ * #### Direct Credit Card Payment
+ *
+ * <code>
  *   // Create a credit card object
  *   // DO NOT USE THESE CARD VALUES -- substitute your own
  *   // see the documentation in the class header.
@@ -99,32 +109,29 @@ use Omnipay\PayPal\Message\RefundRequest;
  *               'billingState'          => 'QLD',
  *   ));
  *
- *   // Do an authorisation transaction on the gateway
- *   if ($gateway->supportsAuthorize()) {
- *       try {
- *           $transaction = $gateway->authorize(array(
- *               'amount'        => '10.00',
- *               'currency'      => 'AUD',
- *               'description'   => 'This is a test authorize transaction.',
- *               'card'          => $card,
- *           ));
- *           $response = $transaction->send();
- *           $data = $response->getData();
- *           echo "Gateway authorize response data == " . print_r($data, true) . "\n";
- *  
- *           if ($response->isSuccessful()) {
- *               echo "Authorize transaction was successful!\n";
- *           }
- *       } catch (\Exception $e) {
- *           echo "Exception caught while attempting authorize.\n";
- *           echo "Exception type == " . get_class($e) . "\n";
- *           echo "Message == " . $e->getMessage() . "\n";
+ *   // Do a purchase transaction on the gateway
+ *   try {
+ *       $transaction = $gateway->purchase(array(
+ *           'amount'        => '10.00',
+ *           'currency'      => 'AUD',
+ *           'description'   => 'This is a test purchase transaction.',
+ *           'card'          => $card,
+ *       ));
+ *       $response = $transaction->send();
+ *       $data = $response->getData();
+ *       echo "Gateway purchase response data == " . print_r($data, true) . "\n";
+ *
+ *       if ($response->isSuccessful()) {
+ *           echo "Purchase transaction was successful!\n";
  *       }
- *      
- *   } else {
- *       echo "Gateway does not support authorize.\n";
+ *   } catch (\Exception $e) {
+ *       echo "Exception caught while attempting authorize.\n";
+ *       echo "Exception type == " . get_class($e) . "\n";
+ *       echo "Message == " . $e->getMessage() . "\n";
  *   }
  * </code>
+ *
+ * ### Dashboard
  *
  * Once you have processed some payments you can go to the PayPal sandbox site,
  * at https://www.sandbox.paypal.com/ and log in with the email address and password
@@ -182,7 +189,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 client ID for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -196,7 +203,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 client ID for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -211,7 +218,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 secret for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -225,7 +232,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 secret for the access token.
-     * 
+     *
      * Get an access token by using the OAuth 2.0 client_credentials
      * token grant type with your clientId:secret as your Basic Auth
      * credentials.
@@ -272,7 +279,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 access token.
-     * 
+     *
      * @param string $value
      * @return RestGateway provides a fluent interface
      */
@@ -283,7 +290,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Get OAuth 2.0 access token expiry time.
-     * 
+     *
      * @return integer
      */
     public function getTokenExpires()
@@ -293,7 +300,7 @@ class RestGateway extends AbstractGateway
 
     /**
      * Set OAuth 2.0 access token expiry time.
-     * 
+     *
      * @param integer $value
      * @return RestGateway provides a fluent interface
      */
@@ -503,7 +510,7 @@ class RestGateway extends AbstractGateway
      * with PayPal instead of storing them on your own server. After storing
      * a credit card, you can then pass the credit card id instead of the
      * related credit card details to complete a payment.
-     * 
+     *
      * @link https://developer.paypal.com/docs/api/#store-a-credit-card
      * @param array $parameters
      * @return \Omnipay\PayPal\Message\RestCreateCardRequest
@@ -519,7 +526,7 @@ class RestGateway extends AbstractGateway
      * Updating a card in the vault is no longer supported -- see
      * http://stackoverflow.com/questions/20858910/paypal-rest-api-update-a-stored-credit-card
      * Therefore the only way to update a card is to remove it using deleteCard and
-     * then re-add it using createCard. 
+     * then re-add it using createCard.
      *
      * @link https://developer.paypal.com/docs/api/#delete-a-stored-credit-card
      * @param array $parameters
