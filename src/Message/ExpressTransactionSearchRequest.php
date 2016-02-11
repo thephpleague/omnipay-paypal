@@ -3,7 +3,6 @@
 namespace Omnipay\PayPal\Message;
 
 use DateTime;
-use DateTimeInterface;
 
 /**
  * Paypal Express Checkout - Transaction Search
@@ -113,7 +112,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
      */
     public function setStartDate($date)
     {
-        if (! $date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTime) {
             $date = new DateTime($date);
         }
 
@@ -134,7 +133,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
      */
     public function setEndDate($date)
     {
-        if (! $date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTime) {
             $date = new DateTime($date);
         }
 

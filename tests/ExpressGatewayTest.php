@@ -177,7 +177,7 @@ class ExpressGatewayTest extends GatewayTestCase
         ));
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressTransactionSearchRequest', $transactionSearch);
-        $this->assertInstanceOf('\DateTimeInterface', $transactionSearch->getStartDate());
-        $this->assertInstanceOf('\DateTimeInterface', $transactionSearch->getEndDate());
+        $this->assertInstanceOf('\DateTime', $transactionSearch->getStartDate());
+        $this->assertInstanceOf('\DateTime', $transactionSearch->getEndDate());
     }
 }
