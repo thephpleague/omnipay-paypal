@@ -282,7 +282,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
      */
     public function getInvoiceNumber()
     {
-        return $this->getParameter('InvoiceNumber');
+        return $this->getParameter('invoiceNumber');
     }
 
     /**
