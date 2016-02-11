@@ -47,10 +47,13 @@ class ExpressTransactionSearchRequestTest extends TestCase
 
         $data = $this->request->getData();
 
+        $startDate = new \DateTime($startDate);
+        $endDate = new \DateTime($endDate);
+
         $this->assertSame('10.00', $data['AMT']);
         $this->assertSame('USD', $data['CURRENCYCODE']);
-        $this->assertSame((new \DateTime($startDate))->format(\DateTime::ISO8601), $data['STARTDATE']);
-        $this->assertSame((new \DateTime($endDate))->format(\DateTime::ISO8601), $data['ENDDATE']);
+        $this->assertSame($startDate->format(\DateTime::ISO8601), $data['STARTDATE']);
+        $this->assertSame($endDate->format(\DateTime::ISO8601), $data['ENDDATE']);
         $this->assertSame('Mr.', $data['SALUTATION']);
         $this->assertSame('Jhon', $data['FIRSTNAME']);
         $this->assertSame('Carter', $data['MIDDLENAME']);
