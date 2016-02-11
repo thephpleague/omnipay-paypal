@@ -81,7 +81,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
             $data['TRANSACTIONCLASS'] = $this->getTransactionClass();
         }
 
-        if ($this->getAmount() ) {
+        if ($this->getAmount()) {
             $this->validate('currency');
 
             $data['AMT'] = $this->getAmount();
@@ -370,4 +370,3 @@ class ExpressTransactionSearchRequest extends AbstractRequest
         return $this->response = new ExpressTransactionSearchResponse($this, $data);
     }
 }
-

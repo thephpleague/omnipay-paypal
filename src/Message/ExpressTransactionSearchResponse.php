@@ -32,4 +32,3 @@ class ExpressTransactionSearchResponse extends Response
         return $this->data['payments'];
     }
 }
-
