@@ -26,5 +26,10 @@ class ExpressTransactionSearchResponse extends Response
 
         $this->data['payments'] = $payments;
     }
+
+    public function getPayments()
+    {
+        return $this->data['payments'];
+    }
 }
 
