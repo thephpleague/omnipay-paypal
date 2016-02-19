@@ -89,6 +89,32 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
 
+    public function testOrderSuccess()
+    {
+        $this->setMockHttpResponse('ExpressOrderSuccess.txt');
+
+        $response = $this->gateway->order($this->options)->send();
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressAuthorizeResponse', $response);
+        $this->assertFalse($response->isPending());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
+    }
+
+    public function testOrderFailure()
+    {
+        $this->setMockHttpResponse('ExpressOrderFailure.txt');
+
+        $response = $this->gateway->order($this->options)->send();
+
+        $this->assertFalse($response->isPending());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertNull($response->getTransactionReference());
+        $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
+    }
+
     public function testVoidSuccess()
     {
         $this->setMockHttpResponse('ExpressVoidSuccess.txt');
