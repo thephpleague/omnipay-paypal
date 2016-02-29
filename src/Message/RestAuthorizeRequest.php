@@ -231,7 +231,8 @@ class RestAuthorizeRequest extends AbstractRestRequest
                         'currency' => $this->getCurrency(),
                     ),
                 )
-            )
+            ),
+            'experience_profile_id' => $this->getExperienceProfileId()
         );
 
         $items = $this->getItems();
@@ -300,6 +301,27 @@ class RestAuthorizeRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+
+   /**
+     * Get the experience profile id
+     *
+     * @return string
+     */
+    public function getExperienceProfileId()
+    {
+        return $this->getParameter('experienceProfileId');
+    }
+
+    /**
+     * Set the experience profile id
+     *
+     * @param string $value
+     * @return RestAuthorizeRequest provides a fluent interface.
+     */
+    public function setExperienceProfileId($value)
+    {
+        return $this->setParameter('experienceProfileId', $value);
     }
 
     /**
