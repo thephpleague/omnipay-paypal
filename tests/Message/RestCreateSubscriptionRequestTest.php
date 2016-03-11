@@ -19,7 +19,7 @@ class RestCreateSubscriptionRequestTest extends TestCase
         $this->request->initialize(array(
             'name'                  => 'Test Subscription',
             'description'           => 'Test Billing Subscription',
-            'startDate'             => new \DateTime(),
+            'startDate'             => new \DateTime('now', new \DateTimeZone('UTC')),
             'planId'                => 'ABC-123',
             'payerDetails'          => array(
                 'payment_method'    => 'paypal',
