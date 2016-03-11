@@ -2,14 +2,86 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
+
 /**
  * PayPal Express Authorize Request
  */
 class ExpressAuthorizeRequest extends AbstractRequest
 {
+
+    const DEFAULT_CALLBACK_TIMEOUT = 5;
+
+    public function setCallback($callback)
+    {
+        return $this->setParameter('callback', $callback);
+    }
+
+    public function getCallback()
+    {
+        return $this->getParameter('callback');
+    }
+
+    public function setCallbackTimeout($callbackTimeout)
+    {
+        return $this->setParameter('callbackTimeout', $callbackTimeout);
+    }
+
+    public function getCallbackTimeout()
+    {
+        return $this->getParameter('callbackTimeout');
+    }
+
+    /**
+     * @param ShippingOption[] $data
+     */
+    public function setShippingOptions($data)
+    {
+        $this->setParameter('shippingOptions', $data);
+    }
+
+    /**
+     * @return ShippingOption[]
+     */
+    public function getShippingOptions()
+    {
+        return $this->getParameter('shippingOptions');
+    }
+
+    protected function validateCallback()
+    {
+        $callback = $this->getCallback();
+
+        if (!empty($callback)) {
+            $shippingOptions = $this->getShippingOptions();
+
+            if (empty($shippingOptions)) {
+                throw new InvalidRequestException(
+                    'When setting a callback for the Instant Update API you must set shipping options'
+                );
+            } else {
+                $hasDefault = false;
+                foreach ($shippingOptions as $shippingOption) {
+                    if ($shippingOption->isDefault()) {
+                        $hasDefault = true;
+                        continue;
+                    }
+                }
+
+                if (!$hasDefault) {
+                    throw new InvalidRequestException(
+                        'One of the supplied shipping options must be set as default'
+                    );
+                }
+            }
+        }
+    }
+
     public function getData()
     {
         $this->validate('amount', 'returnUrl', 'cancelUrl');
+        $this->validateCallback();
 
         $data = $this->getBaseData();
         $data['METHOD'] = 'SetExpressCheckout';
@@ -33,6 +105,31 @@ class ExpressAuthorizeRequest extends AbstractRequest
         $data['CARTBORDERCOLOR'] = $this->getBorderColor();
         $data['LOCALECODE'] = $this->getLocaleCode();
         $data['CUSTOMERSERVICENUMBER'] = $this->getCustomerServiceNumber();
+
+        $callback = $this->getCallback();
+
+        if (!empty($callback)) {
+            $data['CALLBACK'] = $callback;
+            // callback timeout MUST be included and > 0
+            $timeout = $this->getCallbackTimeout();
+
+            $data['CALLBACKTIMEOUT'] = $timeout > 0 ? $timeout : self::DEFAULT_CALLBACK_TIMEOUT;
+
+            // if you're using a callback you MUST set shipping option(s)
+            $shippingOptions = $this->getShippingOptions();
+
+            if (!empty($shippingOptions)) {
+                foreach ($shippingOptions as $index => $shipping) {
+                    $data['L_SHIPPINGOPTIONNAME' . $index] = $shipping->getName();
+                    $data['L_SHIPPINGOPTIONAMOUNT' . $index] = number_format($shipping->getAmount(), 2);
+                    $data['L_SHIPPINGOPTIONISDEFAULT' . $index] = $shipping->isDefault() ? '1' : '0';
+
+                    if ($shipping->hasLabel()) {
+                        $data['L_SHIPPINGOPTIONLABEL' . $index] = $shipping->getLabel();
+                    }
+                }
+            }
+        }
 
         $data['MAXAMT'] = $this->getMaxAmount();
         $data['PAYMENTREQUEST_0_TAXAMT'] = $this->getTaxAmount();

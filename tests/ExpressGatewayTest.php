@@ -148,7 +148,6 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseHttpOptions()
     {
-
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
         $this->getHttpRequest()->query->replace(array(
@@ -158,7 +157,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completePurchase(array(
             'amount' => '10.00',
-            'currency' => 'BYR'
+            'currency' => 'BYR',
         ))->send();
 
         $httpRequests = $this->getMockedRequests();
@@ -171,7 +170,6 @@ class ExpressGatewayTest extends GatewayTestCase
 
     public function testCompletePurchaseCustomOptions()
     {
-
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
         // Those values should not be used if custom token or payerid are passed
@@ -184,7 +182,7 @@ class ExpressGatewayTest extends GatewayTestCase
             'amount' => '10.00',
             'currency' => 'BYR',
             'token' => 'CUSTOM_TOKEN',
-            'payerid' => 'CUSTOM_PAYERID'
+            'payerid' => 'CUSTOM_PAYERID',
         ))->send();
 
         $httpRequests = $this->getMockedRequests();
@@ -195,4 +193,15 @@ class ExpressGatewayTest extends GatewayTestCase
 
     }
 
+    public function testTransactionSearch()
+    {
+        $transactionSearch = $this->gateway->transactionSearch(array(
+            'startDate' => '2015-01-01',
+            'endDate' => '2015-12-31',
+        ));
+
+        $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressTransactionSearchRequest', $transactionSearch);
+        $this->assertInstanceOf('\DateTime', $transactionSearch->getStartDate());
+        $this->assertInstanceOf('\DateTime', $transactionSearch->getEndDate());
+    }
 }

@@ -138,7 +138,10 @@ class RestGatewayTest extends GatewayTestCase
         $endPoint = $request->getEndpoint();
         $this->assertSame('https://api.paypal.com/v1/payments/sale/abc123/refund', $endPoint);
         $data = $request->getData();
-        $this->assertEmpty((array)$data);
+
+        // we're expecting an empty object here
+        $json = json_encode($data);
+        $this->assertEquals('{}', $json);
     }
 
     public function testFetchTransaction()

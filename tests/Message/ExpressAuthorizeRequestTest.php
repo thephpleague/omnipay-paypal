@@ -3,6 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\CreditCard;
+use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 use Omnipay\Tests\TestCase;
 
 class ExpressAuthorizeRequestTest extends TestCase
@@ -216,4 +217,158 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $this->assertSame(321.54, $data['MAXAMT']);
     }
+
+    public function testDataWithCallback()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        $shippingOptions = array(
+            new ShippingOption('First Class', 1.20, true, '1-2 days'),
+            new ShippingOption('Second Class', 0.70, false, '3-5 days'),
+            new ShippingOption('International', 3.50),
+        );
+
+        // with a default callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'shippingOptions' => $shippingOptions,
+        )));
+
+        $data = $this->request->getData();
+        $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
+        $this->assertSame(ExpressAuthorizeRequest::DEFAULT_CALLBACK_TIMEOUT, $data['CALLBACKTIMEOUT']);
+
+        $this->assertSame('First Class', $data['L_SHIPPINGOPTIONNAME0']);
+        $this->assertSame('1.20', $data['L_SHIPPINGOPTIONAMOUNT0']);
+        $this->assertSame('1', $data['L_SHIPPINGOPTIONISDEFAULT0']);
+        $this->assertSame('1-2 days', $data['L_SHIPPINGOPTIONLABEL0']);
+
+        $this->assertSame('Second Class', $data['L_SHIPPINGOPTIONNAME1']);
+        $this->assertSame('0.70', $data['L_SHIPPINGOPTIONAMOUNT1']);
+        $this->assertSame('0', $data['L_SHIPPINGOPTIONISDEFAULT1']);
+        $this->assertSame('3-5 days', $data['L_SHIPPINGOPTIONLABEL1']);
+
+        $this->assertSame('International', $data['L_SHIPPINGOPTIONNAME2']);
+        $this->assertSame('3.50', $data['L_SHIPPINGOPTIONAMOUNT2']);
+        $this->assertSame('0', $data['L_SHIPPINGOPTIONISDEFAULT2']);
+
+        // with a defined callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'callbackTimeout' => 10,
+            'shippingOptions' => $shippingOptions,
+        )));
+
+        $data = $this->request->getData();
+        $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
+        $this->assertSame(10, $data['CALLBACKTIMEOUT']);
+    }
+
+    public function testDataWithCallbackAndNoDefaultShippingOption()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        $shippingOptions = array(
+            new ShippingOption('First Class', 1.20, false, '1-2 days'),
+            new ShippingOption('Second Class', 0.70, false, '3-5 days'),
+            new ShippingOption('International', 3.50),
+        );
+
+        // with a default callback timeout
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+            'shippingOptions' => $shippingOptions,
+        )));
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'One of the supplied shipping options must be set as default'
+        );
+
+        $this->request->getData();
+    }
+
+    public function testNoAmount()
+    {
+        $baseData = array(// nothing here - should cause a certain exception
+        );
+
+        $this->request->initialize($baseData);
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'The amount parameter is required'
+        );
+
+        $this->request->getData();
+    }
+
+    public function testAmountButNoReturnUrl()
+    {
+        $baseData = array(
+            'amount' => 10.00,
+        );
+
+        $this->request->initialize($baseData);
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            'The returnUrl parameter is required'
+        );
+
+        $this->request->getData();
+    }
+
+    public function testBadCallbackConfiguration()
+    {
+        $baseData = array(
+            'amount' => '10.00',
+            'currency' => 'AUD',
+            'transactionId' => '111',
+            'description' => 'Order Description',
+            'returnUrl' => 'https://www.example.com/return',
+            'cancelUrl' => 'https://www.example.com/cancel',
+            'subject' => 'demo@example.com',
+            'headerImageUrl' => 'https://www.example.com/header.jpg',
+            'allowNote' => 0,
+            'addressOverride' => 0,
+            'brandName' => 'Dunder Mifflin Paper Company, Incy.',
+        );
+
+        $this->request->initialize(array_merge($baseData, array(
+            'callback' => 'https://www.example.com/calculate-shipping',
+        )));
+
+        // from the docblock on this exception -
+        // Thrown when a request is invalid or missing required fields.
+        // callback has been set but no shipping options so expect one of these:
+        $this->setExpectedException('\Omnipay\Common\Exception\InvalidRequestException');
+
+        $this->request->getData();
+    }
+
 }
