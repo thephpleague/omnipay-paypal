@@ -5,6 +5,9 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\ItemBag;
+use Omnipay\PayPal\PayPalItemBag;
+
 /**
  * PayPal Abstract Request
  *
@@ -302,6 +305,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
                 $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+                $data["L_PAYMENTREQUEST_0_NUMBER$n"] = $item->getCode();
 
                 $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
             }
@@ -329,5 +333,19 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     protected function createResponse($data)
     {
         return $this->response = new Response($this, $data);
+    }
+
+    /**
+     * Set the items in this order
+     *
+     * @param ItemBag|array $items An array of items in this order
+     */
+    public function setItems($items)
+    {
+        if ($items && !$items instanceof ItemBag) {
+            $items = new PayPalItemBag($items);
+        }
+
+        return $this->setParameter('items', $items);
     }
 }
