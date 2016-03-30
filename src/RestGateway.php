@@ -442,6 +442,20 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Void an authorization.
+     *
+     * To to void a previously authorized payment.
+     *
+     * @link https://developer.paypal.com/docs/api/#void-an-authorization
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestVoidRequest
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestVoidRequest', $parameters);
+    }
+
+    /**
      * Capture an authorization.
      *
      * Use this resource to capture and process a previously created authorization.
