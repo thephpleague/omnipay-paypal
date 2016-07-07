@@ -48,7 +48,8 @@ class RestTokenRequest extends AbstractRestRequest
         );
 
         $httpResponse = $httpRequest->setAuth($this->getClientId(), $this->getSecret())->send();
-
-        return $this->response = new RestResponse($this, $httpResponse->json(), $httpResponse->getStatusCode());
+        // Empty body response should be parsed also
+        $jsonToArrayResponse = !empty($httpResponse->getBody(true)) ? $httpResponse->json() : array();
+        return $this->response = new RestResponse($this, $jsonToArrayResponse, $httpResponse->getStatusCode());
     }
 }
