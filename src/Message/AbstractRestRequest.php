@@ -166,7 +166,8 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
             $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
             $httpResponse = $httpRequest->send();
             // Empty response body should be parsed also as and empty array
-            $jsonToArrayResponse = !empty($httpResponse->getBody(true)) ? $httpResponse->json() : array();
+            $body = $httpResponse->getBody(true);
+            $jsonToArrayResponse = !empty($body) ? $httpResponse->json() : array();
             return $this->response = $this->createResponse($jsonToArrayResponse, $httpResponse->getStatusCode());
         } catch (\Exception $e) {
             throw new InvalidResponseException(
