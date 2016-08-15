@@ -303,7 +303,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
         return $data;
     }
 
-   /**
+    /**
      * Get the experience profile id
      *
      * @return string
