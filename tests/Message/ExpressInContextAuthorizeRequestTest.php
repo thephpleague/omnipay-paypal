@@ -3,14 +3,14 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\CreditCard;
-use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
+use Omnipay\PayPal\Message\ExpressInContextAuthorizeRequest;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 use Omnipay\Tests\TestCase;
 
-class ExpressAuthorizeRequestTest extends TestCase
+class ExpressInContextAuthorizeRequestTest extends TestCase
 {
     /**
-     * @var ExpressAuthorizeRequest
+     * @var ExpressInContextAuthorizeRequest
      */
     private $request;
 
@@ -18,7 +18,7 @@ class ExpressAuthorizeRequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = new ExpressAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new ExpressInContextAuthorizeRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(
             array(
                 'amount' => '10.00',
@@ -103,7 +103,7 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $expected = array(
             'METHOD' => 'SetExpressCheckout',
-            'VERSION' => ExpressAuthorizeRequest::API_VERSION,
+            'VERSION' => ExpressInContextAuthorizeRequest::API_VERSION,
             'USER' => null,
             'PWD' => null,
             'SIGNATURE' => null,
@@ -249,7 +249,7 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $data = $this->request->getData();
         $this->assertSame('https://www.example.com/calculate-shipping', $data['CALLBACK']);
-        $this->assertSame(ExpressAuthorizeRequest::DEFAULT_CALLBACK_TIMEOUT, $data['CALLBACKTIMEOUT']);
+        $this->assertSame(ExpressInContextAuthorizeRequest::DEFAULT_CALLBACK_TIMEOUT, $data['CALLBACKTIMEOUT']);
 
         $this->assertSame('First Class', $data['L_SHIPPINGOPTIONNAME0']);
         $this->assertSame('1.20', $data['L_SHIPPINGOPTIONAMOUNT0']);
@@ -371,5 +371,4 @@ class ExpressAuthorizeRequestTest extends TestCase
 
         $this->request->getData();
     }
-
 }

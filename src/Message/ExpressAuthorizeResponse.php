@@ -24,13 +24,7 @@ class ExpressAuthorizeResponse extends Response implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        $query = array(
-            'cmd' => '_express-checkout',
-            'useraction' => 'commit',
-            'token' => $this->getTransactionReference(),
-        );
-
-        return $this->getCheckoutEndpoint().'?'.http_build_query($query, '', '&');
+        return $this->getCheckoutEndpoint().'?'.http_build_query($this->getRedirectQueryParameters(), '', '&');
     }
 
     public function getTransactionReference()
@@ -46,6 +40,15 @@ class ExpressAuthorizeResponse extends Response implements RedirectResponseInter
     public function getRedirectData()
     {
         return null;
+    }
+
+    protected function getRedirectQueryParameters()
+    {
+        return array(
+            'cmd' => '_express-checkout',
+            'useraction' => 'commit',
+            'token' => $this->getTransactionReference(),
+        );
     }
 
     protected function getCheckoutEndpoint()
