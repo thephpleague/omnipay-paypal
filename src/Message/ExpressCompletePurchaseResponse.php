@@ -7,11 +7,11 @@ namespace Omnipay\PayPal\Message;
  */
 class ExpressCompletePurchaseResponse extends ExpressAuthorizeResponse
 {
-	public function isSuccessful()
-	{
-		$success = isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
-		return !$this->isRedirect() && $success;
-	}
+    public function isSuccessful()
+    {
+        $success = isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
+        return !$this->isRedirect() && $success;
+    }
 
     public function isRedirect()
     {
