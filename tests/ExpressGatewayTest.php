@@ -146,18 +146,18 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertSame('abc123', $request->getToken());
     }
 
-	public function testCompletePurchaseFailureRedirect()
-	{
-		$this->setMockHttpResponse('ExpressCompletePurchaseFailureRedirect.txt');
+    public function testCompletePurchaseFailureRedirect()
+    {
+        $this->setMockHttpResponse('ExpressCompletePurchaseFailureRedirect.txt');
 
-		$response = $this->gateway->completePurchase($this->options)->send();
+        $response = $this->gateway->completePurchase($this->options)->send();
 
-		$this->assertFalse($response->isPending());
-		$this->assertFalse($response->isSuccessful());
-		$this->assertTrue($response->isRedirect());
-		$this->assertEquals('ASDFASDFASDF', $response->getTransactionReference());
-		$this->assertSame('This transaction couldn\'t be completed. Please redirect your customer to PayPal.', $response->getMessage());
-	}
+        $this->assertFalse($response->isPending());
+        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertEquals('ASDFASDFASDF', $response->getTransactionReference());
+        $this->assertSame('This transaction couldn\'t be completed. Please redirect your customer to PayPal.', $response->getMessage());
+    }
 
     public function testCompletePurchaseHttpOptions()
     {
@@ -178,7 +178,6 @@ class ExpressGatewayTest extends GatewayTestCase
         parse_str((string)$httpRequest->getBody(), $postData);
         $this->assertSame('GET_TOKEN', $postData['TOKEN']);
         $this->assertSame('GET_PAYERID', $postData['PAYERID']);
-
     }
 
     public function testCompletePurchaseCustomOptions()
@@ -203,7 +202,6 @@ class ExpressGatewayTest extends GatewayTestCase
         parse_str((string)$httpRequest->getBody(), $postData);
         $this->assertSame('CUSTOM_TOKEN', $postData['TOKEN']);
         $this->assertSame('CUSTOM_PAYERID', $postData['PAYERID']);
-
     }
 
     public function testTransactionSearch()
