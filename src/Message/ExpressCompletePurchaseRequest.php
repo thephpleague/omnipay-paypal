@@ -14,4 +14,9 @@ class ExpressCompletePurchaseRequest extends ExpressCompleteAuthorizeRequest
 
         return $data;
     }
+
+    protected function createResponse($data)
+    {
+        return $this->response = new ExpressCompletePurchaseResponse($this, $data);
+    }
 }
