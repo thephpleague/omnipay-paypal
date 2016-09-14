@@ -146,6 +146,19 @@ class ExpressGatewayTest extends GatewayTestCase
         $this->assertSame('abc123', $request->getToken());
     }
 
+	public function testCompletePurchaseFailureRedirect()
+	{
+		$this->setMockHttpResponse('ExpressCompletePurchaseFailureRedirect.txt');
+
+		$response = $this->gateway->completePurchase($this->options)->send();
+
+		$this->assertFalse($response->isPending());
+		$this->assertFalse($response->isSuccessful());
+		$this->assertTrue($response->isRedirect());
+		$this->assertEquals('ASDFASDFASDF', $response->getTransactionReference());
+		$this->assertSame('This transaction couldn\'t be completed. Please redirect your customer to PayPal.', $response->getMessage());
+	}
+
     public function testCompletePurchaseHttpOptions()
     {
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
