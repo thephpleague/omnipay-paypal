@@ -28,7 +28,7 @@ use Omnipay\PayPal\Message\RefundRequest;
  *
  * In order to use this for testing in sandbox mode you will need at least two sandbox
  * test accounts.  One will need to be a business account, and one will need to be a
- * personal account with credit card details.  To create these yo will need to go to
+ * personal account with credit card details.  To create these you will need to go to
  * the sandbox accounts section of the PayPal developer dashboard, here:
  * https://developer.paypal.com/webapps/developer/applications/accounts
  * On that page click "Create Account" and follow the prompts.  When you are creating the
