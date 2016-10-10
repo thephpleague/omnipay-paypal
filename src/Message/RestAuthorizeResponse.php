@@ -70,7 +70,7 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
 
         // The last element of the URL should be "execute"
         $execute = end($urlParts);
-        if ($execute != 'execute') {
+        if (!in_array($execute, array('execute', 'agreement-execute')) {
             return parent::getTransactionReference();
         }
 
