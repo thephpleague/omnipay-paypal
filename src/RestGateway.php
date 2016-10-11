@@ -442,6 +442,20 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Void an authorization.
+     *
+     * To to void a previously authorized payment.
+     *
+     * @link https://developer.paypal.com/docs/api/#void-an-authorization
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestVoidRequest
+     */
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestVoidRequest', $parameters);
+    }
+
+    /**
      * Capture an authorization.
      *
      * Use this resource to capture and process a previously created authorization.
@@ -458,7 +472,20 @@ class RestGateway extends AbstractGateway
     }
 
     // TODO: Authorizations with payment_method == paypal.
-    // TODO: Look up and refund captured payments.
+
+    /**
+     * Refund a Captured Payment
+     *
+     * To refund captured payments (authorization transaction) created by a authorize request.
+     *
+     * @link https://developer.paypal.com/docs/api/#refund-a-captured-payment
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestRefundCaptureRequest
+     */
+    public function refundCapture(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestRefundCaptureRequest', $parameters);
+    }
 
     //
     // Sale Transactions -- Get and refund completed payments (sale transactions).
