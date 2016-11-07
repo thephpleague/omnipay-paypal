@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\ExpressFetchCheckoutRequest;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class ExpressFetchCheckoutRequestTest extends TestCase
 {

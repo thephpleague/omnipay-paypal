@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\Message\RedirectResponseInterface;
+use League\Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * PayPal REST Authorize Response

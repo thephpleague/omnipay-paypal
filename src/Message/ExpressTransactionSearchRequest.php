@@ -108,7 +108,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param DateTime|string $date
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setStartDate($date)
     {
@@ -129,7 +129,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param DateTime|string $date
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setEndDate($date)
     {
@@ -150,7 +150,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $salutation
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setSalutation($salutation)
     {
@@ -167,7 +167,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $firstName
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setFirstName($firstName)
     {
@@ -184,7 +184,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $middleName
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setMiddleName($middleName)
     {
@@ -201,7 +201,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $lastName
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setLastName($lastName)
     {
@@ -218,7 +218,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $suffix
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setSuffix($suffix)
     {
@@ -235,7 +235,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $email
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setEmail($email)
     {
@@ -252,7 +252,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $receiver
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setReceiver($receiver)
     {
@@ -269,7 +269,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $receiptId
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setReceiptId($receiptId)
     {
@@ -286,7 +286,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $invoiceNumber
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setInvoiceNumber($invoiceNumber)
     {
@@ -303,7 +303,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $auctionItemNumber
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setAuctionItemNumber($auctionItemNumber)
     {
@@ -320,7 +320,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $transactionClass
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setTransactionClass($transactionClass)
     {
@@ -337,7 +337,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $status
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setStatus($status)
     {
@@ -354,7 +354,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
 
     /**
      * @param string $profileId
-     * @return \Omnipay\Common\Message\AbstractRequest
+     * @return \League\Omnipay\Common\Message\AbstractRequest
      */
     public function setProfileId($profileId)
     {

@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\Exception\InvalidResponseException;
+use League\Omnipay\Common\Exception\InvalidResponseException;
 
 /**
  * PayPal Abstract REST Request
@@ -28,7 +28,7 @@ use Omnipay\Common\Exception\InvalidResponseException;
  * @link http://paypal.github.io/sdk/
  * @see Omnipay\PayPal\RestGateway
  */
-abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRestRequest extends \League\Omnipay\Common\Message\AbstractRequest
 {
     const API_VERSION = 'v1';
 

@@ -2,8 +2,8 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Tests\GatewayTestCase;
-use Omnipay\Common\CreditCard;
+use League\Omnipay\Tests\GatewayTestCase;
+use League\Omnipay\Common\CreditCard;
 
 class ProGatewayTest extends GatewayTestCase
 {

@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
+use League\Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 
 /**

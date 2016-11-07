@@ -5,8 +5,8 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Common\ItemBag;
-use Omnipay\Common\ItemInterface;
+use League\Omnipay\Common\ItemBag;
+use League\Omnipay\Common\ItemInterface;
 
 /**
  * Class PayPalItemBag
