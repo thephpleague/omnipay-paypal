@@ -5,6 +5,7 @@
 
 namespace Omnipay\PayPal\Message;
 
+use League\Omnipay\Common\Amount;
 use League\Omnipay\Common\ItemBag;
 use Omnipay\PayPal\PayPalItem;
 use Omnipay\PayPal\PayPalItemBag;
@@ -305,14 +306,16 @@ abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRe
                 $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
-                $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+                $amount = new Amount($item->getPrice(), $this->getCurrency());
+                $data["L_PAYMENTREQUEST_0_AMT$n"] = $amount->getFormatted();
                 if ($item instanceof PayPalItem) {
                     $data["L_PAYMENTREQUEST_0_NUMBER$n"] = $item->getCode();
                 }
 
-                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
+                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $amount->getFormatted();
             }
-            $data["PAYMENTREQUEST_0_ITEMAMT"] = $this->formatCurrency($data["PAYMENTREQUEST_0_ITEMAMT"]);
+            $amount = new Amount($data["PAYMENTREQUEST_0_ITEMAMT"], $this->getCurrency());
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = $amount->getFormatted();
         }
 
         return $data;

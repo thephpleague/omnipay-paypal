@@ -17,13 +17,15 @@ class ProGatewayTest extends GatewayTestCase
             'amount' => '10.00',
             'currency' => 'USD',
             'card' => new CreditCard(array(
-                'firstName' => 'Example',
-                'lastName' => 'User',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+            'customer' => array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+            )
         );
     }
 
