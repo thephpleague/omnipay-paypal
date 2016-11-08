@@ -20,6 +20,11 @@ class RestResponse extends AbstractResponse
         parent::__construct($request, $data);
         $this->statusCode = $statusCode;
     }
+    
+    public function isCompleted()
+    {
+        return false;
+    }
 
     public function isSuccessful()
     {
