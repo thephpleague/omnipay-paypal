@@ -306,7 +306,7 @@ abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRe
                 $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
-                $amount = new Amount($item->getPrice(), $this->getCurrency());
+                $amount = Amount::fromDecimal($item->getPrice(), $this->getCurrency());
                 $data["L_PAYMENTREQUEST_0_AMT$n"] = $amount->getFormatted();
                 if ($item instanceof PayPalItem) {
                     $data["L_PAYMENTREQUEST_0_NUMBER$n"] = $item->getCode();
@@ -314,7 +314,7 @@ abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRe
 
                 $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $amount->getFormatted();
             }
-            $amount = new Amount($data["PAYMENTREQUEST_0_ITEMAMT"], $this->getCurrency());
+            $amount = Amount::fromDecimal($data["PAYMENTREQUEST_0_ITEMAMT"], $this->getCurrency());
             $data["PAYMENTREQUEST_0_ITEMAMT"] = $amount->getFormatted();
         }
 

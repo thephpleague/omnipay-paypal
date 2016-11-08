@@ -3,6 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Customer;
 use League\Omnipay\Tests\TestCase;
 
 class RestPurchaseRequestTest extends TestCase
@@ -16,7 +17,7 @@ class RestPurchaseRequestTest extends TestCase
         $card->setStartMonth(1);
         $card->setStartYear(2000);
 
-        $customer = $this->getCustomer();
+        $customer = new Customer($this->getCustomer());
 
         $this->request = new RestPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(

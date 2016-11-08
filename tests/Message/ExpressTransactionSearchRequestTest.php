@@ -88,7 +88,7 @@ class ExpressTransactionSearchRequestTest extends TestCase
 
         $this->setExpectedException(
             '\League\Omnipay\Common\Exception\InvalidRequestException',
-            'The currency parameter is required'
+            'A currency is required.'
         );
 
         $this->request->getData();

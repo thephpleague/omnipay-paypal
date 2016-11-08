@@ -15,7 +15,7 @@ class ProAuthorizeRequest extends AbstractRequest
         $data = $this->getBaseData();
         $data['METHOD'] = 'DoDirectPayment';
         $data['PAYMENTACTION'] = 'Authorization';
-        $data['AMT'] = $this->getAmount();
+        $data['AMT'] = $this->getAmount()->getFormatted();
         $data['CURRENCYCODE'] = $this->getCurrency();
         $data['INVNUM'] = $this->getTransactionId();
         $data['DESC'] = $this->getDescription();

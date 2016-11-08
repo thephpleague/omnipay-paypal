@@ -83,7 +83,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
         if ($this->getAmount()) {
             $this->validate('currency');
 
-            $data['AMT'] = $this->getAmount();
+            $data['AMT'] = $this->getAmount()->getFormatted();
             $data['CURRENCYCODE'] = $this->getCurrency();
         }
 

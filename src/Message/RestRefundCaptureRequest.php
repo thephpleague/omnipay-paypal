@@ -23,7 +23,7 @@ class RestRefundCaptureRequest extends AbstractRestRequest
         return array(
             'amount' => array(
                 'currency' => $this->getCurrency(),
-                'total' => $this->getAmount(),
+                'total' => $this->getAmount()->getFormatted(),
             ),
             'description' => $this->getDescription(),
         );

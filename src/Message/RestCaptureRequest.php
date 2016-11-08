@@ -46,7 +46,7 @@ class RestCaptureRequest extends AbstractRestRequest
         return array(
             'amount' => array(
                 'currency' => $this->getCurrency(),
-                'total' => $this->getAmount(),
+                'total' => $this->getAmount()->getFormatted(),
             ),
             'is_final_capture' => true,
         );

@@ -53,11 +53,11 @@ class RestRefundRequest extends AbstractRestRequest
     {
         $this->validate('transactionReference');
 
-        if ($this->getAmount() > 0) {
+        if ($this->getAmount() && $this->getAmount()->getInteger() > 0) {
             return array(
                 'amount' => array(
                     'currency' => $this->getCurrency(),
-                    'total' => $this->getAmount(),
+                    'total' => $this->getAmount()->getFormatted(),
                 ),
                 'description' => $this->getDescription(),
             );

@@ -9,7 +9,7 @@ use League\Omnipay\Tests\TestCase;
 class RestAuthorizeRequestTest extends TestCase
 {
     /**
-     * @var ProPurchaseRequest
+     * @var RestAuthorizeRequest
      */
     private $request;
 

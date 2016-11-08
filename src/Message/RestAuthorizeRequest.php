@@ -229,7 +229,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
                 array(
                     'description' => $this->getDescription(),
                     'amount' => array(
-                        'total' => $this->getAmount(),
+                        'total' => $this->getAmount()->getFormatted(),
                         'currency' => $this->getCurrency(),
                     ),
                 )
@@ -245,7 +245,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
                     'name' => $item->getName(),
                     'description' => $item->getDescription(),
                     'quantity' => $item->getQuantity(),
-                    'price' => (new Amount($item->getPrice(), $this->getCurrency()))->getFormatted(),
+                    'price' => Amount::fromDecimal($item->getPrice(), $this->getCurrency())->getFormatted(),
                     'currency' => $this->getCurrency()
                 );
             }
