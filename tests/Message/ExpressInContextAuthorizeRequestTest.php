@@ -3,6 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Customer;
 use Omnipay\PayPal\Message\ExpressInContextAuthorizeRequest;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 use League\Omnipay\Tests\TestCase;
@@ -29,7 +30,7 @@ class ExpressInContextAuthorizeRequestTest extends TestCase
         );
     }
 
-    public function testGetDataWithoutCard()
+    public function testGetDataWithoutCustomer()
     {
         $this->request->initialize(array(
             'amount' => '10.00',
@@ -66,7 +67,7 @@ class ExpressInContextAuthorizeRequestTest extends TestCase
         $this->assertSame('1-801-FLOWERS', $data['CUSTOMERSERVICENUMBER']);
     }
 
-    public function testGetDataWithCard()
+    public function testGetDataWithCustomer()
     {
         $this->request->initialize(array(
             'amount' => '10.00',
@@ -89,7 +90,7 @@ class ExpressInContextAuthorizeRequestTest extends TestCase
             'sellerPaypalAccountId' => 'billing@example.com',
         ));
 
-        $card = new CreditCard(array(
+        $customer = new Customer(array(
             'name' => 'John Doe',
             'address1' => '123 NW Blvd',
             'address2' => 'Lynx Lane',
@@ -100,7 +101,7 @@ class ExpressInContextAuthorizeRequestTest extends TestCase
             'phone' => '555-555-5555',
             'email' => 'test@email.com',
         ));
-        $this->request->setCard($card);
+        $this->request->setCustomer($customer);
 
         $expected = array(
             'METHOD' => 'SetExpressCheckout',
