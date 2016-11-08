@@ -15,6 +15,7 @@ class ProGatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
+            'currency' => 'USD',
             'card' => new CreditCard(array(
                 'firstName' => 'Example',
                 'lastName' => 'User',
