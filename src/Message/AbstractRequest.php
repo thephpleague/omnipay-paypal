@@ -25,11 +25,11 @@ use Omnipay\PayPal\PayPalItemBag;
  *   Account; it also gives the merchant the flexibility to change payment
  *   processors without having to re-do their technical integration. When using
  *   PayPal Payments Pro (Payflow Edition) using Payflow Gateway integration,
- *   merchants can use Transparent Redirect feature to help manage PCI compliance. 
+ *   merchants can use Transparent Redirect feature to help manage PCI compliance.
  *
  * @link https://developer.paypal.com/docs/classic/products/payflow-gateway/
  * @link https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
- * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/ 
+ * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/
  * @link https://devtools-paypal.com/integrationwizard/
  * @link http://paypal.github.io/sdk/
  */
