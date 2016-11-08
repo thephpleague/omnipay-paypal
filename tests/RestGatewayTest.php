@@ -207,7 +207,11 @@ class RestGatewayTest extends GatewayTestCase
         $cardRef = $response->getCardReference();
 
         $this->setMockHttpResponse('RestPurchaseSuccess.txt');
-        $response = $this->gateway->purchase(array('amount'=>'10.00', 'cardReference'=>$cardRef))->send();
+        $response = $this->gateway->purchase(array(
+            'amount'=>'10.00',
+            'currency' => 'USD',
+            'cardReference'=>$cardRef
+        ))->send();
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
