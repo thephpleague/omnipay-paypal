@@ -6,6 +6,7 @@
 namespace Omnipay\PayPal\Message;
 
 use League\Omnipay\Common\Exception\InvalidResponseException;
+use League\Omnipay\Common\Http\Factory;
 
 /**
  * PayPal Abstract REST Request
@@ -122,20 +123,10 @@ abstract class AbstractRestRequest extends \League\Omnipay\Common\Message\Abstra
 
     public function sendData($data)
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
-
         // Guzzle HTTP Client createRequest does funny things when a GET request
         // has attached data, so don't send the data if the method is GET.
         if ($this->getHttpMethod() == 'GET') {
-            $httpRequest = $this->httpClient->createRequest(
+            $httpRequest = Factory::createRequest(
                 $this->getHttpMethod(),
                 $this->getEndpoint() . '?' . http_build_query($data),
                 array(
@@ -145,7 +136,7 @@ abstract class AbstractRestRequest extends \League\Omnipay\Common\Message\Abstra
                 )
             );
         } else {
-            $httpRequest = $this->httpClient->createRequest(
+            $httpRequest = Factory::createRequest(
                 $this->getHttpMethod(),
                 $this->getEndpoint(),
                 array(
@@ -163,11 +154,10 @@ abstract class AbstractRestRequest extends \League\Omnipay\Common\Message\Abstra
         // echo "Data == " . json_encode($data) . "\n";
 
         try {
-            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-            $httpResponse = $httpRequest->send();
+            $httpResponse = $this->httpClient->sendRequest($httpRequest);
             // Empty response body should be parsed also as and empty array
-            $body = $httpResponse->getBody(true);
-            $jsonToArrayResponse = !empty($body) ? $httpResponse->json() : array();
+            $body = $httpResponse->getBody()->getContents();
+            $jsonToArrayResponse = !empty($body) ? json_decode($body, true) : array();
             return $this->response = $this->createResponse($jsonToArrayResponse, $httpResponse->getStatusCode());
         } catch (\Exception $e) {
             throw new InvalidResponseException(

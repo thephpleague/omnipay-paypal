@@ -320,11 +320,9 @@ abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRe
 
     public function sendData($data)
     {
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), null, http_build_query($data, '', '&'));
-        $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-        $httpResponse = $httpRequest->send();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), [], http_build_query($data, '', '&'));
 
-        return $this->createResponse($httpResponse->getBody());
+        return $this->createResponse($httpResponse->getBody()->getContents());
     }
 
     protected function getEndpoint()

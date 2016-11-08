@@ -27,13 +27,15 @@ class RestGatewayTest extends GatewayTestCase
         $this->options = array(
             'amount' => '10.00',
             'card' => new CreditCard(array(
-                'firstName' => 'Example',
-                'lastName' => 'User',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+            'customer' => array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+            )
         );
 
         $this->subscription_options = array(
