@@ -27,8 +27,8 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_SHIPDISCAMT'] = $this->getShippingDiscount();
         $data['PAYMENTREQUEST_0_INSURANCEAMT'] = $this->getInsuranceAmount();
 
-        $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->httpRequest->query->get('token');
-        $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->httpRequest->query->get('PayerID');
+        $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->query('token');
+        $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->query('PayerID');
 
         $data = array_merge($data, $this->getItemData());
 

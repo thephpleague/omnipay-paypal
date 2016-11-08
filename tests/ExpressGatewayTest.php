@@ -164,6 +164,7 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
+
         $this->getHttpRequest()->query->replace(array(
             'token' => 'GET_TOKEN',
             'PayerID' => 'GET_PAYERID',
@@ -176,7 +177,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $httpRequests = $this->getMockedRequests();
         $httpRequest = $httpRequests[0];
-        parse_str((string)$httpRequest->getBody(), $postData);
+        parse_str((string)$httpRequest->getBody()->getContent(), $postData);
         $this->assertSame('GET_TOKEN', $postData['TOKEN']);
         $this->assertSame('GET_PAYERID', $postData['PAYERID']);
     }
