@@ -16,6 +16,11 @@ class Response extends AbstractResponse
         parse_str($data, $this->data);
     }
 
+    public function isCompleted()
+    {
+        return false;
+    }
+
     public function isPending()
     {
         return isset($this->data['PAYMENTINFO_0_PAYMENTSTATUS'])

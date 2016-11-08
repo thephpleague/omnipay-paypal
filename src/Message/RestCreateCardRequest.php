@@ -81,21 +81,21 @@ class RestCreateCardRequest extends AbstractRestRequest
             'expire_month' => $this->getCard()->getExpiryMonth(),
             'expire_year' => $this->getCard()->getExpiryYear(),
             'cvv2' => $this->getCard()->getCvv(),
-            'first_name' => $this->getCard()->getFirstName(),
-            'last_name' => $this->getCard()->getLastName(),
+            'first_name' => $this->getCustomer()->getFirstName(),
+            'last_name' => $this->getCustomer()->getLastName(),
             'billing_address' => array(
-                'line1' => $this->getCard()->getAddress1(),
-                //'line2' => $this->getCard()->getAddress2(),
-                'city' => $this->getCard()->getCity(),
-                'state' => $this->getCard()->getState(),
-                'postal_code' => $this->getCard()->getPostcode(),
-                'country_code' => strtoupper($this->getCard()->getCountry()),
+                'line1' => $this->getCustomer()->getAddress1(),
+                //'line2' => $this->$this->getCustomer()->getAddress2(),
+                'city' => $this->getCustomer()->getCity(),
+                'state' => $this->getCustomer()->getState(),
+                'postal_code' => $this->getCustomer()->getPostcode(),
+                'country_code' => strtoupper($this->getCustomer()->getCountry()),
             )
         );
 
         // There's currently a quirk with the REST API that requires line2 to be
         // non-empty if it's present. Jul 14, 2014
-        $line2 = $this->getCard()->getAddress2();
+        $line2 = $this->getCustomer()->getAddress2();
         if (!empty($line2)) {
             $data['billing_address']['line2'] = $line2;
         }

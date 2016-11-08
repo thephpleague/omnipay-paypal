@@ -28,15 +28,15 @@ class ProAuthorizeRequest extends AbstractRequest
         $data['CVV2'] = $this->getCard()->getCvv();
         $data['ISSUENUMBER'] = $this->getCard()->getIssueNumber();
         $data['IPADDRESS'] = $this->getClientIp();
-        $data['FIRSTNAME'] = $this->getCard()->getFirstName();
-        $data['LASTNAME'] = $this->getCard()->getLastName();
-        $data['EMAIL'] = $this->getCard()->getEmail();
-        $data['STREET'] = $this->getCard()->getAddress1();
-        $data['STREET2'] = $this->getCard()->getAddress2();
-        $data['CITY'] = $this->getCard()->getCity();
-        $data['STATE'] = $this->getCard()->getState();
-        $data['ZIP'] = $this->getCard()->getPostcode();
-        $data['COUNTRYCODE'] = strtoupper($this->getCard()->getCountry());
+        $data['FIRSTNAME'] = $this->getCustomer()->getFirstName();
+        $data['LASTNAME'] = $this->getCustomer()->getLastName();
+        $data['EMAIL'] = $this->getCustomer()->getEmail();
+        $data['STREET'] = $this->getCustomer()->getAddress1();
+        $data['STREET2'] = $this->getCustomer()->getAddress2();
+        $data['CITY'] = $this->getCustomer()->getCity();
+        $data['STATE'] = $this->getCustomer()->getState();
+        $data['ZIP'] = $this->getCustomer()->getPostcode();
+        $data['COUNTRYCODE'] = strtoupper($this->getCustomer()->getCountry());
 
         return $data;
     }
