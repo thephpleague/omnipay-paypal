@@ -23,6 +23,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize(
             array(
                 'amount' => '10.00',
+                'currency' => 'USD',
                 'returnUrl' => 'https://www.example.com/return',
                 'cancelUrl' => 'https://www.example.com/cancel',
             )
