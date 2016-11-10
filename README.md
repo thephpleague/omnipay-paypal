@@ -32,6 +32,7 @@ And run composer to update your dependencies:
 The following gateways are provided by this package:
 
 * PayPal_Express (PayPal Express Checkout)
+* PayPal_ExpressInContext (PayPal Express In-Context Checkout)
 * PayPal_Pro (PayPal Website Payments Pro)
 * PayPal_Rest (Paypal Rest API)
 
