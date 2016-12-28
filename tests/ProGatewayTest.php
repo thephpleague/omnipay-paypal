@@ -2,8 +2,8 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Tests\GatewayTestCase;
-use Omnipay\Common\CreditCard;
+use League\Omnipay\Tests\GatewayTestCase;
+use League\Omnipay\Common\CreditCard;
 
 class ProGatewayTest extends GatewayTestCase
 {
@@ -15,14 +15,17 @@ class ProGatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
+            'currency' => 'USD',
             'card' => new CreditCard(array(
-                'firstName' => 'Example',
-                'lastName' => 'User',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+            'customer' => array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+            )
         );
     }
 

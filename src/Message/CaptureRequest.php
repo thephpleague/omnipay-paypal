@@ -13,7 +13,7 @@ class CaptureRequest extends AbstractRequest
 
         $data = $this->getBaseData();
         $data['METHOD'] = 'DoCapture';
-        $data['AMT'] = $this->getAmount();
+        $data['AMT'] = $this->getAmount()->getFormatted();
         $data['CURRENCYCODE'] = $this->getCurrency();
         $data['AUTHORIZATIONID'] = $this->getTransactionReference();
         $data['COMPLETETYPE'] = 'Complete';

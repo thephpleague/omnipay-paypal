@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Tests\GatewayTestCase;
+use League\Omnipay\Tests\GatewayTestCase;
 
 class ExpressGatewayTest extends GatewayTestCase
 {
@@ -29,6 +29,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
+            'currency' => 'USD',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
         );
@@ -163,10 +164,14 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
-        $this->getHttpRequest()->query->replace(array(
-            'token' => 'GET_TOKEN',
-            'PayerID' => 'GET_PAYERID',
-        ));
+        $httpRequest = $this->getHttpRequest();
+        $query = $httpRequest->getQueryParams();
+        $query['token'] = 'GET_TOKEN';
+        $query['PayerID'] = 'GET_PAYERID';
+
+        $httpRequest = $httpRequest->withQueryParams($query);
+
+        $this->gateway = new ExpressGateway($this->getHttpClient(), $httpRequest);
 
         $response = $this->gateway->completePurchase(array(
             'amount' => '10.00',
@@ -175,7 +180,9 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $httpRequests = $this->getMockedRequests();
         $httpRequest = $httpRequests[0];
-        parse_str((string)$httpRequest->getBody(), $postData);
+
+        parse_str((string)$httpRequest->getBody()->getContents(), $postData);
+
         $this->assertSame('GET_TOKEN', $postData['TOKEN']);
         $this->assertSame('GET_PAYERID', $postData['PAYERID']);
     }
@@ -184,11 +191,14 @@ class ExpressGatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('ExpressPurchaseSuccess.txt');
 
-        // Those values should not be used if custom token or payerid are passed
-        $this->getHttpRequest()->query->replace(array(
-            'token' => 'GET_TOKEN',
-            'PayerID' => 'GET_PAYERID',
-        ));
+        $httpRequest = $this->getHttpRequest();
+        $query = $httpRequest->getQueryParams();
+        $query['token'] = 'GET_TOKEN';
+        $query['PayerID'] = 'GET_PAYERID';
+
+        $httpRequest = $httpRequest->withQueryParams($query);
+
+        $this->gateway = new ExpressGateway($this->getHttpClient(), $httpRequest);
 
         $response = $this->gateway->completePurchase(array(
             'amount' => '10.00',

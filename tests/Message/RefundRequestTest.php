@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\RefundRequest;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class RefundRequestTest extends TestCase
 {

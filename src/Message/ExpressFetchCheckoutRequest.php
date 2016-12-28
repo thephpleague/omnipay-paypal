@@ -18,7 +18,7 @@ class ExpressFetchCheckoutRequest extends AbstractRequest
         if ($this->getToken()) {
             $data['TOKEN'] = $this->getToken();
         } else {
-            $data['TOKEN'] = $this->httpRequest->query->get('token');
+            $data['TOKEN'] = $this->query('token');
         }
 
         return $data;

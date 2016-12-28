@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Common\Item;
+use League\Omnipay\Common\Item;
 
 /**
  * Class PayPalItem

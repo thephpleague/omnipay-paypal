@@ -5,7 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\ItemBag;
+use League\Omnipay\Common\Amount;
+use League\Omnipay\Common\ItemBag;
 use Omnipay\PayPal\PayPalItem;
 use Omnipay\PayPal\PayPalItemBag;
 
@@ -24,15 +25,15 @@ use Omnipay\PayPal\PayPalItemBag;
  *   Account; it also gives the merchant the flexibility to change payment
  *   processors without having to re-do their technical integration. When using
  *   PayPal Payments Pro (Payflow Edition) using Payflow Gateway integration,
- *   merchants can use Transparent Redirect feature to help manage PCI compliance. 
+ *   merchants can use Transparent Redirect feature to help manage PCI compliance.
  *
  * @link https://developer.paypal.com/docs/classic/products/payflow-gateway/
  * @link https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
- * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/ 
+ * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/
  * @link https://devtools-paypal.com/integrationwizard/
  * @link http://paypal.github.io/sdk/
  */
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRequest
 {
     const API_VERSION = '119.0';
 
@@ -305,14 +306,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $data["L_PAYMENTREQUEST_0_NAME$n"] = $item->getName();
                 $data["L_PAYMENTREQUEST_0_DESC$n"] = $item->getDescription();
                 $data["L_PAYMENTREQUEST_0_QTY$n"] = $item->getQuantity();
-                $data["L_PAYMENTREQUEST_0_AMT$n"] = $this->formatCurrency($item->getPrice());
+                $amount = Amount::fromDecimal($item->getPrice(), $this->getCurrency());
+                $data["L_PAYMENTREQUEST_0_AMT$n"] = $amount->getFormatted();
                 if ($item instanceof PayPalItem) {
                     $data["L_PAYMENTREQUEST_0_NUMBER$n"] = $item->getCode();
                 }
 
-                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $this->formatCurrency($item->getPrice());
+                $data["PAYMENTREQUEST_0_ITEMAMT"] += $item->getQuantity() * $amount->getFormatted();
             }
-            $data["PAYMENTREQUEST_0_ITEMAMT"] = $this->formatCurrency($data["PAYMENTREQUEST_0_ITEMAMT"]);
+            $amount = Amount::fromDecimal($data["PAYMENTREQUEST_0_ITEMAMT"], $this->getCurrency());
+            $data["PAYMENTREQUEST_0_ITEMAMT"] = $amount->getFormatted();
         }
 
         return $data;
@@ -320,11 +323,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function sendData($data)
     {
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), null, http_build_query($data, '', '&'));
-        $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-        $httpResponse = $httpRequest->send();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), [], http_build_query($data, '', '&'));
 
-        return $this->createResponse($httpResponse->getBody());
+        return $this->createResponse($httpResponse->getBody()->getContents());
     }
 
     protected function getEndpoint()

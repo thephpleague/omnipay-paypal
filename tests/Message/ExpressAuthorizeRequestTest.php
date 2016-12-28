@@ -2,10 +2,11 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\CreditCard;
+use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Customer;
 use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class ExpressAuthorizeRequestTest extends TestCase
 {
@@ -22,13 +23,14 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize(
             array(
                 'amount' => '10.00',
+                'currency' => 'USD',
                 'returnUrl' => 'https://www.example.com/return',
                 'cancelUrl' => 'https://www.example.com/cancel',
             )
         );
     }
 
-    public function testGetDataWithoutCard()
+    public function testGetDataWithoutCustomer()
     {
         $this->request->initialize(array(
             'amount' => '10.00',
@@ -65,7 +67,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('1-801-FLOWERS', $data['CUSTOMERSERVICENUMBER']);
     }
 
-    public function testGetDataWithCard()
+    public function testGetDataWithCustomer()
     {
         $this->request->initialize(array(
             'amount' => '10.00',
@@ -88,7 +90,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'sellerPaypalAccountId' => 'billing@example.com',
         ));
 
-        $card = new CreditCard(array(
+        $customer = new Customer(array(
             'name' => 'John Doe',
             'address1' => '123 NW Blvd',
             'address2' => 'Lynx Lane',
@@ -99,7 +101,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             'phone' => '555-555-5555',
             'email' => 'test@email.com',
         ));
-        $this->request->setCard($card);
+        $this->request->setCustomer($customer);
 
         $expected = array(
             'METHOD' => 'SetExpressCheckout',
@@ -306,7 +308,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         )));
 
         $this->setExpectedException(
-            '\Omnipay\Common\Exception\InvalidRequestException',
+            '\League\Omnipay\Common\Exception\InvalidRequestException',
             'One of the supplied shipping options must be set as default'
         );
 
@@ -321,7 +323,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize($baseData);
 
         $this->setExpectedException(
-            '\Omnipay\Common\Exception\InvalidRequestException',
+            '\League\Omnipay\Common\Exception\InvalidRequestException',
             'The amount parameter is required'
         );
 
@@ -337,7 +339,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize($baseData);
 
         $this->setExpectedException(
-            '\Omnipay\Common\Exception\InvalidRequestException',
+            '\League\Omnipay\Common\Exception\InvalidRequestException',
             'The returnUrl parameter is required'
         );
 
@@ -367,7 +369,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         // from the docblock on this exception -
         // Thrown when a request is invalid or missing required fields.
         // callback has been set but no shipping options so expect one of these:
-        $this->setExpectedException('\Omnipay\Common\Exception\InvalidRequestException');
+        $this->setExpectedException('\League\Omnipay\Common\Exception\InvalidRequestException');
 
         $this->request->getData();
     }

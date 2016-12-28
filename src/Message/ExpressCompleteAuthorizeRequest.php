@@ -14,7 +14,7 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data = $this->getBaseData();
         $data['METHOD'] = 'DoExpressCheckoutPayment';
         $data['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Authorization';
-        $data['PAYMENTREQUEST_0_AMT'] = $this->getAmount();
+        $data['PAYMENTREQUEST_0_AMT'] = $this->getAmount()->getFormatted();
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->getCurrency();
         $data['PAYMENTREQUEST_0_INVNUM'] = $this->getTransactionId();
         $data['PAYMENTREQUEST_0_DESC'] = $this->getDescription();
@@ -27,8 +27,8 @@ class ExpressCompleteAuthorizeRequest extends AbstractRequest
         $data['PAYMENTREQUEST_0_SHIPDISCAMT'] = $this->getShippingDiscount();
         $data['PAYMENTREQUEST_0_INSURANCEAMT'] = $this->getInsuranceAmount();
 
-        $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->httpRequest->query->get('token');
-        $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->httpRequest->query->get('PayerID');
+        $data['TOKEN'] = $this->getToken() ? $this->getToken() : $this->query('token');
+        $data['PAYERID'] = $this->getPayerID() ? $this->getPayerID() : $this->query('PayerID');
 
         $data = array_merge($data, $this->getItemData());
 

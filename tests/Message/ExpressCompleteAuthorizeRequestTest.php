@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\ExpressCompleteAuthorizeRequest;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class ExpressCompleteAuthorizeRequestTest extends TestCase
 {
@@ -15,10 +15,12 @@ class ExpressCompleteAuthorizeRequestTest extends TestCase
     public function setUp()
     {
         $client = $this->getHttpClient();
-
         $request = $this->getHttpRequest();
-        $request->query->set('PayerID', 'Payer-1234');
-        $request->query->set('token', 'TOKEN1234');
+
+        $query = $request->getQueryParams();
+        $query['PayerID'] = 'Payer-1234';
+        $query['token'] = 'TOKEN1234';
+        $request = $request->withQueryParams($query);
 
         $this->request = new ExpressCompleteAuthorizeRequest($client, $request);
     }

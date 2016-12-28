@@ -2,8 +2,9 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\CreditCard;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Customer;
+use League\Omnipay\Tests\TestCase;
 
 class RestPurchaseRequestTest extends TestCase
 {
@@ -16,11 +17,14 @@ class RestPurchaseRequestTest extends TestCase
         $card->setStartMonth(1);
         $card->setStartYear(2000);
 
+        $customer = new Customer($this->getCustomer());
+
         $this->request = new RestPurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize(array(
             'amount' => '10.00',
             'currency' => 'USD',
-            'card' => $card
+            'card' => $card,
+            'customer' => $customer,
         ));
 
         $this->request->setTransactionId('abc123');
@@ -41,14 +45,14 @@ class RestPurchaseRequestTest extends TestCase
         $this->assertSame($card->getExpiryYear(), $data['payer']['funding_instruments'][0]['credit_card']['expire_year']);
         $this->assertSame($card->getCvv(), $data['payer']['funding_instruments'][0]['credit_card']['cvv2']);
 
-        $this->assertSame($card->getFirstName(), $data['payer']['funding_instruments'][0]['credit_card']['first_name']);
-        $this->assertSame($card->getLastName(), $data['payer']['funding_instruments'][0]['credit_card']['last_name']);
-        $this->assertSame($card->getAddress1(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line1']);
-        $this->assertSame($card->getAddress2(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2']);
-        $this->assertSame($card->getCity(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['city']);
-        $this->assertSame($card->getState(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['state']);
-        $this->assertSame($card->getPostcode(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['postal_code']);
-        $this->assertSame($card->getCountry(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['country_code']);
+        $this->assertSame($customer->getFirstName(), $data['payer']['funding_instruments'][0]['credit_card']['first_name']);
+        $this->assertSame($customer->getLastName(), $data['payer']['funding_instruments'][0]['credit_card']['last_name']);
+        $this->assertSame($customer->getAddress1(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line1']);
+        $this->assertSame($customer->getAddress2(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['line2']);
+        $this->assertSame($customer->getCity(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['city']);
+        $this->assertSame($customer->getState(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['state']);
+        $this->assertSame($customer->getPostcode(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['postal_code']);
+        $this->assertSame($customer->getCountry(), $data['payer']['funding_instruments'][0]['credit_card']['billing_address']['country_code']);
     }
 
     public function testGetDataWithCardRef()

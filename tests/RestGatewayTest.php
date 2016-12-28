@@ -2,8 +2,8 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Tests\GatewayTestCase;
-use Omnipay\Common\CreditCard;
+use League\Omnipay\Tests\GatewayTestCase;
+use League\Omnipay\Common\CreditCard;
 
 class RestGatewayTest extends GatewayTestCase
 {
@@ -26,14 +26,17 @@ class RestGatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
+            'currency' => 'USD',
             'card' => new CreditCard(array(
-                'firstName' => 'Example',
-                'lastName' => 'User',
                 'number' => '4111111111111111',
                 'expiryMonth' => '12',
                 'expiryYear' => '2016',
                 'cvv' => '123',
             )),
+            'customer' => array(
+                'firstName' => 'Example',
+                'lastName' => 'User',
+            )
         );
 
         $this->subscription_options = array(
@@ -204,7 +207,11 @@ class RestGatewayTest extends GatewayTestCase
         $cardRef = $response->getCardReference();
 
         $this->setMockHttpResponse('RestPurchaseSuccess.txt');
-        $response = $this->gateway->purchase(array('amount'=>'10.00', 'cardReference'=>$cardRef))->send();
+        $response = $this->gateway->purchase(array(
+            'amount'=>'10.00',
+            'currency' => 'USD',
+            'cardReference'=>$cardRef
+        ))->send();
         $this->assertTrue($response->isSuccessful());
         $this->assertEquals('44E89981F8714392Y', $response->getTransactionReference());
         $this->assertNull($response->getMessage());

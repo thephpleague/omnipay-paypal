@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 use Omnipay\PayPal\RestGateway;
 
 class RestCompleteSubscriptionRequestTest extends TestCase

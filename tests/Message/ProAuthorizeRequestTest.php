@@ -2,8 +2,9 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\CreditCard;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Common\CreditCard;
+use League\Omnipay\Common\Customer;
+use League\Omnipay\Tests\TestCase;
 
 class ProAuthorizeRequestTest extends TestCase
 {
@@ -22,6 +23,7 @@ class ProAuthorizeRequestTest extends TestCase
                 'amount' => '10.00',
                 'currency' => 'USD',
                 'card' => $this->getValidCard(),
+                'customer' => $this->getCustomer(),
             )
         );
     }
@@ -32,7 +34,10 @@ class ProAuthorizeRequestTest extends TestCase
         $card->setStartMonth(1);
         $card->setStartYear(2000);
 
+        $customer = new Customer($this->getCustomer());
+
         $this->request->setCard($card);
+        $this->request->setCustomer($customer);
         $this->request->setTransactionId('abc123');
         $this->request->setDescription('Sheep');
         $this->request->setClientIp('127.0.0.1');
@@ -54,14 +59,14 @@ class ProAuthorizeRequestTest extends TestCase
         $this->assertSame($card->getCvv(), $data['CVV2']);
         $this->assertSame($card->getIssueNumber(), $data['ISSUENUMBER']);
 
-        $this->assertSame($card->getFirstName(), $data['FIRSTNAME']);
-        $this->assertSame($card->getLastName(), $data['LASTNAME']);
-        $this->assertSame($card->getEmail(), $data['EMAIL']);
-        $this->assertSame($card->getAddress1(), $data['STREET']);
-        $this->assertSame($card->getAddress2(), $data['STREET2']);
-        $this->assertSame($card->getCity(), $data['CITY']);
-        $this->assertSame($card->getState(), $data['STATE']);
-        $this->assertSame($card->getPostcode(), $data['ZIP']);
-        $this->assertSame($card->getCountry(), $data['COUNTRYCODE']);
+        $this->assertSame($customer->getFirstName(), $data['FIRSTNAME']);
+        $this->assertSame($customer->getLastName(), $data['LASTNAME']);
+        $this->assertSame($customer->getEmail(), $data['EMAIL']);
+        $this->assertSame($customer->getAddress1(), $data['STREET']);
+        $this->assertSame($customer->getAddress2(), $data['STREET2']);
+        $this->assertSame($customer->getCity(), $data['CITY']);
+        $this->assertSame($customer->getState(), $data['STATE']);
+        $this->assertSame($customer->getPostcode(), $data['ZIP']);
+        $this->assertSame($customer->getCountry(), $data['COUNTRYCODE']);
     }
 }

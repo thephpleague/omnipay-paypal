@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\ExpressFetchCheckoutRequest;
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class ExpressFetchCheckoutRequestTest extends TestCase
 {
@@ -15,9 +15,11 @@ class ExpressFetchCheckoutRequestTest extends TestCase
     public function setUp()
     {
         $client = $this->getHttpClient();
-
         $request = $this->getHttpRequest();
-        $request->query->set('token', 'TOKEN1234');
+
+        $query = $request->getQueryParams();
+        $query['token'] = 'TOKEN1234';
+        $request = $request->withQueryParams($query);
 
         $this->request = new ExpressFetchCheckoutRequest($client, $request);
     }

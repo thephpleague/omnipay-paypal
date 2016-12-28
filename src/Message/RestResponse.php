@@ -5,8 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Common\Message\AbstractResponse;
-use Omnipay\Common\Message\RequestInterface;
+use League\Omnipay\Common\Message\AbstractResponse;
+use League\Omnipay\Common\Message\RequestInterface;
 
 /**
  * PayPal REST Response
@@ -19,6 +19,11 @@ class RestResponse extends AbstractResponse
     {
         parent::__construct($request, $data);
         $this->statusCode = $statusCode;
+    }
+    
+    public function isCompleted()
+    {
+        return false;
     }
 
     public function isSuccessful()

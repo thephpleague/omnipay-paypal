@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use Omnipay\Tests\TestCase;
+use League\Omnipay\Tests\TestCase;
 
 class ExpressTransactionSearchResponseTest extends TestCase
 {

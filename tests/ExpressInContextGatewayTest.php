@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use Omnipay\Tests\GatewayTestCase;
+use League\Omnipay\Tests\GatewayTestCase;
 
 class ExpressInContextGatewayTest extends GatewayTestCase
 {
@@ -29,6 +29,7 @@ class ExpressInContextGatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount' => '10.00',
+            'currency' => 'USD',
             'returnUrl' => 'https://www.example.com/return',
             'cancelUrl' => 'https://www.example.com/cancel',
         );
