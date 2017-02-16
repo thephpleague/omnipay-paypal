@@ -4,6 +4,7 @@ namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\CreditCard;
 use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
+use Omnipay\PayPal\Support\InstantUpdateApi\BillingAgreement;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
 use Omnipay\Tests\TestCase;
 
@@ -372,4 +373,48 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->getData();
     }
 
+    public function testGetDataWithSingleBillingAgreement()
+    {
+        $billingAgreement = new BillingAgreement(false, 'Some Stuff');
+        $this->request->setBillingAgreement($billingAgreement);
+
+        $data = $this->request->getData();
+
+        $this->assertSame('MerchantInitiatedBillingSingleAgreement', $data['L_BILLINGTYPE0']);
+        $this->assertSame('Some Stuff', $data['L_BILLINGAGREEMENTDESCRIPTION0']);
+    }
+
+    public function testGetDataWithRecurringBillingAgreement()
+    {
+        $billingAgreement = new BillingAgreement(true, 'Some Stuff');
+        $this->request->setBillingAgreement($billingAgreement);
+
+        $data = $this->request->getData();
+
+        $this->assertSame('MerchantInitiatedBilling', $data['L_BILLINGTYPE0']);
+        $this->assertSame('Some Stuff', $data['L_BILLINGAGREEMENTDESCRIPTION0']);
+    }
+
+    public function testGetDataWithBillingAgreementOptionalParameters()
+    {
+        $billingAgreement = new BillingAgreement(true, 'Some Stuff', 'InstantOnly ', 'Some custom annotation');
+        $this->request->setBillingAgreement($billingAgreement);
+
+        $data = $this->request->getData();
+
+        $this->assertSame('MerchantInitiatedBilling', $data['L_BILLINGTYPE0']);
+        $this->assertSame('Some Stuff', $data['L_BILLINGAGREEMENTDESCRIPTION0']);
+        $this->assertSame('InstantOnly', $data['L_PAYMENTTYPE0']);
+        $this->assertSame('Some custom annotation', $data['L_BILLINGAGREEMENTCUSTOM0']);
+    }
+
+    public function testGetDataWithBillingAgreementWrongPaymentType()
+    {
+        $billingAgreement = new BillingAgreement(true, 'Some Stuff', 'BadType ', 'Some custom annotation');
+
+        $this->setExpectedException(
+            '\Omnipay\Common\Exception\InvalidRequestException',
+            "The 'paymentType' parameter can be only 'Any' or 'InstantOnly'"
+        );
+    }
 }

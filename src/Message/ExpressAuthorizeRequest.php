@@ -4,6 +4,7 @@ namespace Omnipay\PayPal\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
+use Omnipay\PayPal\Support\InstantUpdateApi\BillingAgreement;
 
 /**
  * PayPal Express Authorize Request
@@ -47,6 +48,22 @@ class ExpressAuthorizeRequest extends AbstractRequest
     public function getShippingOptions()
     {
         return $this->getParameter('shippingOptions');
+    }
+
+    /**
+     * @param BillingAgreement $data
+     */
+    public function setBillingAgreement($data)
+    {
+        $this->setParameter('billingAgreement', $data);
+    }
+
+    /**
+     * @return BillingAgreement
+     */
+    public function getBillingAgreement()
+    {
+        return $this->getParameter('billingAgreement');
     }
 
     protected function validateCallback()
@@ -150,6 +167,20 @@ class ExpressAuthorizeRequest extends AbstractRequest
             $data['PAYMENTREQUEST_0_SHIPTOZIP'] = $card->getPostcode();
             $data['PAYMENTREQUEST_0_SHIPTOPHONENUM'] = $card->getPhone();
             $data['EMAIL'] = $card->getEmail();
+        }
+
+        $billingAgreement = $this->getBillingAgreement();
+        if ($billingAgreement) {
+            $data['L_BILLINGTYPE0'] = $billingAgreement->getType();
+            $data['L_BILLINGAGREEMENTDESCRIPTION0'] = $billingAgreement->getDescription();
+
+            if ($billingAgreement->hasPaymentType()) {
+                $data['L_PAYMENTTYPE0'] = $billingAgreement->getPaymentType();
+            }
+
+            if ($billingAgreement->hasCustomAnnotation()) {
+                $data['L_BILLINGAGREEMENTCUSTOM0'] = $billingAgreement->getCustomAnnotation();
+            }
         }
 
         $data = array_merge($data, $this->getItemData());
