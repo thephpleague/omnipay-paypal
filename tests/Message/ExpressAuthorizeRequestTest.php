@@ -397,7 +397,7 @@ class ExpressAuthorizeRequestTest extends TestCase
 
     public function testGetDataWithBillingAgreementOptionalParameters()
     {
-        $billingAgreement = new BillingAgreement(true, 'Some Stuff', 'InstantOnly ', 'Some custom annotation');
+        $billingAgreement = new BillingAgreement(true, 'Some Stuff', 'InstantOnly', 'Some custom annotation');
         $this->request->setBillingAgreement($billingAgreement);
 
         $data = $this->request->getData();
@@ -408,13 +408,16 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->assertSame('Some custom annotation', $data['L_BILLINGAGREEMENTCUSTOM0']);
     }
 
+    /**
+     *
+     */
     public function testGetDataWithBillingAgreementWrongPaymentType()
     {
-        $billingAgreement = new BillingAgreement(true, 'Some Stuff', 'BadType ', 'Some custom annotation');
-
         $this->setExpectedException(
             '\Omnipay\Common\Exception\InvalidRequestException',
             "The 'paymentType' parameter can be only 'Any' or 'InstantOnly'"
         );
+        
+        $billingAgreement = new BillingAgreement(false, 'Some Stuff', 'BadType', 'Some custom annotation');
     }
 }

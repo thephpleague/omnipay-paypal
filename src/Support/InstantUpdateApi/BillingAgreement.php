@@ -2,6 +2,8 @@
 
 namespace Omnipay\PayPal\Support\InstantUpdateApi;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+
 class BillingAgreement
 {
     /**
@@ -9,10 +11,10 @@ class BillingAgreement
      *
      * @var array
      */
-    protected $types = [
+    protected $types = array(
         'single' => 'MerchantInitiatedBillingSingleAgreement',
         'recurring' => 'MerchantInitiatedBilling',
-    ];
+    );
 
     /** @var string */
     private $type;
