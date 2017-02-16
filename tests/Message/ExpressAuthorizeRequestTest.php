@@ -417,7 +417,7 @@ class ExpressAuthorizeRequestTest extends TestCase
             '\Omnipay\Common\Exception\InvalidRequestException',
             "The 'paymentType' parameter can be only 'Any' or 'InstantOnly'"
         );
-        
+
         $billingAgreement = new BillingAgreement(false, 'Some Stuff', 'BadType', 'Some custom annotation');
     }
 }
