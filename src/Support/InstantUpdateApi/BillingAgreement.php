@@ -37,7 +37,7 @@ class BillingAgreement
      */
     public function __construct($recurring, $description, $paymentType = null, $customAnnotation = null)
     {
-        if (!$recurring && !is_null($paymentType) && !in_array($paymentType, ['Any', 'InstantOnly'])) {
+        if (!$recurring && !is_null($paymentType) && !in_array($paymentType, array('Any', 'InstantOnly'))) {
             throw new InvalidRequestException("The 'paymentType' parameter can be only 'Any' or 'InstantOnly'");
         }
 
