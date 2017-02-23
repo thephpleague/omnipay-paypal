@@ -47,8 +47,14 @@ class RestResponse extends AbstractResponse
 
     public function getMessage()
     {
+        // Validation error details
         if (isset($this->data['error_description'])) {
             return $this->data['error_description'];
+        }
+
+        // Payment error details (array)
+        if (isset($this->data['details'])) {
+            return $this->data['details'];
         }
 
         if (isset($this->data['message'])) {
