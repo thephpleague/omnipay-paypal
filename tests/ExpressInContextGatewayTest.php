@@ -45,7 +45,7 @@ class ExpressInContextGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressInContextAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/checkoutnow?useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
@@ -58,7 +58,7 @@ class ExpressInContextGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressInContextAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/checkoutnow?useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
@@ -71,7 +71,7 @@ class ExpressInContextGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressInContextAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/checkoutnow?useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
