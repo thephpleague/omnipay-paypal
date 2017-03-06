@@ -45,7 +45,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
@@ -58,7 +58,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isPending());
         $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
+        $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
@@ -71,7 +71,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
@@ -84,7 +84,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isPending());
         $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
+        $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }
@@ -97,7 +97,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\PayPal\Message\ExpressAuthorizeResponse', $response);
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->assertTrue($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertEquals('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
     }
@@ -110,7 +110,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $this->assertFalse($response->isPending());
         $this->assertFalse($response->isSuccessful());
-        $this->assertFalse($response->isRedirect());
+        $this->assertTrue($response->isRedirect());
         $this->assertNull($response->getTransactionReference());
         $this->assertSame('This transaction cannot be processed. The amount to be charged is zero.', $response->getMessage());
     }

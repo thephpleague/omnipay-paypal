@@ -23,7 +23,7 @@ class ExpressAuthorizeResponseTest extends TestCase
         $response = new ExpressAuthorizeResponse($request, $httpResponse->getBody());
 
         $this->assertFalse($response->isPending());
-        $this->assertFalse($response->isSuccessful());
+        $this->asserttrue($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getRedirectData());
