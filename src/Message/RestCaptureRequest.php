@@ -48,7 +48,7 @@ class RestCaptureRequest extends AbstractRestRequest
                 'currency' => $this->getCurrency(),
                 'total' => $this->getAmount(),
             ),
-            'is_final_capture' => true,
+            'is_final_capture' => false,
         );
     }
 
