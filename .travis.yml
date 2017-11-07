@@ -17,6 +17,7 @@ matrix:
   include:
     - php: 5.3
       env: setup=lowest
+      dist: precise
     - php: 5.5
       env: setup=stable
 
