@@ -46,7 +46,7 @@ namespace Omnipay\PayPal\Message;
  * This is from the PayPal web site:
  *
  * <code>
- * curl -v -X GET https://api.sandbox.paypal.com/v1/payments/billing-plans?page_size=3&status=ACTIVE&page_size=2&page=1&total_required=yes \
+ * curl -v -X GET https://api.sandbox.paypal.com/v1/payments/billing-plans?page_size=3&status=ACTIVE&page=1\
  * -H "Content-Type:application/json" \
  * -H "Authorization: Bearer Access-Token"
  * </code>
@@ -80,7 +80,7 @@ namespace Omnipay\PayPal\Message;
  * "id": "P-1TV69435N82273154UPWDU4I",
  * "state": "ACTIVE",
  * "name": "Plan with Regular Payment Definition",
- * "description": "Plan with one regular payment definition, minimal merchant preferences, and no shipping fees or tax.",
+ * "description": "Plan with one regular payment definition, minimal merchant preferences, and no shipping fee",
  * "type": "INFINITE",
  * "create_time": "2017-08-22T04:41:55.623Z",
  * "update_time": "2017-08-22T04:41:56.055Z",
