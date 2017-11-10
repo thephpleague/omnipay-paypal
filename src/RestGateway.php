@@ -603,7 +603,22 @@ class RestGateway extends AbstractGateway
     }
 
     // TODO: Retrieve a plan
-    // TODO: List plans
+
+
+    /**
+     * List billing plans.
+     *
+     * Use this call to get a list of plans in any state (CREATED, ACTIVE, etc.).
+     * The plans returned are the plans made by the merchant making the call.
+     *
+     * @link https://developer.paypal.com/docs/api/payments.billing-plans#plan_list
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestListPlanRequest
+     */
+    public function listPlan(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestListPlanRequest', $parameters);
+    }
 
     /**
      * Create a subscription.
