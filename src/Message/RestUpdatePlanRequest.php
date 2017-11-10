@@ -24,7 +24,7 @@ namespace Omnipay\PayPal\Message;
  * <code>
  *   // Create a gateway for the PayPal REST Gateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('Paypal_Rest');
+ *   $gateway = Omnipay::create('PayPal_Rest');
  *
  *   // Initialise the gateway
  *   $gateway->initialize(array(
