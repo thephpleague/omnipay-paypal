@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use League\Omnipay\Common\AbstractGateway;
+use Omnipay\Common\AbstractGateway;
 
 /**
  * PayPal Pro Class
