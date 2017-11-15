@@ -227,6 +227,17 @@ class RestPurchaseRequest extends RestAuthorizeRequest
     {
         $data = parent::getData();
         $data['intent'] = 'sale';
+        $data['application_context']['shipping_preference'] = $this->getShippingPreference();
         return $data;
+    }
+
+    public function getShippingPreference()
+    {
+        return $this->getParameter('shippingPreference');
+    }
+
+    public function setShippingPreference($value)
+    {
+        return $this->setParameter('shippingPreference', $value);
     }
 }
