@@ -17,7 +17,7 @@ class RestAuthorizeResponseTest extends TestCase
         $this->assertSame('PAY-3TJ47806DA028052TKTQGVYI', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
 
-        $this->assertNull($response->getRedirectData());
+        $this->assertEquals(array(), $response->getRedirectData());
         $this->assertSame('GET', $response->getRedirectMethod());
         $this->assertSame('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-5KV58254GL528393N', $response->getRedirectUrl());
     }

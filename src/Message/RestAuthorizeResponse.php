@@ -91,10 +91,10 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
     /**
      * Gets the redirect form data array, if the redirect method is POST.
      *
-     * @return null
+     * @return array
      */
     public function getRedirectData()
     {
-        return null;
+        return array();
     }
 }

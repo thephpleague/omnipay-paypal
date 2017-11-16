@@ -26,7 +26,7 @@ class ExpressInContextAuthorizeResponseTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertSame('EC-42721413K79637829', $response->getTransactionReference());
         $this->assertNull($response->getMessage());
-        $this->assertNull($response->getRedirectData());
+        $this->assertEquals(array(), $response->getRedirectData());
         $this->assertSame('https://www.sandbox.paypal.com/checkoutnow?useraction=commit&token=EC-42721413K79637829', $response->getRedirectUrl());
         $this->assertSame('GET', $response->getRedirectMethod());
     }
