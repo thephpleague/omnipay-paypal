@@ -223,6 +223,10 @@ namespace Omnipay\PayPal\Message;
  */
 class RestPurchaseRequest extends RestAuthorizeRequest
 {
+    const SHIPPING_PREFERENCE_NO_SHIPPING = 'NO_SHIPPING';
+    const SHIPPING_PREFERENCE_GET_FROM_FILE = 'GET_FROM_FILE';
+    const SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS= 'SET_PROVIDED_ADDRESS';
+
     public function getData()
     {
         $data = parent::getData();
