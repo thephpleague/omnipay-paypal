@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\FetchTransactionRequest;
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Tests\TestCase;
 
 class FetchTransactionRequestTest extends TestCase
 {

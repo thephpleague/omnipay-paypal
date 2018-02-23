@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\Message\RequestInterface;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Response for Transaction Search request

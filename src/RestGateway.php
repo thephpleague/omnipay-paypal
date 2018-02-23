@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal;
 
-use League\Omnipay\Common\AbstractGateway;
+use Omnipay\Common\AbstractGateway;
 use Omnipay\PayPal\Message\ProAuthorizeRequest;
 use Omnipay\PayPal\Message\CaptureRequest;
 use Omnipay\PayPal\Message\RefundRequest;

@@ -3,7 +3,7 @@
 namespace Omnipay\PayPal\Message;
 
 use Omnipay\PayPal\Message\ExpressCompletePurchaseRequest;
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ExpressCompletePurchaseRequestTest extends TestCase
 {

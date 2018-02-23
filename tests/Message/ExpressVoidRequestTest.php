@@ -2,8 +2,8 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\CreditCard;
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Common\CreditCard;
+use Omnipay\Tests\TestCase;
 
 class ExpressVoidRequestTest extends TestCase
 {

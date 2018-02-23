@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\Message\RedirectResponseInterface;
+use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * PayPal Express Authorize Response
