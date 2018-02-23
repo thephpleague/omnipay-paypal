@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ExpressTransactionSearchRequestTest extends TestCase
 {
@@ -74,7 +74,7 @@ class ExpressTransactionSearchRequestTest extends TestCase
         $this->request->initialize(array());
 
         $this->setExpectedException(
-            '\League\Omnipay\Common\Exception\InvalidRequestException',
+            '\Omnipay\Common\Exception\InvalidRequestException',
             'The startDate parameter is required'
         );
 
@@ -87,7 +87,7 @@ class ExpressTransactionSearchRequestTest extends TestCase
         $this->request->setAmount(150.00);
 
         $this->setExpectedException(
-            '\League\Omnipay\Common\Exception\InvalidRequestException',
+            '\Omnipay\Common\Exception\InvalidRequestException',
             'A currency is required.'
         );
 

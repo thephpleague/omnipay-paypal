@@ -2,11 +2,11 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\CreditCard;
-use League\Omnipay\Common\Customer;
+use Omnipay\Common\CreditCard;
+use Omnipay\Common\Customer;
 use Omnipay\PayPal\Message\ExpressAuthorizeRequest;
 use Omnipay\PayPal\Support\InstantUpdateApi\ShippingOption;
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Tests\TestCase;
 
 class ExpressAuthorizeRequestTest extends TestCase
 {
@@ -308,7 +308,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         )));
 
         $this->setExpectedException(
-            '\League\Omnipay\Common\Exception\InvalidRequestException',
+            '\Omnipay\Common\Exception\InvalidRequestException',
             'One of the supplied shipping options must be set as default'
         );
 
@@ -323,7 +323,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize($baseData);
 
         $this->setExpectedException(
-            '\League\Omnipay\Common\Exception\InvalidRequestException',
+            '\Omnipay\Common\Exception\InvalidRequestException',
             'The amount parameter is required'
         );
 
@@ -339,7 +339,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         $this->request->initialize($baseData);
 
         $this->setExpectedException(
-            '\League\Omnipay\Common\Exception\InvalidRequestException',
+            '\Omnipay\Common\Exception\InvalidRequestException',
             'The returnUrl parameter is required'
         );
 
@@ -369,7 +369,7 @@ class ExpressAuthorizeRequestTest extends TestCase
         // from the docblock on this exception -
         // Thrown when a request is invalid or missing required fields.
         // callback has been set but no shipping options so expect one of these:
-        $this->setExpectedException('\League\Omnipay\Common\Exception\InvalidRequestException');
+        $this->setExpectedException('\Omnipay\Common\Exception\InvalidRequestException');
 
         $this->request->getData();
     }

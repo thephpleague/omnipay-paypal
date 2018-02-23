@@ -4,7 +4,7 @@
 namespace Omnipay\PayPal\Message;
 
 
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Tests\TestCase;
 
 class RestCompletePurchaseRequestTest extends TestCase
 {

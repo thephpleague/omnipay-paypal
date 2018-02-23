@@ -5,8 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\Amount;
-use League\Omnipay\Common\ItemBag;
+use Omnipay\Common\Amount;
+use Omnipay\Common\ItemBag;
 use Omnipay\PayPal\PayPalItem;
 use Omnipay\PayPal\PayPalItemBag;
 
@@ -33,7 +33,7 @@ use Omnipay\PayPal\PayPalItemBag;
  * @link https://devtools-paypal.com/integrationwizard/
  * @link http://paypal.github.io/sdk/
  */
-abstract class AbstractRequest extends \League\Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     const API_VERSION = '119.0';
 

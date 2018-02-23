@@ -2,7 +2,7 @@
 
 namespace Omnipay\PayPal;
 
-use League\Omnipay\Tests\GatewayTestCase;
+use Omnipay\Tests\GatewayTestCase;
 
 class ExpressInContextGatewayTest extends GatewayTestCase
 {

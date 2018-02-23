@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\Amount;
+use Omnipay\Common\Amount;
 
 /**
  * PayPal REST Authorize Request

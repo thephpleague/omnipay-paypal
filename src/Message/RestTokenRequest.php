@@ -5,7 +5,7 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\Http\Factory;
+use Omnipay\Common\Http\Factory;
 
 /**
  * PayPal REST Token Request

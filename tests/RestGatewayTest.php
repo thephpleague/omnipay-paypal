@@ -2,8 +2,8 @@
 
 namespace Omnipay\PayPal;
 
-use League\Omnipay\Tests\GatewayTestCase;
-use League\Omnipay\Common\CreditCard;
+use Omnipay\Tests\GatewayTestCase;
+use Omnipay\Common\CreditCard;
 
 class RestGatewayTest extends GatewayTestCase
 {

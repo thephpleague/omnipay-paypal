@@ -2,9 +2,9 @@
 
 namespace Omnipay\PayPal\Message;
 
-use League\Omnipay\Common\CreditCard;
-use League\Omnipay\Common\Customer;
-use League\Omnipay\Tests\TestCase;
+use Omnipay\Common\CreditCard;
+use Omnipay\Common\Customer;
+use Omnipay\Tests\TestCase;
 
 class RestAuthorizeRequestTest extends TestCase
 {
