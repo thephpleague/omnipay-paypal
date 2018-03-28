@@ -11,7 +11,9 @@ class RestAuthorizeResponseTest extends TestCase
     public function testRestPurchaseWithoutCardSuccess()
     {
         $httpResponse = $this->getMockHttpResponse('RestPurchaseWithoutCardSuccess.txt');
-        $response = new RestAuthorizeResponse($this->getMockRequest(), $httpResponse->json(), $httpResponse->getStatusCode());
+        $data = json_decode($httpResponse->getBody()->getContents(), true);
+
+        $response = new RestAuthorizeResponse($this->getMockRequest(), $data, $httpResponse->getStatusCode());
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('PAY-3TJ47806DA028052TKTQGVYI', $response->getTransactionReference());

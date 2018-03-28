@@ -24,11 +24,11 @@ use Omnipay\PayPal\PayPalItemBag;
  *   Account; it also gives the merchant the flexibility to change payment
  *   processors without having to re-do their technical integration. When using
  *   PayPal Payments Pro (Payflow Edition) using Payflow Gateway integration,
- *   merchants can use Transparent Redirect feature to help manage PCI compliance. 
+ *   merchants can use Transparent Redirect feature to help manage PCI compliance.
  *
  * @link https://developer.paypal.com/docs/classic/products/payflow-gateway/
  * @link https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
- * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/ 
+ * @link https://developer.paypal.com/docs/classic/products/ppp-payflow-edition/
  * @link https://devtools-paypal.com/integrationwizard/
  * @link http://paypal.github.io/sdk/
  */
@@ -320,11 +320,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function sendData($data)
     {
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), null, http_build_query($data, '', '&'));
-        $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-        $httpResponse = $httpRequest->send();
+        $httpResponse = $this->httpClient->request('POST', $this->getEndpoint(), [], http_build_query($data, '', '&'));
 
-        return $this->createResponse($httpResponse->getBody());
+        return $this->createResponse($httpResponse->getBody()->getContents());
     }
 
     protected function getEndpoint()
