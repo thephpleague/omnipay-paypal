@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/omnipay/paypal/d/total.png)](https://packagist.org/packages/omnipay/paypal)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.3+. This package implements PayPal support for Omnipay.
+processing library for PHP. This package implements PayPal support for Omnipay.
 
 ## Installation
 
@@ -17,10 +17,13 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "omnipay/paypal": "~2.0"
+        "omnipay/paypal": "~3.0@dev"
     }
 }
 ```
+
+> Note: v3 is in development. See the [2.x branch](https://github.com/thephpleague/omnipay-paypal/tree/2.x) for the Omnipay 2.x version.
+
 
 And run composer to update your dependencies:
 
