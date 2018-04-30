@@ -38,6 +38,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected $liveEndpoint = 'https://api-3t.paypal.com/nvp';
     protected $testEndpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+    
+    /**
+     * @var bool
+     */
+    protected $negativeAmountAllowed = true;
 
     public function getUsername()
     {
