@@ -2,6 +2,7 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Tests\TestCase;
 
 class ExpressTransactionSearchRequestTest extends TestCase
@@ -73,10 +74,8 @@ class ExpressTransactionSearchRequestTest extends TestCase
     {
         $this->request->initialize(array());
 
-        $this->setExpectedException(
-            '\Omnipay\Common\Exception\InvalidRequestException',
-            'The startDate parameter is required'
-        );
+        $this->expectException(InvalidRequestException::class);
+        $this->expectExceptionMessage('The startDate parameter is required');
 
         $this->request->getData();
     }
@@ -85,11 +84,9 @@ class ExpressTransactionSearchRequestTest extends TestCase
     {
         $this->request->setStartDate('2015-01-01');
         $this->request->setAmount(150.00);
-
-        $this->setExpectedException(
-            '\Omnipay\Common\Exception\InvalidRequestException',
-            'The currency parameter is required'
-        );
+        
+        $this->expectException(InvalidRequestException::class);
+        $this->expectExceptionMessage('The currency parameter is required');
 
         $this->request->getData();
     }
