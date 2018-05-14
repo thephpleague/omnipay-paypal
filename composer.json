@@ -27,7 +27,7 @@
         "psr-4": { "Omnipay\\PayPal\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "^3@beta"
+        "omnipay/common": "^3"
     },
     "require-dev": {
         "omnipay/tests": "^3",
@@ -39,6 +39,5 @@
             "dev-master": "3.0.x-dev"
         }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }
