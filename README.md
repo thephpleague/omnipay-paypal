@@ -11,24 +11,12 @@ processing library for PHP. This package implements PayPal support for Omnipay.
 
 ## Installation
 
-Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply add it
-to your `composer.json` file:
+Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply require `omnipay/paypal` with Composer:
 
-```json
-{
-    "require": {
-        "omnipay/paypal": "~3.0@dev"
-    }
-}
+```
+composer require omnipay/paypal
 ```
 
-> Note: v3 is in development. See the [2.x branch](https://github.com/thephpleague/omnipay-paypal/tree/2.x) for the Omnipay 2.x version.
-
-
-And run composer to update your dependencies:
-
-    $ curl -s http://getcomposer.org/installer | php
-    $ php composer.phar update
 
 ## Basic Usage
 
