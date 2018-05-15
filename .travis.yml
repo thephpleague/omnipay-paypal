@@ -12,7 +12,7 @@ env:
 
 matrix:
   include:
-    - php: 7.1
+    - php: 5.6
       env: setup=lowest
 
 sudo: false
