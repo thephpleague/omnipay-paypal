@@ -36,7 +36,7 @@ class RestTokenRequest extends AbstractRestRequest
             $this->getEndpoint(),
             array(
                 'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . base64_encode("{$this->getClientId()}:{$this->getSecret()}"),
+                'Authorization' => 'Basic ' . base64_encode("{$this->getClientId()}:{$this->getSecret()}"),
             ),
             $body
         );
