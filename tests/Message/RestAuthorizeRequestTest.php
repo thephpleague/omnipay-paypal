@@ -47,6 +47,33 @@ class RestAuthorizeRequestTest extends TestCase
         $this->assertSame('https://www.example.com/cancel', $data['redirect_urls']['cancel_url']);
     }
 
+    /**
+     * This tests that having a card object with no card details acts as 'no card'.
+     *
+     * We may have a card object holding billing details but no card details. This
+     * should be treated as a card-not-present rather than as invalid.
+     */
+    public function testGetDataWitLimitedCard()
+    {
+        $this->request->setTransactionId('abc123');
+        $this->request->setDescription('Sheep');
+        $this->request->setCard(new CreditCard(['firstName' => 'Example']));
+
+        $data = $this->request->getData();
+
+        $this->assertSame('authorize', $data['intent']);
+        $this->assertSame('paypal', $data['payer']['payment_method']);
+        $this->assertSame('10.00', $data['transactions'][0]['amount']['total']);
+        $this->assertSame('USD', $data['transactions'][0]['amount']['currency']);
+        $this->assertSame('abc123 : Sheep', $data['transactions'][0]['description']);
+
+        // Funding instruments must not be set, otherwise paypal API will give error 500.
+        $this->assertArrayNotHasKey('funding_instruments', $data['payer']);
+
+        $this->assertSame('https://www.example.com/return', $data['redirect_urls']['return_url']);
+        $this->assertSame('https://www.example.com/cancel', $data['redirect_urls']['cancel_url']);
+    }
+
     public function testGetDataWithCard()
     {
         $card = new CreditCard($this->getValidCard());
