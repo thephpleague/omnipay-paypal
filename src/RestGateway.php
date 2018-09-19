@@ -602,8 +602,19 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestUpdatePlanRequest', $parameters);
     }
 
-    // TODO: Retrieve a plan
-
+    /**
+     * Fetch a billing plan.
+     *
+     * Use this call to get details about a billing plan.
+     *
+     * @link https://developer.paypal.com/docs/api/payments.billing-plans/#billing-plans_get
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestFetchPlanRequest
+     */
+    public function fetchPlan(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestFetchPlanRequest', $parameters);
+    }
 
     /**
      * List billing plans.
