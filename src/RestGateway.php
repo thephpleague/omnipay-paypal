@@ -721,6 +721,20 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestSearchTransactionRequest', $parameters);
     }
 
+    /**
+     * Verify a webhook signature
+     *
+     * Use this call to verify a webhook signature.
+     *
+     * @link https://developer.paypal.com/docs/api/webhooks/#verify-webhook-signature
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestVerifyWebhookRequest
+     */
+    public function verifyWebhook(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestVerifyWebhookRequest', $parameters);
+    }
+
     // TODO: Update an agreement
     // TODO: Retrieve an agreement
     // TODO: Set outstanding agreement amounts
