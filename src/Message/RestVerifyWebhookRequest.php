@@ -91,7 +91,16 @@ class RestVerifyWebhookRequest extends AbstractRestRequest
 
     public function getData()
     {
-        $this->validate('authAlgo', 'certUrl', 'transmissionId', 'transmissionSig', 'transmissionTime', 'webhookId', 'webhookEvent');
+        $this->validate(
+            'authAlgo',
+            'certUrl',
+            'transmissionId',
+            'transmissionSig',
+            'transmissionTime',
+            'webhookId',
+            'webhookEvent'
+        );
+        
         $data = array(
             'auth_algo' => $this->getAuthAlgo(),
             'cert_url' => $this->getCertUrl(),
