@@ -5,6 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidCreditCardException;
+
 /**
  * PayPal REST Authorize Request
  *
@@ -259,9 +261,8 @@ class RestAuthorizeRequest extends AbstractRestRequest
                     'credit_card_id' => $this->getCardReference(),
                 ),
             );
-        } elseif ($this->getCard()) {
+        } elseif ($this->validCardPresent()) {
             $this->validate('amount', 'card');
-            $this->getCard()->validate();
 
             $data['payer']['funding_instruments'][] = array(
                 'credit_card' => array(
@@ -302,6 +303,32 @@ class RestAuthorizeRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+
+  /**
+   * Has a valid card been passed in the Omnipay parameters.
+   *
+   * Omnipay supports details other than card details in the card parameter (e.g.
+   * billing address) so a generic omnipay integration might set the 'card' when
+   * there is no number present. In which case the Rest integration should fall
+   * back to the next method.
+   */
+    public function validCardPresent()
+    {
+        $card = $this->getCard();
+        if (!$card) {
+            return false;
+        }
+        try {
+            $card->validate();
+        } catch (InvalidCreditCardException $e) {
+            if (stristr($e->getMessage(), 'is required')) {
+                return false;
+            } else {
+                throw $e;
+            }
+        }
+        return true;
     }
 
     /**
