@@ -561,6 +561,20 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Complete a card creation when using paypal account method.
+     *
+     * Use this call to create a billing agreement after the buyer approves it.
+     *
+     * @link https://developer.paypal.com/docs/limited-release/reference-transactions/#create-billing-agreement-token
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestCompleteCreateCardRequest
+     */
+    public function completeCreateCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestCompleteCreateCardRequest', $parameters);
+    }
+
+    /**
      * Delete a credit card from the vault.
      *
      * Updating a card in the vault is no longer supported -- see
