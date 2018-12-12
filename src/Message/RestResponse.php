@@ -42,6 +42,13 @@ class RestResponse extends AbstractResponse
             return $this->data['id'];
         }
 
+        if (isset($this->data['token_id'])) {
+            // This would be present when dealing with a case where the user
+            // authorize's their card within paypal. In this case the transactionReference
+            // will be used during the redirect.
+            return $this->data['token_id'];
+        }
+
         return null;
     }
 
@@ -63,6 +70,9 @@ class RestResponse extends AbstractResponse
         return $this->statusCode;
     }
 
+    /**
+     * Get a string that will represent the stored card in future requests.
+     */
     public function getCardReference()
     {
         if (isset($this->data['id'])) {
