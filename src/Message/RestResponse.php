@@ -72,11 +72,26 @@ class RestResponse extends AbstractResponse
 
     /**
      * Get a string that will represent the stored card in future requests.
+     *
+     * If they have authorised the payment through submitting a card through Omnipay
+     * this will be a reference to the card in the vault. If they have authorised the payment
+     * through paypal this will be a reference to an approved billing agreement.
      */
     public function getCardReference()
     {
+        if ($this->isPaypalApproval()) {
+            return $this->data['payer']['funding_instruments'][0]['billing']['billing_agreement_id'];
+        }
         if (isset($this->data['id'])) {
             return $this->data['id'];
         }
+    }
+
+    public function isPaypalApproval()
+    {
+        if (!isset($this->data['payer']['payment_method'])) {
+            return false;
+        }
+        return ($this->data['payer']['payment_method'] === 'paypal');
     }
 }

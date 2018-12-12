@@ -6,7 +6,7 @@
 namespace Omnipay\PayPal\Message;
 
 /**
- * PayPal REST Complete Subscription Request
+ * PayPal REST Complete Create Card Request
  *
  * Use this call to create a billing agreement after the buyer approves it.
  *

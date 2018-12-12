@@ -253,7 +253,20 @@ class RestAuthorizeRequest extends AbstractRestRequest
             $data['transactions'][0]['item_list']["items"] = $itemList;
         }
 
-        if ($this->getCardReference()) {
+        if ($this->getCardReference() && substr($this->getCardReference(), 0, 2) === 'B-') {
+            // Card references can be for a billing agreement (format B-....) or a stored card format CARD-...
+            // here billing agreement
+            // https://developer.paypal.com/docs/limited-release/reference-transactions/#use-a-reference-transaction-to-make-a-payment
+            $this->validate('amount');
+            $data['payer']['funding_instruments'][] = array(
+              'billing' => array(
+                'billing_agreement_id' => $this->getCardReference(),
+              ),
+            );
+            $data['payer']['payment_method'] = 'paypal';
+        } elseif ($this->getCardReference()) {
+            // stored card
+            //https://developer.paypal.com/docs/integration/direct/vault/#pay-with-vaulted-card
             $this->validate('amount');
 
             $data['payer']['funding_instruments'][] = array(
