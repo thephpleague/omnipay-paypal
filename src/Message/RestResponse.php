@@ -80,7 +80,10 @@ class RestResponse extends AbstractResponse
     public function getCardReference()
     {
         if ($this->isPaypalApproval()) {
-            return $this->data['payer']['funding_instruments'][0]['billing']['billing_agreement_id'];
+            if (isset($this->data['funding_instruments'])) {
+                return $this->data['payer']['funding_instruments'][0]['billing']['billing_agreement_id'];
+            }
+            return false;
         }
         if (isset($this->data['id'])) {
             return $this->data['id'];
