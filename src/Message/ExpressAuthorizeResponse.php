@@ -14,7 +14,7 @@ class ExpressAuthorizeResponse extends Response implements RedirectResponseInter
 
     public function isSuccessful()
     {
-        return false;
+        return isset($this->data['ACK']) && in_array($this->data['ACK'], array('Success', 'SuccessWithWarning'));
     }
 
     public function isRedirect()
