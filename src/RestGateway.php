@@ -9,6 +9,9 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\PayPal\Message\ProAuthorizeRequest;
 use Omnipay\PayPal\Message\CaptureRequest;
 use Omnipay\PayPal\Message\RefundRequest;
+use Omnipay\PayPal\Message\RestCreateWebhookRequest;
+use Omnipay\PayPal\Message\RestListWebhooksRequest;
+use Omnipay\PayPal\Message\RestVerifyWebhookSignatureRequest;
 
 /**
  * PayPal Pro Class using REST API
@@ -416,6 +419,16 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestCompletePurchaseRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     *
+     * @return RestCreateWebhookRequest
+     */
+    public function createWebhook(array $parameters = [])
+    {
+        return $this->createRequest(RestCreateWebhookRequest::class, $parameters);
+    }
+
     // TODO: Update a payment resource https://developer.paypal.com/docs/api/#update-a-payment-resource
 
     //
@@ -708,6 +721,26 @@ class RestGateway extends AbstractGateway
     public function searchTransaction(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestSearchTransactionRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return RestListWebhooksRequest
+     */
+    public function listWebhooks(array $parameters = [])
+    {
+        return $this->createRequest(RestListWebhooksRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return RestVerifyWebhookSignatureRequest
+     */
+    public function verifyWebhookSignature(array $parameters = [])
+    {
+        return $this->createRequest(RestVerifyWebhookSignatureRequest::class, $parameters);
     }
 
     // TODO: Update an agreement
