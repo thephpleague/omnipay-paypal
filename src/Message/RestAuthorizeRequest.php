@@ -306,19 +306,19 @@ class RestAuthorizeRequest extends AbstractRestRequest
     }
     
     /**
-     * Get the invoice number to track this payment. 
+     * Get the invoice number to track this payment.
      *
      * @return string
      */
-    public function getInvoiceNumber()                                                                                                 
-    {                                                                                                                                  
-        $id = $this->getParameter('invoiceNumber');                                                                                    
-        if(empty($id)){                                                                                                                
-            return $this->getTransactionId();                                                                                          
-        }else{                                                                                                                         
-            return $id;                                                                                                                
-        }                                                                                                                              
-    } 
+    public function getInvoiceNumber()
+    {
+        $id = $this->getParameter('invoiceNumber');
+        if (empty($id)) {
+            return $this->getTransactionId();
+        } else {
+            return $id;
+        }
+    }
     
     /**
      * Set the invoice number to track this payment.
@@ -332,7 +332,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
     }
     
     /**
-     * Get the free-form field for the client's use. 
+     * Get the free-form field for the client's use.
      *
      * @return string
      */
