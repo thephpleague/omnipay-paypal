@@ -230,7 +230,8 @@ class RestAuthorizeRequest extends AbstractRestRequest
                         'total' => $this->getAmount(),
                         'currency' => $this->getCurrency(),
                     ),
-                    'invoice_number' => $this->getTransactionId()
+                    'custom' => $this->getCustom(), // custom data
+                    'invoice_number' => $this->getInvoiceNumber()
                 )
             ),
             'experience_profile_id' => $this->getExperienceProfileId()
@@ -302,6 +303,53 @@ class RestAuthorizeRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+    
+    /**
+     * Get the invoice number to track this payment. 
+     *
+     * @return string
+     */
+    public function getInvoiceNumber()                                                                                                 
+    {                                                                                                                                  
+        $id = $this->getParameter('invoiceNumber');                                                                                    
+        if(empty($id)){                                                                                                                
+            return $this->getTransactionId();                                                                                          
+        }else{                                                                                                                         
+            return $id;                                                                                                                
+        }                                                                                                                              
+    } 
+    
+    /**
+     * Set the invoice number to track this payment.
+     *
+     * @param string $value
+     * @return @return $this
+     */
+    public function setInvoiceNumber($value)
+    {
+        return $this->setParameter('invoiceNumber', $value);
+    }
+    
+    /**
+     * Get the free-form field for the client's use. 
+     *
+     * @return string
+     */
+    public function getCustom()
+    {
+        return $this->getParameter('custom');
+    }
+    
+    /**
+     * Set the free-form field for the client's use.
+     *
+     * @param string $value
+     * @return $this
+     */
+    public function setCustom($value)
+    {
+        return $this->setParameter('custom', $value);
     }
 
     /**
