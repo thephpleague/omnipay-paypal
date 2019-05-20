@@ -65,6 +65,11 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
     protected $referrerCode;
 
     /**
+     * @var bool
+     */
+    protected $negativeAmountAllowed = true;
+    
+    /**
      * @return string
      */
     public function getReferrerCode()
