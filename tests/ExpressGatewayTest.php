@@ -170,7 +170,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completePurchase(array(
             'amount' => '10.00',
-            'currency' => 'BYR',
+            'currency' => 'EUR',
         ))->send();
 
         $httpRequests = $this->getMockedRequests();
@@ -192,7 +192,7 @@ class ExpressGatewayTest extends GatewayTestCase
 
         $response = $this->gateway->completePurchase(array(
             'amount' => '10.00',
-            'currency' => 'BYR',
+            'currency' => 'EUR',
             'token' => 'CUSTOM_TOKEN',
             'payerid' => 'CUSTOM_PAYERID',
         ))->send();

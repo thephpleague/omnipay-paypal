@@ -62,6 +62,24 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      */
     protected $payerId = null;
 
+    protected $referrerCode;
+
+    /**
+     * @return string
+     */
+    public function getReferrerCode()
+    {
+        return $this->referrerCode;
+    }
+
+    /**
+     * @param string $referrerCode
+     */
+    public function setReferrerCode($referrerCode)
+    {
+        $this->referrerCode = $referrerCode;
+    }
+
     public function getClientId()
     {
         return $this->getParameter('clientId');
@@ -122,39 +140,15 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
 
     public function sendData($data)
     {
-        // don't throw exceptions for 4xx errors
-        $this->httpClient->getEventDispatcher()->addListener(
-            'request.error',
-            function ($event) {
-                if ($event['response']->isClientError()) {
-                    $event->stopPropagation();
-                }
-            }
-        );
 
         // Guzzle HTTP Client createRequest does funny things when a GET request
         // has attached data, so don't send the data if the method is GET.
         if ($this->getHttpMethod() == 'GET') {
-            $httpRequest = $this->httpClient->createRequest(
-                $this->getHttpMethod(),
-                $this->getEndpoint() . '?' . http_build_query($data),
-                array(
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->getToken(),
-                    'Content-type' => 'application/json',
-                )
-            );
+            $requestUrl = $this->getEndpoint() . '?' . http_build_query($data);
+            $body = null;
         } else {
-            $httpRequest = $this->httpClient->createRequest(
-                $this->getHttpMethod(),
-                $this->getEndpoint(),
-                array(
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->getToken(),
-                    'Content-type' => 'application/json',
-                ),
-                $this->toJSON($data)
-            );
+            $body = $this->toJSON($data);
+            $requestUrl = $this->getEndpoint();
         }
 
         // Might be useful to have some debug code here, PayPal especially can be
@@ -163,11 +157,20 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         // echo "Data == " . json_encode($data) . "\n";
 
         try {
-            $httpRequest->getCurlOptions()->set(CURLOPT_SSLVERSION, 6); // CURL_SSLVERSION_TLSv1_2 for libcurl < 7.35
-            $httpResponse = $httpRequest->send();
+            $httpResponse = $this->httpClient->request(
+                $this->getHttpMethod(),
+                $this->getEndpoint(),
+                array(
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $this->getToken(),
+                    'Content-type' => 'application/json',
+                    'PayPal-Partner-Attribution-Id' => $this->getReferrerCode(),
+                ),
+                $body
+            );
             // Empty response body should be parsed also as and empty array
-            $body = $httpResponse->getBody(true);
-            $jsonToArrayResponse = !empty($body) ? $httpResponse->json() : array();
+            $body = (string) $httpResponse->getBody()->getContents();
+            $jsonToArrayResponse = !empty($body) ? json_decode($body, true) : array();
             return $this->response = $this->createResponse($jsonToArrayResponse, $httpResponse->getStatusCode());
         } catch (\Exception $e) {
             throw new InvalidResponseException(

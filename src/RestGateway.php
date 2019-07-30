@@ -9,6 +9,9 @@ use Omnipay\Common\AbstractGateway;
 use Omnipay\PayPal\Message\ProAuthorizeRequest;
 use Omnipay\PayPal\Message\CaptureRequest;
 use Omnipay\PayPal\Message\RefundRequest;
+use Omnipay\PayPal\Message\RestCreateWebhookRequest;
+use Omnipay\PayPal\Message\RestListWebhooksRequest;
+use Omnipay\PayPal\Message\RestVerifyWebhookSignatureRequest;
 
 /**
  * PayPal Pro Class using REST API
@@ -416,6 +419,16 @@ class RestGateway extends AbstractGateway
         return $this->createRequest('\Omnipay\PayPal\Message\RestCompletePurchaseRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     *
+     * @return RestCreateWebhookRequest
+     */
+    public function createWebhook(array $parameters = [])
+    {
+        return $this->createRequest(RestCreateWebhookRequest::class, $parameters);
+    }
+
     // TODO: Update a payment resource https://developer.paypal.com/docs/api/#update-a-payment-resource
 
     //
@@ -603,7 +616,22 @@ class RestGateway extends AbstractGateway
     }
 
     // TODO: Retrieve a plan
-    // TODO: List plans
+
+
+    /**
+     * List billing plans.
+     *
+     * Use this call to get a list of plans in any state (CREATED, ACTIVE, etc.).
+     * The plans returned are the plans made by the merchant making the call.
+     *
+     * @link https://developer.paypal.com/docs/api/payments.billing-plans#plan_list
+     * @param array $parameters
+     * @return \Omnipay\PayPal\Message\RestListPlanRequest
+     */
+    public function listPlan(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestListPlanRequest', $parameters);
+    }
 
     /**
      * Create a subscription.
@@ -707,6 +735,26 @@ class RestGateway extends AbstractGateway
     public function fetchAgreement(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\PayPal\Message\RestFetchAgreementRequest', $parameters);
+    }
+  
+    /**
+     * @param array $parameters
+     *
+     * @return RestListWebhooksRequest
+     */
+    public function listWebhooks(array $parameters = [])
+    {
+        return $this->createRequest(RestListWebhooksRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     *
+     * @return RestVerifyWebhookSignatureRequest
+     */
+    public function verifyWebhookSignature(array $parameters = [])
+    {
+        return $this->createRequest(RestVerifyWebhookSignatureRequest::class, $parameters);
     }
 
     // TODO: Update an agreement

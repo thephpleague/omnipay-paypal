@@ -230,6 +230,7 @@ class RestAuthorizeRequest extends AbstractRestRequest
                         'total' => $this->getAmount(),
                         'currency' => $this->getCurrency(),
                     ),
+                    'invoice_number' => $this->getTransactionId()
                 )
             ),
             'experience_profile_id' => $this->getExperienceProfileId()
