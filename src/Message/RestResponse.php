@@ -71,8 +71,7 @@ class RestResponse extends AbstractResponse
         if (!empty($this->data['transactions']) &&
             !empty($this->data['transactions'][0]['related_resources']) &&
             !empty($this->data['transactions'][0]['related_resources'][0]['sale']) &&
-            !empty($this->data['transactions'][0]['related_resources'][0]['sale']['transaction_fee']))
-        {
+            !empty($this->data['transactions'][0]['related_resources'][0]['sale']['transaction_fee'])) {
             return $this->data['transactions'][0]['related_resources'][0]['sale']['transaction_fee']['value'];
         }
 
