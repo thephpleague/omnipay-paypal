@@ -61,7 +61,11 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
         // The transaction reference for a paypal purchase request or for a
         // paypal create subscription request ends up in the execute URL
         // in the links section of the response.
-        $completeUrl = $this->getCompleteUrl();
+        // this has been HACKED. Paypal changed it's product offering & introduced
+        // smart buttons instead of checkout.js and it needs something different returned.
+        // notes here https://github.com/thephpleague/omnipay-paypal/issues/228 but I couldn't see a
+        // good answer here so I just hacked.
+        $completeUrl = $this->getRedirectUrl();
         if (empty($completeUrl)) {
             return parent::getTransactionReference();
         }
@@ -70,6 +74,8 @@ class RestAuthorizeResponse extends RestResponse implements RedirectResponseInte
 
         // The last element of the URL should be "execute"
         $execute = end($urlParts);
+        // part of hack above.
+        return (str_replace('webscr?cmd=_express-checkout&token=', '', $execute));
         if (!in_array($execute, array('execute', 'agreement-execute'))) {
             return parent::getTransactionReference();
         }

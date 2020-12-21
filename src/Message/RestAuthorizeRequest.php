@@ -5,6 +5,8 @@
 
 namespace Omnipay\PayPal\Message;
 
+use Omnipay\Common\Exception\InvalidCreditCardException;
+
 /**
  * PayPal REST Authorize Request
  *
@@ -251,7 +253,20 @@ class RestAuthorizeRequest extends AbstractRestRequest
             $data['transactions'][0]['item_list']["items"] = $itemList;
         }
 
-        if ($this->getCardReference()) {
+        if ($this->getCardReference() && substr($this->getCardReference(), 0, 2) === 'B-') {
+            // Card references can be for a billing agreement (format B-....) or a stored card format CARD-...
+            // here billing agreement
+            // https://developer.paypal.com/docs/limited-release/reference-transactions/#use-a-reference-transaction-to-make-a-payment
+            $this->validate('amount');
+            $data['payer']['funding_instruments'][] = array(
+              'billing' => array(
+                'billing_agreement_id' => $this->getCardReference(),
+              ),
+            );
+            $data['payer']['payment_method'] = 'paypal';
+        } elseif ($this->getCardReference()) {
+            // stored card
+            //https://developer.paypal.com/docs/integration/direct/vault/#pay-with-vaulted-card
             $this->validate('amount');
 
             $data['payer']['funding_instruments'][] = array(
@@ -259,9 +274,8 @@ class RestAuthorizeRequest extends AbstractRestRequest
                     'credit_card_id' => $this->getCardReference(),
                 ),
             );
-        } elseif ($this->getCard()) {
+        } elseif ($this->validCardPresent()) {
             $this->validate('amount', 'card');
-            $this->getCard()->validate();
 
             $data['payer']['funding_instruments'][] = array(
                 'credit_card' => array(
@@ -302,6 +316,32 @@ class RestAuthorizeRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+
+  /**
+   * Has a valid card been passed in the Omnipay parameters.
+   *
+   * Omnipay supports details other than card details in the card parameter (e.g.
+   * billing address) so a generic omnipay integration might set the 'card' when
+   * there is no number present. In which case the Rest integration should fall
+   * back to the next method.
+   */
+    public function validCardPresent()
+    {
+        $card = $this->getCard();
+        if (!$card) {
+            return false;
+        }
+        try {
+            $card->validate();
+        } catch (InvalidCreditCardException $e) {
+            if (stristr($e->getMessage(), 'is required')) {
+                return false;
+            } else {
+                throw $e;
+            }
+        }
+        return true;
     }
 
     /**
