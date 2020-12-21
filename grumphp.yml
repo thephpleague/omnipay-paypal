@@ -1,4 +1,4 @@
-parameters:
+grumphp:
     git_dir: .
     bin_dir: vendor/bin
     tasks:
