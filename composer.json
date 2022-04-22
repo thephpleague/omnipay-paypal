@@ -1,5 +1,5 @@
 {
-    "name": "searchanise/omnipay-paypal",
+    "name": "snize/omnipay-paypal",
     "type": "library",
     "description": "PayPal gateway for Omnipay payment processing library",
     "keywords": [
