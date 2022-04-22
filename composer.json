@@ -1,5 +1,5 @@
 {
-    "name": "omnipay/paypal",
+    "name": "searchanise/omnipay-paypal",
     "type": "library",
     "description": "PayPal gateway for Omnipay payment processing library",
     "keywords": [
@@ -11,7 +11,7 @@
         "paypal",
         "purchase"
     ],
-    "homepage": "https://github.com/thephpleague/omnipay-paypal",
+    "homepage": "https://github.com/searchanise/omnipay-paypal",
     "license": "MIT",
     "authors": [
         {
