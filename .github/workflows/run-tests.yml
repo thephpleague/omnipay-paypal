@@ -40,7 +40,7 @@ jobs:
         composer update --${{ matrix.dependency-version }} --prefer-dist --no-progress
 
     - name: Execute Unit Tests
-      run: vendor/bin/phpunit --coverage-text
+      run: composer test
       
     - name: Check Code Style
-      run: vendor/bin/phpcs --standard=PSR2 src
+      run: composer check-style
