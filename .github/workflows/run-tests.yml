@@ -44,4 +44,4 @@ jobs:
       
     - name: Check Code Style
       run: composer check-style
-      if: ${{ matrix.php-version == '8.1' }}
+      if: ${{ matrix.dependency-version == 'prefer-stable' }}
