@@ -10,7 +10,7 @@ class RestReactivateSubscriptionRequestTest extends TestCase
     /** @var \Omnipay\PayPal\Message\RestReactivateSubscriptionRequest */
     private $request;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = $this->getHttpClient();
         $request = $this->getHttpRequest();

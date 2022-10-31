@@ -19,7 +19,7 @@ class RestGatewayTest extends GatewayTestCase
     /** @var array */
     public $subscription_options;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

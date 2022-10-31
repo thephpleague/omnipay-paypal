@@ -7,7 +7,7 @@ use Omnipay\Common\CreditCard;
 
 class ProGatewayTest extends GatewayTestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

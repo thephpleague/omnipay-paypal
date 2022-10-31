@@ -21,7 +21,7 @@ class ExpressInContextGatewayTest extends GatewayTestCase
      */
     protected $voidOptions;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

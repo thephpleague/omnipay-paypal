@@ -13,7 +13,7 @@ class RestDeleteCardRequestTest extends TestCase
     /** @var CreditCard */
     private $card;
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

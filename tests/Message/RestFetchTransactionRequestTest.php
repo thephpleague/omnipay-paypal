@@ -9,7 +9,7 @@ class RestFetchTransactionRequestTest extends TestCase
     /** @var \Omnipay\PayPal\Message\RestFetchTransactionRequest */
     private $request;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = $this->getHttpClient();
         $request = $this->getHttpRequest();
