@@ -10,7 +10,7 @@ class RestUpdatePlanRequestTest extends TestCase
     /** @var \Omnipay\PayPal\Message\RestUpdatePlanRequest */
     private $request;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = $this->getHttpClient();
         $request = $this->getHttpRequest();

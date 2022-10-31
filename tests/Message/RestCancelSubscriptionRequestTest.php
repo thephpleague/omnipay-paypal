@@ -10,7 +10,7 @@ class RestCancelSubscriptionRequestTest extends TestCase
     /** @var \Omnipay\PayPal\Message\RestCancelSubscriptionRequest */
     private $request;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = $this->getHttpClient();
         $request = $this->getHttpRequest();

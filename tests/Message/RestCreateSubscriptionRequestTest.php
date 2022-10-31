@@ -10,7 +10,7 @@ class RestCreateSubscriptionRequestTest extends TestCase
     /** @var \Omnipay\PayPal\Message\RestCreateSubscriptionRequest */
     private $request;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = $this->getHttpClient();
         $request = $this->getHttpRequest();
