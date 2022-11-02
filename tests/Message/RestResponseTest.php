@@ -14,6 +14,7 @@ class RestResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('44E89981F8714392Y', $response->getTransactionReference());
+        $this->assertSame("0.50", $response->getProcessorFeeAmount());
         $this->assertNull($response->getMessage());
     }
 
@@ -25,6 +26,7 @@ class RestResponseTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getProcessorFeeAmount());
         $this->assertSame('Invalid request - see details', $response->getMessage());
     }
 
@@ -37,6 +39,7 @@ class RestResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('9EA05739TH369572R', $response->getTransactionReference());
+        $this->assertNull($response->getProcessorFeeAmount());
         $this->assertNull($response->getMessage());
     }
 
@@ -72,6 +75,7 @@ class RestResponseTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertSame('58N7596879166930B', $response->getTransactionReference());
+        $this->assertNull($response->getProcessorFeeAmount());
         $this->assertNull($response->getMessage());
     }
 
