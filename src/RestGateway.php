@@ -724,6 +724,20 @@ class RestGateway extends AbstractGateway
     }
 
     /**
+     * Retrieve an agreement
+     *
+     * Use this call to fetch agreement details
+     *
+     * @link https://developer.paypal.com/docs/api/payments.billing-agreements#agreement_get
+     * @param array $parameters
+     * @return Message\AbstractRestRequest
+     */
+    public function fetchAgreement(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\PayPal\Message\RestFetchAgreementRequest', $parameters);
+    }
+  
+    /**
      * @param array $parameters
      *
      * @return RestListWebhooksRequest
@@ -744,7 +758,6 @@ class RestGateway extends AbstractGateway
     }
 
     // TODO: Update an agreement
-    // TODO: Retrieve an agreement
     // TODO: Set outstanding agreement amounts
     // TODO: Bill outstanding agreement amounts
 }
