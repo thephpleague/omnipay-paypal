@@ -223,10 +223,41 @@ namespace Omnipay\PayPal\Message;
  */
 class RestPurchaseRequest extends RestAuthorizeRequest
 {
+    const SHIPPING_PREFERENCE_NO_SHIPPING = 'NO_SHIPPING';
+    const SHIPPING_PREFERENCE_GET_FROM_FILE = 'GET_FROM_FILE';
+    const SHIPPING_PREFERENCE_SET_PROVIDED_ADDRESS= 'SET_PROVIDED_ADDRESS';
+
     public function getData()
     {
         $data = parent::getData();
         $data['intent'] = 'sale';
+        $data['application_context']['shipping_preference'] = $this->getShippingPreference();
         return $data;
+    }
+
+    public function getShippingPreference()
+    {
+        return $this->getParameter('shippingPreference');
+    }
+
+    /**
+     * Set the shipping preference
+     *
+     * Supported values:
+     * 'NO_SHIPPING': redacts shipping address fields from the PayPal pages.
+     * Recommended value to use for digital goods.
+     * 'GET_FROM_FILE': Get the shipping address selected by the buyer on PayPal pages.
+     * 'SET_PROVIDED_ADDRESS' (not yet fully supported by the library since shipping address can't be provided):
+     * Use the address provided by the merchant. Buyer is not able to change the address on the PayPal pages.
+     * If merchant doesn't pass an address, buyer has the option to choose the address on PayPal pages.
+     *
+     * @param  string $value
+     * @return bool.
+     * @link https://developer.paypal.com/docs/api/orders/#definition-application_context
+     * @link https://www.paypalobjects.com/api/checkout.js
+     */
+    public function setShippingPreference($value)
+    {
+        return $this->setParameter('shippingPreference', $value);
     }
 }
