@@ -366,6 +366,7 @@ class ExpressTransactionSearchRequest extends AbstractRequest
      */
     public function createResponse($data)
     {
+        unset($data['payments']);
         return $this->response = new ExpressTransactionSearchResponse($this, $data);
     }
 }
