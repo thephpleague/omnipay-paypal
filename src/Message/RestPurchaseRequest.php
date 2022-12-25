@@ -227,6 +227,72 @@ class RestPurchaseRequest extends RestAuthorizeRequest
     {
         $data = parent::getData();
         $data['intent'] = 'sale';
+        $data['transactions'][0]['amount']['details'] = $this->getDetails();
         return $data;
+    }
+
+    /*
+     * Note: For an order authorization or capture, you cannot include the amount details object.
+     *
+     */
+    public function getDetails()
+    {
+        $data = array(
+            'subtotal'  => $this->getSubtotal(),
+            'tax'       => $this->getTaxAmount(),
+            'shipping'  => $this->getShipping(),
+            'handling_fee'  => $this->getHandlingFee(),
+            'shipping_discount' => $this->getShippingDiscount(),
+            'insurance' => $this->getInsurance()
+        );
+        $data = array_filter($data);
+        return $data;
+    }
+
+    private function getSubtotal()
+    {
+        $subtotal = 0;
+        $items = $this->getItems();
+        if ($items) {
+            foreach ($items as $n => $item) {
+                $subtotal += $item->getPrice();
+            }
+            return $this->formatCurrency($subtotal);
+        } else {
+            return $this->getAmount();
+        }
+    }
+
+    public function getShipping()
+    {
+        return ($this->getParameter('shipping'))?$this->formatCurrency($this->getParameter('shipping')):null;
+    }
+    public function setShipping($value)
+    {
+        return $this->setParameter('shipping', $value !== null ? (string) $value : null);
+    }
+    public function getHandlingFee()
+    {
+        return ($this->getParameter('handlingFee'))?$this->formatCurrency($this->getParameter('handlingFee')):null;
+    }
+    public function setHandlingFee($value)
+    {
+        return $this->setParameter('handlingFee', $value !== null ? (string) $value : null);
+    }
+    public function getShippingDiscount()
+    {
+        return ($this->getParameter('shippingDiscount'))?$this->formatCurrency($this->getParameter('shippingDiscount')):null;
+    }
+    public function setShippingDiscount($value)
+    {
+        return $this->setParameter('shippingDiscount', $value !== null ? (string) $value : null);
+    }
+    public function getInsurance()
+    {
+        return ($this->getParameter('insurance'))?$this->formatCurrency($this->getParameter('insurance')):null;
+    }
+    public function setInsurance($value)
+    {
+        return $this->setParameter('insurance', $value !== null ? (string) $value : null);
     }
 }
